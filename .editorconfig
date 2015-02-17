@@ -10,10 +10,10 @@ insert_final_newline = true
 [*]
 charset = utf-8
 
-# Indent using 4 spaces
+# Indent using 1 tab
 [*]
-indent_style = space
-indent_size = 4
+indent_style = tab
+indent_size = 1
 
 # Apply 2 space indentation to json and yml files
 [{package.json,.travis.yml}]
