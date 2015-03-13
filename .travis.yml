@@ -14,10 +14,11 @@ before_script:
   - phpenv rehash
   - git clone git://github.com/typo3-ci/TYPO3SniffPool.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/TYPO3SniffPool
   - git clone git://github.com/typo3-ci/TYPO3CMS.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/TYPO3CMS
+  - sed -i 's/<rule ref="..\/TYPO3SniffPool\/Sniffs\/Files\/FilenameSniff.php" \/>/<!--<rule ref="..\/TYPO3SniffPool\/Sniffs\/Files\/FilenameSniff.php" \/> -->/' $(pear config-get php_dir)/PHP/CodeSniffer/Standards/TYPO3CMS/ruleset.xml
 script:
-  - find . \( -name '*.php' -o -name '*.inc' \) -exec php -lf {} \;
-  - phpcs -s -n --standard=TYPO3CMS .
-  - jshint .
+  - find . \( -name '*.php' -o -name '*.inc' -o -name '*.phtml' \) -exec php -lf {} \;
+  - phpcs -s -n --standard=TYPO3CMS --extensions=php --ignore='lib/laterpay/*,lib/browscap/*' ./
+#  - jshint .
 
 notifications:
   slack: laterpay:3DYypQbldQxT4cbSs5ytZA3D

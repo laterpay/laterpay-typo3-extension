@@ -1,0 +1,6 @@
+[submodule "lib/browscap"]
+	path = lib/browscap
+	url = https://github.com/laterpay/laterpay-php-browscap-library.git
+[submodule "lib/laterpay"]
+	path = lib/laterpay
+	url = https://github.com/laterpay/laterpay-client-php.git
