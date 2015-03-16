@@ -92,7 +92,7 @@ class tx_laterpay_module1 extends t3lib_SCbase {
 			$this->doc->addStyleSheet('laterpay-backend', t3lib_extMgm::extRelPath('laterpay') . 'res/css/laterpay-backend.css');
 			$this->doc->addStyleSheet('fonts.googleapis.com', 'http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,300,400,600&subset=latin,latin-ext');
 			// load LaterPay-specific JS
-			$this->doc->loadJavascriptLib(t3lib_extMgm::extRelPath('laterpay') . 'res/js/jquery-1.11.2.min.js');
+			$this->doc->loadJavascriptLib(t3lib_extMgm::extRelPath('laterpay') . 'res/js/vendor/jquery-1.11.2.min.js');
 			$this->doc->loadJavascriptLib(t3lib_extMgm::extRelPath('laterpay') . 'res/js/laterpay-backend.js');
 
 			$pageContent = $this->getModuleContent();
