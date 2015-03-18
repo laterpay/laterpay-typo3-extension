@@ -45,15 +45,14 @@ class tx_laterpay_core_logger_formatter_html extends tx_laterpay_core_logger_for
 	 * @return mixed The formatted record
 	 */
 	public function format(array $record) {
-		$output = '<li>';
-		$output .= '<table class="lp_debugger_logEntryTable">';
-
+		$output  = '<li class="lp_debugger-content">';
+		$output .= '<table class="lp_js_debuggerContentTable lp_debugger-content__table lp_is-hidden">';
 		// generate thead of log record
 		$output .= $this->addHeadRow((string) $record['message'], $record['level']);
 
 		// generate tbody of log record with details
-		$output .= '<tbody class="lp_js_logEntryDetails" style="display:none;">';
-		$output .= '<tr><td colspan="2"><table>';
+		$output .= '<tbody class="lp_js_logEntryDetails lp_debugger-content__table-body" style="display:none;">';
+		$output .= '<tr><td class="lp_debugger-content__table-td" colspan="2"><table class="lp_debugger-content__table">';
 
 		if ($record['context']) {
 			foreach ($record['context'] as $key => $value) {
@@ -71,7 +70,6 @@ class tx_laterpay_core_logger_formatter_html extends tx_laterpay_core_logger_for
 		$output .= '</tbody>';
 		$output .= '</table>';
 		$output .= '</li>';
-
 		return $output;
 	}
 
@@ -86,12 +84,13 @@ class tx_laterpay_core_logger_formatter_html extends tx_laterpay_core_logger_for
 	private function addHeadRow($message = '', $level) {
 		$showDetailsLink = '<a href="#" class="lp_js_toggleLogDetails" data-icon="l">' . __('Details', 'laterpay') . '</a>';
 
-		$html = '<thead>
-                    <tr>
-                        <td><span class="lp_debugger_logLevel lp_debugger_logLevel-$level lp_vectorIcon"></span>' . $message . '</td>
-                        <td>$showDetailsLink</td>
-                    </tr>
-                </thead>';
+		$html = '<thead class="lp_js_debuggerContentTableTitle lp_debugger-content__table-title">' . LF .
+			'<tr>' . LF .
+			'  <td class="lp_debugger-content__table-td"><span class="lp_debugger__log-level lp_debugger__log-level--' .
+			$level . ' lp_vectorIcon"></span>' . $message . '</td>' . LF .
+			'  <td class="lp_debugger-content__table-td">' . $showDetailsLink . '</td>' . LF .
+			'</tr>' . LF .
+			'</thead>' . LF;
 
 		return $html;
 	}
@@ -112,11 +111,10 @@ class tx_laterpay_core_logger_formatter_html extends tx_laterpay_core_logger_for
 			$td = htmlspecialchars($td, ENT_NOQUOTES, 'UTF-8');
 		}
 
-		$html = '<tr>
-                    <th title="' . $th . '">$th</th>
-                    <td>' . $td . '</td>
-                </tr>';
-
+		$html = '<tr>' . LF .
+			'<th class="lp_debugger-content__table-th" title="' . $th . '">' . $th . '</th>' . LF .
+			'  <td class="lp_debugger-content__table-td">' . $td . '</td>' . LF .
+			'</tr>' . LF;
 		return $html;
 	}
 
