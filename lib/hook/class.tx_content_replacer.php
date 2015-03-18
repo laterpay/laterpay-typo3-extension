@@ -1,15 +1,10 @@
 <?php
 /*
- * This file is part of the TYPO3 CMS project.
+ * LaterPay content model.
  *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
+ * Plugin Name: LaterPay
+ * Plugin URI: https://github.com/laterpay/laterpay-typo3-extension
+ * Author URI: https://laterpay.net/
  */
 
 // @codingStandardsIgnoreStart
@@ -50,7 +45,7 @@ class tx_content_replacer extends tx_hook_abstract {
 
 		// if we get data from tt_content (default table for content) and page_id,id pair was not processed earlier
 		// that possibly need to replace main content by teaser
-		if (($tsKey == 'tt_content') and
+		if (($tsKey == tx_laterpay_model_content::$contentTable) and
 			(! isset($this->processedContent[$pageId]) or ! in_array($this->processedContent[$pageId], $id))) {
 			if ($this->isPaymentNeeded($contentObject)) {
 				$this->replaceContent($contentObject);

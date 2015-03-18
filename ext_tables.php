@@ -42,13 +42,32 @@ $TCA['tt_content']['columns'] += array(
 	'laterpay_price' => array(
 		'label' => 'Price &euro;',
 		'config' => array(
-			'type' => 'input'
+			'type' => 'input',
+			'default' => '0.25',
+			'eval' => 'tx_laterpay_evaluate_price'
+		)
+	)
+);
+$TCA['tt_content']['columns'] += array(
+	'laterpay_revenue_model' => array(
+		'label' => 'Revenue Model Price',
+		'config' => array(
+			'type' => 'radio',
+			'default' => 'ppu',
+			'items' => array(
+					array('PPU','ppu'),
+					array('SIS','sis')
+			)
 		)
 	)
 );
 
-t3lib_extMgm::addToAllTCAtypes('tt_content', 'laterpay_price', '', 'after:bodytext');
-t3lib_extMgm::addToAllTCAtypes('tt_content', 'laterpay_teaser', '', 'after:laterpay_price');
+$TCA['tt_content']['palettes']['1001'] = array(
+	'showitem' => 'laterpay_price,laterpay_revenue_model',
+	'canNotCollapse' => true
+);
+
+t3lib_extMgm::addToAllTCAtypes('tt_content', 'laterpay_teaser;;1001;;', '', 'after:bodytext');
 
 if (TYPO3_MODE == 'BE') {
 	if (t3lib_div::int_from_ver(TYPO3_version) >= 4000000) {
