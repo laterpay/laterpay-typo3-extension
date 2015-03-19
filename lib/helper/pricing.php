@@ -115,7 +115,7 @@ class tx_laterpay_helper_pricing {
 	 * @return array
 	 */
 	public static function getAllPostsWithPrice() {
-		return $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'tt_content', 'laterpay_price > 0');
+		return $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', tx_laterpay_model_content::$contentTable, 'laterpay_price > 0');
 	}
 
 	/**
