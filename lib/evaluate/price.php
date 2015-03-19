@@ -23,10 +23,10 @@ class tx_laterpay_evaluate_price
 {
 	/**
 	 * Method which return JS code value evaluation in admin part of content edit.
-	 * 
+	 *
 	 * @return string
 	 */
-	function returnFieldJS() {
+	public function returnFieldJs() {
 		return '
 			if(value < ' . tx_laterpay_helper_pricing::PPU_MIN . ' && value != 0)
 			{
@@ -41,17 +41,17 @@ class tx_laterpay_evaluate_price
 			return value;
 		';
 	}
-	
+
 	/**
 	 * PHP evaluation of getted value in project.
-	 * 
+	 *
 	 * @param string $value Value from form
 	 * @param mixed $isIn Field configuration from TCA array.
 	 * @param bool $set Set to database or not.
-	 * 
+	 *
 	 * @return float
 	 */
-	function evaluateFieldValue($value, $isIn, &$set) {
-		return round( tx_laterpay_helper_pricing::ensureValidPrice((float) $value) ,2);
+	public function evaluateFieldValue($value, $isIn, &$set) {
+		return round( tx_laterpay_helper_pricing::ensureValidPrice((float) $value), 2);
 	}
 }

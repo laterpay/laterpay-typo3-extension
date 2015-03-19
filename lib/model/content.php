@@ -12,7 +12,7 @@
  * The TYPO3 project - inspiring people to share!
  */
 
-/*
+/**
  * LaterPay content model.
  *
  * Plugin Name: LaterPay
@@ -46,10 +46,10 @@ class tx_laterpay_model_content {
 
 	/**
 	 * Update content table
-	 * 
+	 *
 	 * @param int $contentId id of updated content
-	 * @param array $fieldsToUpdate key => value array
-	 * 
+	 * @param mixed $fieldsToUpdate key => value array
+	 *
 	 * @return type
 	 */
 	public static function updateContentData($contentId, $fieldsToUpdate) {
