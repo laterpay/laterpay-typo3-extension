@@ -1,5 +1,18 @@
 <?php
-/**
+/*
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
+
+/*
  * LaterPay content model.
  *
  * Plugin Name: LaterPay
@@ -21,7 +34,7 @@ class tx_laterpay_model_content {
 	/**
 	 * Get content block.
 	 *
-	 * @param int $contentId content block 
+	 * @param int $contentId content block
 	 *
 	 * @return array $contentBlock array of time pass data
 	 */
@@ -34,7 +47,8 @@ class tx_laterpay_model_content {
 	/**
 	 * Update content table
 	 * 
-	 * @param type $contentId
+	 * @param int $contentId id of updated content
+	 * @param array $fieldsToUpdate key => value array
 	 * 
 	 * @return type
 	 */

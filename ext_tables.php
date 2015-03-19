@@ -64,7 +64,7 @@ $TCA['tt_content']['columns'] += array(
 
 $TCA['tt_content']['palettes']['1001'] = array(
 	'showitem' => 'laterpay_price,laterpay_revenue_model',
-	'canNotCollapse' => true
+	'canNotCollapse' => TRUE
 );
 
 t3lib_extMgm::addToAllTCAtypes('tt_content', 'laterpay_teaser;;1001;;', '', 'after:bodytext');
