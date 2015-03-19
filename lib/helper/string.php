@@ -16,7 +16,7 @@
  * LaterPay string helper.
  *
  * Plugin Name: LaterPay
- * Plugin URI: https://github.com/laterpay/laterpay-wordpress-plugin
+ * Plugin URI: https://github.com/laterpay/laterpay-typo3-extension
  * Author URI: https://laterpay.net/
  */
 class tx_laterpay_helper_string {
