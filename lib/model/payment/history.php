@@ -65,22 +65,29 @@ class tx_laterpay_model_payment_history extends tx_laterpay_model_query_abstract
 		} else {
 			$mode = 'test';
 		}
-
+		$queryParams = array(
+			'mode' => $mode,
+			'post_id' => $data['post_id'],
+			'currency_id' => $data['id_currency'],
+			'price' => $data['price'],
+			'date' => date('Y-m-d H:i:s', $data['date']),
+			'ip' => $data['ip'],
+			'hash' => $data['hash'],
+			'revenue_model' => $data['revenue_model'],
+			'pass_id' => $data['pass_id'],
+			'code' => $data['code']
+		);
 		$payment = $this->getPaymentByHash($mode, $data['hash']);
 		if (empty($payment)) {
 			$GLOBALS['TYPO3_DB']->exec_INSERTquery(
 				$this->table,
+				$queryParams
+			);
+			$this->logger->info(__METHOD__,
 				array(
-					'mode' => $mode,
-					'post_id' => $data['post_id'],
-					'currency_id' => $data['id_currency'],
-					'price' => $data['price'],
-					'date' => date('Y-m-d H:i:s', $data['date']),
-					'ip' => $data['ip'],
-					'hash' => $data['hash'],
-					'revenue_model' => $data['revenue_model'],
-					'pass_id' => $data['pass_id'],
-					'code' => $data['code']
+					'args' => $queryParams,
+					'query' => $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery,
+					'results' => $payment
 				)
 			);
 		}
@@ -361,13 +368,20 @@ class tx_laterpay_model_payment_history extends tx_laterpay_model_query_abstract
 			$this->table,
 			'mode = :mode AND hash = :hash'
 		);
-		$statement->execute(array(
-				':mode' => $mode,
-				':hash' => $hash
-			));
+		$queryParams = array(
+			':mode' => $mode,
+			':hash' => $hash
+		);
+		$statement->execute($queryParams);
 		$row = $statement->fetch(t3lib_db_PreparedStatement::FETCH_ASSOC);
 		$statement->free();
-
+		$this->logger->info(__METHOD__,
+			array(
+					'args' => $queryParams,
+					'query' => $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery,
+					'results' => $row
+			)
+		);
 		return $row;
 	}
 
@@ -555,6 +569,13 @@ class tx_laterpay_model_payment_history extends tx_laterpay_model_query_abstract
 		$statement->execute();
 		$results = $statement->fetchAll(t3lib_db_PreparedStatement::FETCH_ASSOC);
 		$statement->free();
+		$this->logger->info(__METHOD__,
+			array(
+				'args' => $paramValues,
+				'query' => $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery,
+				'results' => $results
+			)
+		);
 
 		return $results;
 	}

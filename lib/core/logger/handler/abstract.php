@@ -256,4 +256,23 @@ abstract class tx_laterpay_core_logger_handler_abstract implements tx_laterpay_c
 	protected function getDefaultFormatter() {
 		return new tx_laterpay_core_logger_formatter_normalizer();
 	}
+
+	/**
+	 * Load all assets for this handler
+	 *
+	 * @param object $renderer Instance of t3lib_PageRenderer class
+	 *
+	 * @return void
+	 */
+	public function loadAssets($renderer) {
+	}
+
+	/**
+	 * Flush all buffered records and return as string
+	 *
+	 * @return string
+	 */
+	public function flushRecords() {
+		return '';
+	}
 }

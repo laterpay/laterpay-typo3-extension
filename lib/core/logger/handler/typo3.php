@@ -21,6 +21,90 @@
  */
 class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_handler_abstract {
 
+
+	/**
+	 * Template for debug output
+	 *
+	 * @var string
+	 */
+	const DEBUG_TABLE_TEMPLATE = '
+		<div id="lp_js_debugger" class="lp_debugger lp_is-hidden">
+			<header id="lp_js_toggleDebuggerVisibility" class="lp_debugger-header">
+				<a href="#" class="lp_debugger__close-link lp_right" data-icon="l"></a>
+				<div class="lp_debugger-header__text lp_right">%s</div>
+				<h2 data-icon="a" class="lp_debugger-header__title">%s</h2>
+			</header>
+
+			<ul id="lp_js_debuggerTabs" class="lp_debugger-tabs lp_clearfix">
+				<li class="lp_js_debuggerTabItem lp_is-selected lp_debugger-tabs__item">
+					<a href="#" class="lp_debugger-tabs__link">%s<span class="lp_debugger-tabs__count">%s</span></a>
+				</li>
+				%s
+			</ul>
+
+			<ul class="lp_debugger-content-list">
+				<li class="lp_js_debuggerContent lp_debugger-content">
+					<ul class="lp_debugger-content-list">
+						%s
+					</ul>
+				</li>
+				%s
+			</ul>
+		</div>
+	';
+
+
+	/**
+	 * Template for debug output for tabs
+	 *
+	 * @var string
+	 */
+	const DEBUG_TABS_TEMPLATE = '
+					<li class="lp_js_debuggerTabItem lp_debugger-tabs__item">
+						<a href="#" class="lp_debugger-tabs__link">%s</a>
+					</li>
+	';
+
+	/**
+	 * Template for debug output for content as table
+	 *
+	 * @var string
+	 */
+	const DEBUG_CONTENT_TABLE_TEMPLATE = '
+					<li class="lp_js_debuggerContent lp_debugger-content lp_is-hidden">
+						<table class="lp_debugger-content__table">
+							%s
+						</table>
+					</li>
+	';
+
+	/**
+	 * Template for debug output for content in table
+	 *
+	 * @var string
+	 */
+	const DEBUG_CONTENT_TEMPLATE = '
+								<tr>
+									<th class="lp_debugger-content__table-th">%s</th>
+									<td class="lp_debugger-content__table-td">%s</td>
+								</tr>
+
+	';
+
+	/**
+	 * Internal buffer
+	 *
+	 * @var array
+	 */
+	protected $records = array();
+
+	/**
+	 * Config object
+	 *
+	 * @var tx_laterpay_config
+	 */
+	protected $config = NULL;
+
 	/**
 	 * Constructor of object
 	 *
@@ -28,6 +112,7 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 	 */
 	public function __construct($level = tx_laterpay_core_logger::DEBUG) {
 		parent::__construct($level, FALSE);
+		$this->config = tx_laterpay_config::getInstance();
 	}
 
 	/**
@@ -41,9 +126,124 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 		if ($record['level'] < $this->level) {
 			return FALSE;
 		}
+
+		$this->records[] = $record;
+
+		return TRUE;
+
 		// @codingStandardsIgnoreStart
 		t3lib_utility_Debug::debug($record);
 		// @codingStandardsIgnoreEnd
 		return TRUE;
+	}
+
+	/**
+	 * Get array of tabs
+	 *
+	 * @return array $tabs
+	 */
+	protected function getTabs() {
+		// @codingStandardsIgnoreStart
+		return array(
+				array(
+						'name'      => __( 'Requests', 'laterpay' ),
+						'content'   => array_merge(t3lib_div::_GET(), t3lib_div::_POST()),
+				),
+				array(
+						'name'      => __( 'Session', 'laterpay' ),
+						'content'   => isset( $_SESSION ) ? $_SESSION : array(),
+				),
+				array(
+						'name'      => sprintf( __( 'Cookies<span class="lp_debugger-tabs__count">%s</span>', 'laterpay' ), count( $_COOKIE ) ),
+						'content'   => $_COOKIE,
+				),
+				array(
+						'name'      => __( 'System Config', 'laterpay' ),
+						'content'   => $this->getSystemInfo(),
+				),
+				array(
+						'name'      => __( 'Plugin Config', 'laterpay' ),
+						'content'   => $this->config->getAll(),
+				),
+		);
+		// @codingStandardsIgnoreEnd
+	}
+
+	/**
+	 * Get system info as array
+	 *
+	 * @return array
+	 */
+	protected function getSystemInfo() {
+		$systemInfo = array(
+				'Typo3 version'         => $TYPO_VERSION,
+// 				'Multisite'                 => is_multisite() ? __( 'yes', 'laterpay' ) : __( 'no', 'laterpay' ),
+// 				'WordPress memory limit'    => ( $this->let_to_num( WP_MEMORY_LIMIT ) / 1024 ) . ' MB',
+// 				'Active plugins'            => implode( ', ', $plugins ),
+// 				'Network active plugins'    => is_multisite() ? $network_plugins : __( 'none', 'laterpay' ),
+// 				'Registered post types'     => implode( ', ', get_post_types( array( 'public' => true ) ) ),
+// 				'Active theme'              => $theme,
+				'PHP version'               => PHP_VERSION,
+				'PHP memory limit'          => ini_get( 'memory_limit' ),
+				'PHP modules'               => implode( ', ', get_loaded_extensions() ),
+				'Web server info'           => $_SERVER['SERVER_SOFTWARE'],
+		);
+		return $systemInfo;
+	}
+
+	/**
+	 * Load all assets
+	 *
+	 * @param object $renderer Instance of t3lib_PageRenderer class
+	 *
+	 * @return void
+	 */
+	public function loadAssets($renderer) {
+		$href = t3lib_extMgm::extRelPath('laterpay') . 'res/css/laterpay-debugger.css';
+		error_log (__METHOD__ . var_export($href, TRUE) . PHP_EOL, 3, '/vagrant/main_form.log');
+
+		if (strpos($href, '://') !== FALSE || substr($href, 0, 1) === '/') {
+			$file = $href;
+		} else {
+			$file = $GLOBALS['BACK_PATH'] . $href;
+		}
+		$renderer->addCssFile($file, 'stylesheet', 'screen', 'lpdebugger');
+		$renderer->addJsFile($GLOBALS['BACK_PATH'] . t3lib_extMgm::extRelPath('laterpay') . 'res/js/laterpay-debugger.js');
+	}
+
+	/**
+	 * Flush all buffered records and return as string
+	 *
+	 * @return string
+	 */
+	public function flushRecords() {
+		$tabsNamesAndContents = $this->getTabs();
+		$tabs = '';
+		$tabsContent = '';
+		foreach ($tabsNamesAndContents  as $key => $tab ) {
+			if ( empty( $tab['content'] ) ) {
+				continue;
+			}
+			$tabs .= sprintf(self::DEBUG_TABS_TEMPLATE, __( $tab['name'], 'laterpay' ));
+
+			$tabsInternal = '';
+			foreach ( $tab['content'] as $key => $value  ) {
+				$tabsInternal .= sprintf(self::DEBUG_CONTENT_TEMPLATE, $key, var_export($value, TRUE));
+			}
+
+			$tabsContent .= sprintf(self::DEBUG_CONTENT_TABLE_TEMPLATE, $tabsInternal);
+		}
+		$out = sprintf(
+			self::DEBUG_TABLE_TEMPLATE,
+			sprintf( __( '%s Memory Usage', 'laterpay' ), number_format( memory_get_peak_usage() / pow( 1024, 2 ), 1 ) . ' MB' ),
+			__( 'Debugger', 'laterpay' ),
+			__( 'Messages', 'laterpay' ),
+			count( $this->records ),
+			$tabs,
+			$this->getFormatter()->formatBatch( $this->records ),
+			$tabsContent
+		);
+
+		return $out;
 	}
 }

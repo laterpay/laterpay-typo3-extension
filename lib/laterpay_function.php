@@ -29,14 +29,18 @@ function lpPranslateAndLog($text) {
 		$allProcessed = array();
 	}
 // 	$GLOBALS['LANG']->debugKey = FALSE;
-	$result = $GLOBALS['LANG']->getLL($text);
-// 	$GLOBALS['LANG']->debugKey = FALSE;
-	if (empty($result)) {
-		if (!in_array($text, $allProcessed)) {
-			$allProcessed[] = $text;
-			$encResult = htmlentities ($text);
-			error_log (sprintf('<label index="%s">%s</label>', $encResult, $encResult) . PHP_EOL, 3, '/vagrant/main_sub_prices.log');
+	if ($GLOBALS['LANG']) {
+		$result = $GLOBALS['LANG']->getLL($text);
+	// 	$GLOBALS['LANG']->debugKey = FALSE;
+		if (empty($result)) {
+			if (!in_array($text, $allProcessed)) {
+				$allProcessed[] = $text;
+				$encResult = htmlentities ($text);
+				error_log (sprintf('<label index="%s">%s</label>', $encResult, $encResult) . PHP_EOL, 3, '/vagrant/main_sub_prices.log');
+			}
+			$result = $text;
 		}
+	} else {
 		$result = $text;
 	}
 	return $result;

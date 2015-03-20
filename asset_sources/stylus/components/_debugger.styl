@@ -3,7 +3,7 @@
 
 // debugger pane header with LaterPay vector logo ----------------------------------------------------------------------
 .lp_debugger,
-.lp_debugger h2 {
+.lp_debugger-header__title {
     font-family:                    'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-style:                     normal;
 }
@@ -12,8 +12,8 @@
     background-color:               $background-darker;
     bottom:                         0;
     box-shadow:                     -1px 1px 6px hsla(0, 0%, 0%, 0.34);
-    font-size:                      14px;
-    height:                         35em;
+    font-size:                      $fs-1;
+    height:                         $fs-1*35;
     line-height:                    1.3;
     overflow-y:                     hidden;
     position:                       fixed;
@@ -21,15 +21,8 @@
     width:                          100%;
     z-index:                        $zindex-topmost_1;
 
-    header {
-        background-color:           darken(hsl(0, 0%, 89%), 13%);
-        cursor:                     pointer;
-        height:                     2.5em;
-
-        div {
-            line-height:            2.5em;
-            padding:                0 0.5em;
-        }
+    &.lp_is-hidden {
+        bottom: -($fs-1*32.5);
     }
 
     a {
@@ -44,94 +37,71 @@
             text-decoration:        none;
         }
     }
+}
 
-    h2 {
-        display:                    inline-block;
-        font-size:                  1.25em;
-        font-weight:                400;
+.lp_debugger-header {
+    background: hsl(0, 0%, 76%);
+    cursor: pointer;
+    height: $fs-1*2.5;
+        
+    .lp_debugger-header__title {
+        display: inline-block;
+        font-weight: normal;
+
         line-height:                1;
-        margin:                     0.5em 0 0.5em 6.75em;
+        margin:                     $fs-05 0 $fs-05 $fs-1*8.5;
 
         &:before {
             display:                block;
-            font-size:              6em;
+            font-size:              $fs-1*7.5;
             height:                 0;
-            left:                   -1.02em;
+            left:                   -($fs-1*7.75);
             line-height:            0;
             position:               relative;
-            top:                    0.08em;
+            top:                    8px;
         }
     }
 
-    .lp_closeLink {
+    .lp_debugger-header__text {
+            line-height: 1;
+            padding: $fs-075 $fs-05;
+        }
+
+    lp_debugger__close-link {
         color:                      $clickable;
         font-weight:                bold;
-        height:                     2em;
-        line-height:                2em;
+        height:                     $fs-2;
+        line-height:                2;
         margin:                     $fs-025 $fs-025 0 0;
         text-align:                 center;
         transform:                  rotate(90deg);
         transition:                 transform 0.2s;
-        width:                      2em;
+        width:                      $fs-2;
 
         &:before {
-            line-height:            2em;
-            padding:                0 0 0 0.1em;
+            line-height:            2;
+            padding:                0 0 0 $fs-1*0.1;
             top:                    auto;
         }
 
         &:hover {
             color:                  $clickable-highlight;
         }
+
+        .lp_debugger.lp_is-hidden & {
+            transform:                  rotate(-90deg);
+        }
     }
 }
-
-.lp_debugger.lp_is-hidden {
-    bottom:                         -32.5em;
-
-    .lp_closeLink {
-        transform:                  rotate(-90deg);
-    }
-}
-
 
 // debugger pane tabs --------------------------------------------------------------------------------------------------
-.lp_debugger_tabs {
+.lp_debugger-tabs {
     border-bottom:                  1px solid $border-darker;
     margin:                         $fs-075 $fs-075 0;
     position:                       relative;
     z-index:                        $zindex-base;
-
-    li {
-        border:                     1px solid transparent;
-        border-radius:              3px 3px 0 0;
-        float:                      left;
-        height:                     2.5em;
-        list-style:                 none outside none;
-        margin:                     0 2px -1px 0;
-        padding:                    0;
-
-        &:hover {
-            border-color:           $border-darker $border-darker hsl(0, 0%, 90%);
-        }
-    }
-
-    .lp_is-selected {
-        border-color:               $border-darker $border-darker hsl(0, 0%, 90%);
-
-        a,
-        &:hover a {
-            color:                  $text;
-            cursor:                 default;
-        }
-
-        span,
-        &:hover span {
-            background-color:       lighten(hsl(0, 0%, 33%), 20%);
-        }
-    }
-
-    a {
+ 
+    .lp_debugger-tabs__link {
         color:                      $clickable;
         display:                    block;
         padding:                    $fs-05 $fs-1;
@@ -145,8 +115,8 @@
         }
 
         span {
-            background-color:       $clickable;
-            border-radius:          2px;
+            background:             $clickable;
+            border-radius:          3px;
             color:                  $text-inverse;
             display:                inline-block;
             margin-left:            $fs-05;
@@ -157,96 +127,64 @@
     }
 }
 
+.lp_debugger-tabs__item {
+    border: 1px solid transparent;
+    border-radius: 3px 3px 0 0;
+    float: left;
+    height: $fs-1*2.5;
+    list-style: none outside none;
+    margin: 0 2px -1px 0;
+    padding: 0;
+
+
+    &:hover {
+        border-color: $border-darker $border-darker hsl(0, 0%, 90%);
+    }
+
+    &.lp_is-selected {
+        border-color: $border-darker $border-darker hsl(0, 0%, 90%);
+
+        .lp_debugger-tabs__link,
+        &:hover .lp_debugger-tabs__link {
+            color: $text;
+            cursor: default;
+        }
+
+        span,
+        &:hover span {
+            background-color: hsl(0, 0%, 53%);
+        }
+    }
+}
+
+
 // debugging messages --------------------------------------------------------------------------------------------------
-.lp_debugger_contentList {
-    margin:                         0 $fs-075 $fs-1;
-    padding:                        0;
-    overflow-x:                     hidden;
-    overflow-y:                     scroll;
-    height:                         29em;
+.lp_debugger-content-list {
+    height: $fs-1*29;
+    margin: 0 $fs-075 $fs-1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0;
 
-    ul,
-    li {
-        margin:                     0;
-        padding:                    0;
+    .lp_debugger-content-list,
+    .lp_debugger-content {
+        margin: 0;
+        padding: 0;
     }
 
-    li {
-        list-style:                 none outside none;
-    }
+    .lp_debugger-content {
+        list-style: none outside none;
 
-    .lp_debugger_content li {
-        border-bottom:              1px solid darken(hsl(0, 0%, 87%), 3%);
-    }
-
-    // TODO: state classes should only be used as adjoining classes
-    .lp_is-hidden {
-        display:                    none;
-    }
-
-    table,
-    th,
-    td {
-        border:                     0 none;
-        border-collapse:            collapse;
-    }
-
-    table {
-        margin:                     0;
-        width:                      100%;
-    }
-
-    th,
-    td {
-        padding:                    $fs-05;
-        text-align:                 left;
-        vertical-align:             top;
-    }
-
-    th {
-        color:                      $text-lighter;
-        font-weight:                normal;
-        max-width:                  12em;
-        overflow:                   hidden;
-        padding-left:               $fs-05;
-        text-overflow:              ellipsi;
-        width:                      12em;
-    }
-
-    thead {
-        cursor:                     pointer;
-
-        td,
-        th {
-            transition:             background-color 0.25s;
-        }
-
-        &:hover td,
-        &:hover th {
-            background-color:       $background-highlight;
-        }
-
-        td:last-child {
-            color:                  $text-lighter;
-            max-width:              10em;
-            text-align:             right;
+        &.lp_is-hidden {
+            display: none;
         }
     }
 
-    .lp_debugger_logEntryTable {
-        tbody th,
-        tbody td {
-            padding:                0 $fs-05 $fs-025;
-        }
-
-        tbody th {
-            padding-left:           2.25em;
-            padding-left:           2.75em;
-            width:                  12em;
-        }
+    .lp_debugger-content li {
+        border-bottom: 1px solid hsl(0, 0%, 92%);
     }
 
-    .lp_debugger_logLevel:before {
+    .lp_debugger__log-level:before {
         font-size:                  $fs-175;
         height:                     0;
         line-height:                0;
@@ -255,25 +193,25 @@
         top:                        0.23em;
     }
 
-    // infos
-    .lp_debugger_logLevel-100:before
-    .lp_debugger_logLevel-200:before
-    .lp_debugger_logLevel-250:before {
+     // infos
+    .lp_debugger__log-level--100:before
+    .lp_debugger__log-level--200:before
+    .lp_debugger__log-level--250:before {
         color:                      $text-lighter;
         content:                    'm';
     }
 
     // warnings
-    .lp_debugger_logLevel-300:before {
+    .lp_debugger__log-level--300:before {
         color:                      hsl(39, 100%, 50%);
         content:                    'n';
     }
 
     // errors
-    .lp_debugger_logLevel-400:before
-    .lp_debugger_logLevel-500:before
-    .lp_debugger_logLevel-550:before
-    .lp_debugger_logLevel-600:before {
+    .lp_debugger__log-level--400:before
+    .lp_debugger__log-level--500:before
+    .lp_debugger__log-level--550:before
+    .lp_debugger__log-level--600:before {
         color:                      hsl(6, 100%, 50%);
         content:                    'o';
     }
@@ -294,6 +232,69 @@
         line-height:                1.3;
     }
 }
+
+.lp_debugger-content__table-title {
+    cursor: pointer;
+
+    .lp_debugger-content__table-th,
+    .lp_debugger-content__table-td {
+        transition: background 0.25s;
+    }
+
+    &:hover .lp_debugger-content__table-th,
+    &:hover .lp_debugger-content__table-td {
+        background: $background-highlight;
+    }
+
+    .lp_debugger-content__table-td:last-child {
+        color: $text-lighter;
+        max-width: $fs-1*10;
+        text-align: right;
+    }
+}
+
+.lp_debugger-content__table {
+    margin: 0;
+    width: 100%;
+
+    &.lp_is-hidden {
+
+        .lp_debugger-content__table-body .lp_debugger-content__table-th,
+        .lp_debugger-content__table-body .lp_debugger-content__table-td {
+            padding: 0 $fs-05 $fs-025;
+        }
+
+        .lp_debugger-content__table-body .lp_debugger-content__table-th {
+            padding-left: $fs-1*2.75;
+            width: $fs-1*12;
+        }
+    }
+}
+
+.lp_debugger-content__table,
+.lp_debugger-content__table-th,
+.lp_debugger-content__table-td {
+    border: 0 none;
+    border-collapse: collapse;
+}
+
+.lp_debugger-content__table-th,
+.lp_debugger-content__table-td {
+    padding: $fs-05;
+    text-align: left;
+    vertical-align: top;
+}
+
+.lp_debugger-content__table-th {
+    color: $text-lighter;
+    font-weight: normal;
+    max-width: $fs-1*12;
+    overflow: hidden;
+    padding-left: $fs-05;
+    text-overflow: ellipsis;
+    width: $fs-1*12;
+}
+
 
 // admin bar menu for toggling debugger pane ---------------------------------------------------------------------------
 // WordPress selector

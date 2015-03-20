@@ -35,6 +35,7 @@ class tx_laterpay_model_timepass {
 	 */
 	public function __construct() {
 		$this->passesTable = 'tt_laterpay_passes';
+		$this->logger = tx_laterpay_core_logger::getInstance();
 	}
 
 	/**
@@ -48,6 +49,13 @@ class tx_laterpay_model_timepass {
 		$timePass = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('pass_id, duration, period, access_to, ' .
 			'access_category, price, revenue_model, title, description',
 			$this->passesTable, 'pass_id = ' . (int)$timePassId
+		);
+		$this->logger->info(__METHOD__,
+			array(
+				'args' => NULL,
+				'query' => $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery,
+				'results' => $timePass
+			)
 		);
 
 		return $timePass;
@@ -79,6 +87,13 @@ class tx_laterpay_model_timepass {
 			$q = $GLOBALS['TYPO3_DB']->exec_UPDATEquery($this->passesTable, 'pass_id = ' . (int)$timePassId, $data);
 			$data['pass_id'] = $timePassId;
 		}
+		$this->logger->info(__METHOD__,
+			array(
+				'args' => $data,
+				'query' => $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery,
+				'results' => $q
+			)
+		);
 
 		return $data;
 	}
@@ -93,6 +108,13 @@ class tx_laterpay_model_timepass {
 		$timePasses = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('pass_id, duration, period, access_to, ' .
 			'access_category, price, revenue_model, title, description',
 			$this->passesTable, '', '', 'title'
+		);
+		$this->logger->info(__METHOD__,
+			array(
+				'args' => NULL,
+				'query' => $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery,
+				'results' => $timePasses
+			)
 		);
 		return $timePasses;
 	}
@@ -121,6 +143,13 @@ class tx_laterpay_model_timepass {
 			'access_category, price, revenue_model, title, description',
 			$this->passesTable . ' as pt', '', 'pt.access_to DESC, pt.price ASC'
 		);
+		$this->logger->info(__METHOD__,
+			array(
+				'args' => NULL,
+				'query' => $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery,
+				'results' => $timePasses
+			)
+		);
 
 		return $timePasses;
 	}
@@ -134,6 +163,13 @@ class tx_laterpay_model_timepass {
 	 */
 	public function deleteTimePassById($timePassId) {
 		$success = $GLOBALS['TYPO3_DB']->exec_DELETEquery($this->passesTable, 'pass_id = ' . (int) $timePassId);
+		$this->logger->info(__METHOD__,
+			array(
+				'args' => 'pass_id = ' . (int) $timePassId,
+				'query' => $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery,
+				'results' => $success
+			)
+		);
 		return $success;
 	}
 
@@ -145,6 +181,13 @@ class tx_laterpay_model_timepass {
 	public function getTimePassesCount() {
 		$list = $GLOBALS['TYPO3_DB']->exec_SELECTgetSingleRow('count(*) AS c_passes',
 			$this->passesTable
+		);
+		$this->logger->info(__METHOD__,
+			array(
+				'args' => NULL,
+				'query' => $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery,
+				'results' => $list
+			)
 		);
 		return $list['c_passes'];
 	}

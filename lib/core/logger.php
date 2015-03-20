@@ -107,9 +107,12 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	 */
 	public function initLogger() {
 		$handlers   = array();
-		if ($GLOBALS['$TYPO3_CONF_VARS']['BE']['debug'] > 1) {
+		if ($GLOBALS['TYPO3_CONF_VARS']['BE']['debug']) {
 			// LaterPay WordPress handler to render the debugger pane
-			$handlers[] = new tx_laterpay_core_logger_handler_typo3();
+			$wpHandler = new tx_laterpay_core_logger_handler_typo3();
+			$wpHandler->setFormatter( new tx_laterpay_core_logger_formatter_html() );
+
+			$handlers[] = $wpHandler;
 		} else {
 			$handlers[] = new tx_laterpay_core_logger_handler_null();
 		}
@@ -120,7 +123,7 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 				new tx_laterpay_core_logger_processor_memoryusage(),
 				new tx_laterpay_core_logger_processor_memorypeakusage(),
 		);
-
+		$GLOBALS['TYPO3_DB']->store_lastBuiltQuery = TRUE;
 		$this->name = $name;
 		$this->handlers = $handlers;
 		$this->processors = $processors;
@@ -386,5 +389,90 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	 */
 	public function getLevelName($level) {
 		return $this->levels[$level];
+	}
+
+	/**
+	 * Hook handler for ['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess']
+	 * Flush all buffered by handlers content
+	 *
+	 * @param mixed $parameters Array of input parameters
+				'jsLibs'               => &$jsLibs,
+				'jsFiles'              => &$jsFiles,
+				'jsFooterFiles'        => &$jsFooterFiles,
+				'cssFiles'             => &$cssFiles,
+				'headerData'           => &$this->headerData,
+				'footerData'           => &$this->footerData,
+				'jsInline'             => &$jsInline,
+				'cssInline'            => &$cssInline,
+				'xmlPrologAndDocType'  => &$this->xmlPrologAndDocType,
+				'htmlTag'              => &$this->htmlTag,
+				'headTag'              => &$this->headTag,
+				'charSet'              => &$this->charSet,
+				'metaCharsetTag'       => &$this->metaCharsetTag,
+				'shortcutTag'          => &$this->shortcutTag,
+				'inlineComments'       => &$this->inlineComments,
+				'baseUrl'              => &$this->baseUrl,
+				'baseUrlTag'           => &$this->baseUrlTag,
+				'favIcon'              => &$this->favIcon,
+				'iconMimeType'         => &$this->iconMimeType,
+				'titleTag'             => &$this->titleTag,
+				'title'                => &$this->title,
+				'metaTags'             => &$metaTags,
+				'jsFooterInline'       => &$jsFooterInline,
+				'jsFooterLibs'         => &$jsFooterLibs,
+				'bodyContent'          => &$this->bodyContent
+	 * @param object $pObj Instance t3lib_PageRenderer
+	 *
+	 * @return void
+	 */
+	public function handlersLoadAssets(&$parameters, &$pObj) {
+		error_log (__METHOD__ . var_export($parameters['footerData'], TRUE) . PHP_EOL, 3, '/vagrant/main_form.log');
+		foreach ($this->handlers as $handler) {
+			$handler->loadAssets($pObj);
+		}
+	}
+
+	/**
+	 * Hook handler for ['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-postProcess']
+	 * Flush all buffered by handlers content
+	 *
+	 * @param mixed $parameters Array of input parameters
+				'jsLibs'               => &$jsLibs,
+				'jsFiles'              => &$jsFiles,
+				'jsFooterFiles'        => &$jsFooterFiles,
+				'cssFiles'             => &$cssFiles,
+				'headerData'           => &$this->headerData,
+				'footerData'           => &$this->footerData,
+				'jsInline'             => &$jsInline,
+				'cssInline'            => &$cssInline,
+				'xmlPrologAndDocType'  => &$this->xmlPrologAndDocType,
+				'htmlTag'              => &$this->htmlTag,
+				'headTag'              => &$this->headTag,
+				'charSet'              => &$this->charSet,
+				'metaCharsetTag'       => &$this->metaCharsetTag,
+				'shortcutTag'          => &$this->shortcutTag,
+				'inlineComments'       => &$this->inlineComments,
+				'baseUrl'              => &$this->baseUrl,
+				'baseUrlTag'           => &$this->baseUrlTag,
+				'favIcon'              => &$this->favIcon,
+				'iconMimeType'         => &$this->iconMimeType,
+				'titleTag'             => &$this->titleTag,
+				'title'                => &$this->title,
+				'metaTags'             => &$metaTags,
+				'jsFooterInline'       => &$jsFooterInline,
+				'jsFooterLibs'         => &$jsFooterLibs,
+				'bodyContent'          => &$this->bodyContent
+	 * @param object $pObj Instance t3lib_PageRenderer
+	 *
+	 * @return void
+	 */
+	public function handlersFlush(&$parameters, &$pObj) {
+		error_log (__METHOD__ . var_export($parameters['footerData'], TRUE) . PHP_EOL, 3, '/vagrant/main_form.log');
+		foreach ($this->handlers as $handler) {
+			$content = $handler->flushRecords();
+			if (!empty($content)) {
+				$parameters['footerData'][] = $content . LF;
+			}
+		}
 	}
 }

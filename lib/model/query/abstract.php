@@ -28,12 +28,6 @@ class tx_laterpay_model_query_abstract {
 	protected $queryArgs = array();
 
 	/**
-	 * Last query as string
-	 * @var string
-	 */
-	protected $lastQuery = '';
-
-	/**
 	 * Table name
 	 * @var string
 	 */
@@ -322,7 +316,7 @@ class tx_laterpay_model_query_abstract {
 		$this->logger->info(__METHOD__,
 			array(
 				'args' => $this->queryArgs,
-				'query' => $query,
+				'query' => $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery,
 				'results' => $results
 			)
 		);
@@ -338,7 +332,6 @@ class tx_laterpay_model_query_abstract {
 	 * @return array $result
 	 */
 	public function getRow($args = array()) {
-		$query = $this->createQuery($args);
 		$statement = $this->createQuery($args);
 		$statement->execute();
 		$results = $statement->fetch(t3lib_db_PreparedStatement::FETCH_ASSOC);
@@ -347,7 +340,7 @@ class tx_laterpay_model_query_abstract {
 		$this->logger->info(__METHOD__,
 			array(
 				'args' => $this->queryArgs,
-				'query' => $query,
+				'query' => $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery,
 				'results' => $result
 			));
 
@@ -394,26 +387,15 @@ class tx_laterpay_model_query_abstract {
 		$query .= $order;
 		$query .= $limit;
 
-		$this->lastQuery = $query;
-
 		$preparedStatement = t3lib_div::makeInstance('t3lib_db_PreparedStatement', $query, $this->table, array());
 		/* @var $preparedStatement t3lib_db_PreparedStatement */
 
 		// Bind values to parameters
-		foreach ($this->whereParamValues  as $key => $value) {
+		foreach ($this->whereParamValues as $key => $value) {
 			$preparedStatement->bindValue($key, $value, t3lib_db_PreparedStatement::PARAM_AUTOTYPE);
 		}
 
 		// Return prepared statement
 		return $preparedStatement;
-	}
-
-	/**
-	 * Get last query
-	 *
-	 * @return string $query
-	 */
-	public function getLastQuery() {
-		return $this->lastQuery;
 	}
 }
