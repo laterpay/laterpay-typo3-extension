@@ -93,4 +93,20 @@ interface tx_laterpay_core_logger_handler_interface {
 	 * @return tx_laterpay_core_logger_formatter_interface
 	 */
 	public function getFormatter();
+
+	/**
+	 * Flush all buffered records and return as string
+	 *
+	 * @return string
+	 */
+	public function flushRecords();
+
+	/**
+	 * Load all assets
+	 *
+	 * @param object $renderer Instance of t3lib_PageRenderer class
+	 *
+	 * @return void
+	 */
+	public function loadAssets($renderer);
 }
