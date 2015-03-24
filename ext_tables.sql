@@ -49,7 +49,8 @@ CREATE TABLE tt_laterpay_passes (
 ) ENGINE=InnoDB;
 
 CREATE TABLE `tt_content` (
-    laterpay_teaser  TEXT           NULL        DEFAULT NULL,
-    laterpay_price   decimal(10,2)  NOT NULL    DEFAULT 0,
+    laterpay_teaser         TEXT           NULL        DEFAULT NULL,
+    laterpay_price          decimal(10,2)  NOT NULL    DEFAULT 0,
+    laterpay_revenue_model  ENUM('sis','ppu') NULL,
 ) ENGINE=InnoDB;
 
