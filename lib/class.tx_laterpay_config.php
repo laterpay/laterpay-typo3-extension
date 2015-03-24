@@ -78,6 +78,10 @@ class tx_laterpay_config implements t3lib_Singleton {
 
 	const REG_LATERPAY_CURRENCY = 'laterpay_currency';
 
+	const REG_LATERPAY_PREVIEW_AS_VISITOR = 'laterpay_preview_as_visitor';
+	const REG_LATERPAY_STATISTICS_TAB_IS_HIDDEN = 'laterpay_statistic_tab_is_hidden';
+
+	const REG_LATERPAY_IS_IN_VISIBLE_TEST_MODE = 'laterpay_is_in_visible_test_mode';
 
 	/**
 	 * Registry of typo3
@@ -322,6 +326,34 @@ class tx_laterpay_config implements t3lib_Singleton {
 		* @return array $browscap_settings
 		*/
 		$config->import($browscapSettings);
+
+		/**
+		 * Admin preview settings
+		 */
+
+		if ($registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_IS_IN_VISIBLE_TEST_MODE) === NULL) {
+			$registry->set(
+				self::PLUGIN_NAME_SPACE,
+				self::REG_LATERPAY_IS_IN_VISIBLE_TEST_MODE,
+				0
+			);
+		}
+
+		if ($registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_PREVIEW_AS_VISITOR) === NULL) {
+			$registry->set(
+				self::PLUGIN_NAME_SPACE,
+				self::REG_LATERPAY_PREVIEW_AS_VISITOR,
+				0
+			);
+		}
+
+		if ($registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_STATISTICS_TAB_IS_HIDDEN) === NULL) {
+			$registry->set(
+				self::PLUGIN_NAME_SPACE,
+				self::REG_LATERPAY_STATISTICS_TAB_IS_HIDDEN,
+				0
+			);
+		}
 
 		return $config;
 	}

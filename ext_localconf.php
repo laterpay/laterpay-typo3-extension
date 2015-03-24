@@ -62,6 +62,12 @@ $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-pos
 // Callback url catcher
 $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][] = 'EXT:laterpay/lib/hook/class.tx_callback_catcher.php:&tx_callback_catcher->preRenderHook';
 
+// Plugin action catcher
+$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][] = 'EXT:laterpay/lib/hook/class.tx_action_catcher.php:&tx_action_catcher->catchLaterpayAction';
+
+// Preview selector
+$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-postProcess'][] = 'EXT:laterpay/lib/hook/class.tx_content_replacer.php:&tx_content_replacer->addPreviewModeSelector';
+
 // Evaluations for price
 $TYPO3_CONF_VARS['SC_OPTIONS']['tce']['formevals']['tx_evaluation_price'] = 'EXT:laterpay/lib/evaluation/price.php';
 

@@ -35,7 +35,6 @@ class tx_hook_abstract {
 	 */
 	public static function getPageUrl() {
 		$host = 'http://' . $_SERVER['HTTP_HOST'];
-		// @TODO : Not fully correct method of getting page id. Find or implemented more correct method
 		$url = $host . '/index.php?id=' . intval($GLOBALS['TSFE']->id);
 
 		return $url;
@@ -50,7 +49,6 @@ class tx_hook_abstract {
 	 */
 	protected function getAfterPurchaseRedirectUrl(array $data) {
 		$url = self::getPageUrl();
-		/* @TODO : add correct check */
 		if (! $url) {
 			$this->logger->error(
 				__METHOD__ . ' could not find an URL for the given content_id',

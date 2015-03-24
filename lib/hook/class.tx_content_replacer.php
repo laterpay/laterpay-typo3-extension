@@ -32,6 +32,8 @@ class tx_content_replacer extends tx_hook_abstract {
 	 */
 	private $processedContent = array();
 
+	private $cssAndJsSetted = FALSE;
+
 	/**
 	 * Function used on hook wich build and wrap content block
 	 *
@@ -43,14 +45,25 @@ class tx_content_replacer extends tx_hook_abstract {
 	 * @return string
 	 */
 	public function cObjGetSingleExt($name, $conf, $tsKey, tslib_cObj $contentObject) {
+
+		//set Js And Css
+		if (!$this->cssAndJsSetted and TYPO3_MODE != 'BE') {
+			$this->setJsAndCss();
+			$this->cssAndJsSetted = TRUE;
+		}
+
 		// get page id
 		$pageId = $this->getPageId($contentObject);
 		// get content block id
 		$id = $this->getId($contentObject);
 
+		$needToWrap = $this->needToWrap();
+
 		// if we get data from tt_content (default table for content) and page_id,id pair was not processed earlier
 		// that possibly need to replace main content by teaser
-		if (($tsKey == tx_laterpay_model_content::$contentTable) and
+
+		if ($needToWrap and ($tsKey == tx_laterpay_model_content::$contentTable) and
+
 			(! isset($this->processedContent[$pageId]) or ! in_array($this->processedContent[$pageId], $id))) {
 			if ($this->isPaymentNeeded($contentObject)) {
 				$this->replaceContent($contentObject);
@@ -123,6 +136,8 @@ class tx_content_replacer extends tx_hook_abstract {
 		$wrapper->setWrapperArgument('price', tx_laterpay_helper_pricing::getContentPrice($contentObject));
 		$wrapper->setWrapperArgument('purchaseURL', $purchaseUrl);
 		$wrapper->setWrapperArgument('revenueModel', tx_laterpay_helper_pricing::getContentRevenueModel($contentObject));
+		$wrapper->setWrapperArgument('isInVisibleTestMode', get_option(tx_laterpay_config::REG_LATERPAY_IS_IN_VISIBLE_TEST_MODE) ? : NULL);
+		$wrapper->setWrapperArgument('previewAsVisitor', tx_laterpay_helper_user::previewAsVisitor());
 
 		$contentObject->data['bodytext'] = $wrapper->render($contentObject->data['laterpay_teaser']);
 
@@ -191,8 +206,7 @@ class tx_content_replacer extends tx_hook_abstract {
 	 * @return string
 	 */
 	public function getPurchaseUrl(tslib_cObj $contentObject) {
-		ini_set('display_errors', 'on');
-		// @TODO : check if block with such ID exists
+
 		$contentBlockId = $this->getId($contentObject);
 		$config = tx_laterpay_config::getInstance();
 
@@ -211,7 +225,7 @@ class tx_content_replacer extends tx_hook_abstract {
 			'id_currency' => $currencyModel->getCurrencyNameByIso4217Code($currency),
 			'price' => $price,
 			'date' => time(),
-			'buy' => 'true',
+			'buy' => 'TRUE',
 			'ip' => ip2long($_SERVER['REMOTE_ADDR']),
 			'revenue_model' => $revenueModel
 		);
@@ -240,5 +254,78 @@ class tx_content_replacer extends tx_hook_abstract {
 			// Pay-per-Use purchase
 			return $client->get_add_url($params);
 		}
+	}
+
+	/**
+	 * Add tab with selector for preview mode (user or admin)
+	 *
+	 * @param mixed $params Page parameters.
+	 * @param t3lib_PageRenderer $caller Object caller. As default this t3lib_PageRenderer.
+	 *
+	 * @return void
+	 */
+	public function addPreviewModeSelector($params, t3lib_PageRenderer $caller) {
+		// if we in admin part - nothing to do here
+		if (TYPO3_MODE == 'BE') {
+			return;
+		}
+
+		// This action allowed only for admin
+		if (!tx_laterpay_helper_user::isAdmin()) {
+			return;
+		}
+
+		$render = new tx_laterpay_controller_abstract(NULL);
+		$render->assign('preview_as_visitor', get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_AS_VISITOR));
+		$render->assign('hide_statistics_pane', get_option(tx_laterpay_config::REG_LATERPAY_STATISTICS_TAB_IS_HIDDEN));
+
+		$tab = $render->getTextView('frontend/page/select_preview_mode_tab');
+
+		$params['bodyContent'] .= $tab;
+	}
+
+	/**
+	 * Is it needed to wrap content or not.
+	 *
+	 * @return bool
+	 */
+	protected function needToWrap() {
+
+		$liveMode = get_option(tx_laterpay_config::REG_IS_IN_LIVE_MODE);
+		if (tx_laterpay_helper_user::isAdmin()) {
+			if (!get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_AS_VISITOR)) {
+				return FALSE;
+			}
+		} elseif (!$liveMode) {
+			// if in test mode and test mode is invisible
+			if (!get_option(tx_laterpay_config::REG_LATERPAY_IS_IN_VISIBLE_TEST_MODE)) {
+				return FALSE;
+			}
+		}
+
+		return TRUE;
+	}
+
+	/**
+	 * JS and CSS setter
+	 *
+	 * @return void
+	 */
+	public function setJsAndCss() {
+		// set basic js
+		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay_jquery'] = 'http://code.jquery.com/jquery-1.11.1.js';
+		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay_jquery.']['external'] = 1;
+
+		$config = tx_laterpay_config::getInstance();
+		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay_yui'] = $config->getInstance()->get(tx_laterpay_config::LATERPAY_YUI_JS);
+		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay_yui.']['external'] = 1;
+
+		$js = t3lib_extMgm::siteRelPath('laterpay') . 'res/js/laterpay-post-view.js';
+		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay'] = $js;
+		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay.']['external'] = 1;
+
+		//set basic css
+		$css = t3lib_extMgm::siteRelPath('laterpay') . 'res/css/laterpay-post-view.css';
+		$GLOBALS['TSFE']->getPageRenderer()->addCssFile($css);
 	}
 }

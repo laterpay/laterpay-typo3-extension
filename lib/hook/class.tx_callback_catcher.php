@@ -103,7 +103,6 @@ class tx_callback_catcher extends tx_hook_abstract {
 	 * @return void
 	 */
 	public function createToken() {
-		// @TODO : fix browscap data
 		$browserSupportsCookies = tx_laterpay_helper_browser::browserSupportsCookies();
 		$browserIsCrawler = tx_laterpay_helper_browser::isCrawler();
 // 		$browserSupportsCookies = TRUE;
@@ -192,7 +191,6 @@ class tx_callback_catcher extends tx_hook_abstract {
 			$paymentHistoryModel->setPaymentHistory($data);
 		}
 		$redirectUrl = self::getPageUrl();
-
 		t3lib_utility_Http::redirect($redirectUrl);
 		exit();
 	}

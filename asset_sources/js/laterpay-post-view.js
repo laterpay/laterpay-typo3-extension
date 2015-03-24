@@ -46,15 +46,15 @@
                 fadingOut                       : 'lp_is-fading-out',
             },
 
-            recachePostStatisticsPane = function() {
-                $o.postStatisticsPane              = $('#lp_js_postStatistics');
-                $o.postPreviewModeForm             = $('#lp_js_postStatistics_pluginPreviewModeForm');
-                $o.postPreviewModeToggle           = $('#lp_js_togglePostPreviewMode');
-                $o.postPreviewModeInput            = $('#lp_js_postPreviewModeInput');
-                $o.postStatisticsVisibilityForm    = $('#lp_js_postStatistics_visibilityForm');
-                $o.postStatisticsVisibilityToggle  = $('#lp_js_togglePostStatisticsVisibility');
-                $o.postStatisticsVisibilityInput   = $('#lp_js_postStatistics_visibilityInput');
-            },
+//            recachePostStatisticsPane = function() {
+//                $o.postStatisticsPane              = $('#lp_js_postStatistics');
+//                $o.postPreviewModeForm             = $('#lp_js_postStatistics_pluginPreviewModeForm');
+//                $o.postPreviewModeToggle           = $('#lp_js_togglePostPreviewMode');
+//                $o.postPreviewModeInput            = $('#lp_js_postPreviewModeInput');
+//                $o.postStatisticsVisibilityForm    = $('#lp_js_postStatistics_visibilityForm');
+//                $o.postStatisticsVisibilityToggle  = $('#lp_js_togglePostStatisticsVisibility');
+//                $o.postStatisticsVisibilityInput   = $('#lp_js_postStatistics_visibilityInput');
+//            },
 
             recacheRatingForm = function() {
                 $o.postRatingForm  = $('.lp_js_ratingForm');
@@ -295,62 +295,6 @@ YUI().use('node', 'node-event-simulate', function(Y) {
                 );
             },
 
-            loadPostStatistics = function() {
-                $.get(
-                    lpVars.ajaxUrl,
-                    {
-                        action  : 'laterpay_post_statistic_render',
-                        post_id : lpVars.post_id,
-                        nonce   : lpVars.nonces.statistic
-                    },
-                    function(data) {
-                        if (data) {
-                            $o.postStatisticsPlaceholder.before(data).remove();
-                            renderPostStatisticsPane();
-                        }
-                    }
-                );
-            },
-
-            renderPostStatisticsPane = function() {
-                // make sure all objects are in the cache
-                recachePostStatisticsPane();
-
-                // bind events to post statistics pane
-                bindPostStatisticsEvents();
-
-                // render sparklines within post statistics pane
-                $('.lp_sparklineBar', $o.postStatisticsPane).peity('bar', {
-                    delimiter   : ';',
-                    width       : 182,
-                    height      : 42,
-                    gap         : 1,
-                    fill        : function(value, index, array) {
-                                    var date        = new Date(),
-                                        daysCount   = array.length,
-                                        color       = '#999';
-                                    date.setDate(date.getDate() - (daysCount - index));
-                                    // highlight the last (current) day
-                                    if (index === (daysCount - 1)) {
-                                        color = '#555';
-                                    }
-                                    // highlight Saturdays and Sundays
-                                    if (date.getDay() === 0 || date.getDay() === 6) {
-                                        color = '#c1c1c1';
-                                    }
-                                    return color;
-                                }
-                });
-
-                $('.lp_sparklineBackgroundBar', $o.postStatisticsPane).peity('bar', {
-                    delimiter   : ';',
-                    width       : 182,
-                    height      : 42,
-                    gap         : 1,
-                    fill        : function() { return '#ddd'; }
-                });
-            },
-
             togglePostStatisticsVisibility = function() {
                 var doHide = $o.postStatisticsPane.hasClass($o.hidden) ? '0' : '1';
                 $o.postStatisticsVisibilityInput.val(doHide);
@@ -360,7 +304,7 @@ YUI().use('node', 'node-event-simulate', function(Y) {
 
                 // save the state
                 $.post(
-                    lpVars.ajaxUrl,
+                    window.location,
                     $o.postStatisticsVisibilityForm.serializeArray()
                 );
             },
@@ -374,10 +318,10 @@ YUI().use('node', 'node-event-simulate', function(Y) {
 
                 // save the state and reload the page in the new preview mode
                 $.post(
-                    lpVars.ajaxUrl,
+                    window.location,
                     $o.postPreviewModeForm.serializeArray(),
                     function() {
-                        window.location.reload();
+                        window.location.reload(true);
                     }
                 );
             },
@@ -444,9 +388,9 @@ YUI().use('node', 'node-event-simulate', function(Y) {
                 }
 
                 // render the post statistics pane, if a placeholder exists for it
-                if ($o.postStatisticsPlaceholder.length === 1) {
-                    loadPostStatistics();
-                }
+//                if ($o.postStatisticsPlaceholder.length === 1) {
+//                    loadPostStatistics();
+//                }
 
                 if ($o.postRatingPlaceholder.length === 1) {
                     loadRatingSummary();
@@ -456,6 +400,7 @@ YUI().use('node', 'node-event-simulate', function(Y) {
                     loadGiftCards();
                 }
 
+                bindPostStatisticsEvents();
                 bindPurchaseEvents();
                 bindRatingEvents();
                 bindTimePassesEvents();
