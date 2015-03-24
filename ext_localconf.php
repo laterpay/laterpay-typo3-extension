@@ -62,6 +62,12 @@ $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-pos
 // Callback url catcher
 $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][] = 'EXT:laterpay/lib/hook/class.tx_callback_catcher.php:&tx_callback_catcher->preRenderHook';
 
+// Evaluations for price
+$TYPO3_CONF_VARS['SC_OPTIONS']['tce']['formevals']['tx_evaluation_price'] = 'EXT:laterpay/lib/evaluation/price.php';
+
+// Pre database check of values
+$TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'EXT:laterpay/lib/hook/class.tx_field_checker.php:&tx_field_checker';
+
 // register ajax Scripts
 $TYPO3_CONF_VARS['BE']['AJAX']['txttlaterpayM1::account'] = t3lib_extMgm::extPath('laterpay') . 'mod1/index.php:tx_laterpay_module1->accountProcessAjaxRequests';
 $TYPO3_CONF_VARS['BE']['AJAX']['txttlaterpayM1::pricing'] = t3lib_extMgm::extPath('laterpay') . 'mod1/index.php:tx_laterpay_module1->pricingProcessAjaxRequests';

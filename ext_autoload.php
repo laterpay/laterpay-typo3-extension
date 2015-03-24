@@ -68,6 +68,7 @@ return array(
 	'tx_laterpay_model_query_abstract' => $extensionPath . 'lib/model/query/abstract.php',
 	'tx_laterpay_model_payment_history' => $extensionPath . 'lib/model/payment/history.php',
 	'tx_laterpay_model_post_view' => $extensionPath . 'lib/model/post/view.php',
+	'tx_laterpay_model_content' => $extensionPath . 'lib/model/content.php',
 
 	'tx_laterpay_core_logger' => $extensionPath . 'lib/core/logger.php',
 	'tx_laterpay_core_logger_formatter_html' => $extensionPath . 'lib/core/logger/formatter/html.php',
@@ -84,5 +85,8 @@ return array(
 	'tx_laterpay_core_logger_processor_memorypeakusage' => $extensionPath . 'lib/core/logger/processor/memorypeakusage.php',
 	'tx_laterpay_core_logger_processor_memoryusage' => $extensionPath . 'lib/core/logger/processor/memoryusage.php',
 	'tx_laterpay_core_logger_processor_web' => $extensionPath . 'lib/core/logger/processor/web.php',
+
+	'tx_laterpay_evaluate_price' => $extensionPath . 'lib/evaluate/price.php',
+
 );
 
