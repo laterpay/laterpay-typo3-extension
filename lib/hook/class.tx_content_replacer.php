@@ -228,10 +228,10 @@ class tx_content_replacer extends tx_hook_abstract {
 			'title' => $this->getHeader($contentObject)
 		);
 
-		// $this->logger->info(
-		// __METHOD__,
-		// $params
-		// );
+		$this->logger->info(
+			__METHOD__,
+			$params
+		);
 
 		if ($revenueModel == 'sis') {
 			// Single Sale purchase

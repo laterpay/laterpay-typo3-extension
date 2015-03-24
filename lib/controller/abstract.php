@@ -74,15 +74,15 @@ class tx_laterpay_controller_abstract
 			$msg = sprintf($GLOBALS['LANG']->getLL('%s : <code>%s</code> not found', 'laterpay'),
 					__METHOD__, __FILE__);
 
-/* 			$this->logger->error(__METHOD__ . ' - ' . $msg,
+			$this->logger->error(__METHOD__ . ' - ' . $msg,
 					array(
 							'view_file' => $viewFile
 					));
- */
+
 			return;
 		}
 
-// 		$this->logger->info(__METHOD__ . ' - ' . $file, $this->variables);
+		$this->logger->info(__METHOD__ . ' - ' . $file, $this->variables);
 		// @codingStandardsIgnoreStart
 		ob_start();
 		include ($viewFile);
@@ -120,15 +120,15 @@ class tx_laterpay_controller_abstract
 			$msg = sprintf(__('%s : <code>%s</code> not found', 'laterpay'),
 					__METHOD__, $file);
 
-/* 			$this->logger->error(__METHOD__ . ' - ' . $msg,
+			$this->logger->error(__METHOD__ . ' - ' . $msg,
 					array(
 							'view_file' => $viewFile
 					));
- */
+
 			return '';
 		}
 
-// 		$this->logger->info(__METHOD__ . ' - ' . $file, $this->variables);
+		$this->logger->info(__METHOD__ . ' - ' . $file, $this->variables);
 		// @codingStandardsIgnoreStart
 		ob_start();
 		include ($viewFile);
@@ -158,20 +158,6 @@ class tx_laterpay_controller_abstract
 	 * @return void
 	 */
 	public function localizeScript($objectName, $l10nVals) {
-		foreach ((array)$l10nVals as $key => $value ) {
-			if ( !is_scalar($value) ) {
-				continue;
-			}
-			$l10nVals[$key] = html_entity_decode((string) $value, ENT_QUOTES, 'UTF-8');
-		}
-
-		$afterScript = $l10nVals['l10n_print_after'];
-		if (isset($afterScript)) {
-			unset($l10nVals['l10n_print_after']);
-		}
-		// . 'console.log("------>", ' . $objectName . ');'.LF;
-		$script = 'var ' . $objectName . ' = ' . json_encode( $l10nVals ) . ';' . LF;
-		$script .= $afterScript . LF;
-		$this->doc->JScodeArray[$objectName] = $script;
+		$this->doc->JScodeArray[$objectName] = tx_laterpay_helper_render::getLocalizeScript($objectName, $l10nVals);
 	}
 }

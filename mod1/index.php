@@ -153,7 +153,7 @@ class tx_laterpay_module1 extends t3lib_SCbase {
 	 * @return void
 	 */
 	public function printContent() {
-		$this->doc->addStyleSheet();
+		//$this->doc->addStyleSheet();
 		$this->content .= $this->doc->endPage();
 		echo $this->doc->insertStylesAndJS($this->content);
 	}
@@ -255,6 +255,7 @@ if (defined('TYPO3_MODE') && isset($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLA
 
 
 if (!(TYPO3_REQUESTTYPE & TYPO3_REQUESTTYPE_AJAX)) {
+	define(LP_RENDER, 1);
 	// Make instance:
 	// @var $SOBE tx_laterpay_module1
 	$SOBE = t3lib_div::makeInstance('tx_laterpay_module1');

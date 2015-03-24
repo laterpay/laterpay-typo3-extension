@@ -426,9 +426,10 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	 * @return void
 	 */
 	public function handlersLoadAssets(&$parameters, &$pObj) {
-		error_log (__METHOD__ . var_export($parameters['footerData'], TRUE) . PHP_EOL, 3, '/vagrant/main_form.log');
-		foreach ($this->handlers as $handler) {
-			$handler->loadAssets($pObj);
+		if (((TYPO3_MODE == 'BE') && (defined('LP_RENDER'))) || (TYPO3_MODE != 'BE')) {
+			foreach ($this->handlers as $handler) {
+				$handler->loadAssets($pObj);
+			}
 		}
 	}
 
@@ -467,11 +468,12 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	 * @return void
 	 */
 	public function handlersFlush(&$parameters, &$pObj) {
-		error_log (__METHOD__ . var_export($parameters['footerData'], TRUE) . PHP_EOL, 3, '/vagrant/main_form.log');
-		foreach ($this->handlers as $handler) {
-			$content = $handler->flushRecords();
-			if (!empty($content)) {
-				$parameters['footerData'][] = $content . LF;
+		if (((TYPO3_MODE == 'BE') && (defined('LP_RENDER'))) || (TYPO3_MODE != 'BE')) {
+			foreach ($this->handlers as $handler) {
+				$content = $handler->flushRecords();
+				if (!empty($content)) {
+					$parameters['footerData'][] = $content . LF;
+				}
 			}
 		}
 	}
