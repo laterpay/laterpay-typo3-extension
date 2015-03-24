@@ -22,6 +22,13 @@
 class tx_hook_abstract {
 
 	/**
+	 * Constructor of object
+	 */
+	public function __construct() {
+		$this->logger = tx_laterpay_core_logger::getInstance();
+	}
+
+	/**
 	 * Get page url
 	 *
 	 * @return string
@@ -45,11 +52,10 @@ class tx_hook_abstract {
 		$url = self::getPageUrl();
 		/* @TODO : add correct check */
 		if (! $url) {
-			// @TODO : uncomment when time will come
-			// $this->logger->error(
-			// __METHOD__ . ' could not find an URL for the given content_id',
-			// array( 'data' => $data )
-			// );
+			$this->logger->error(
+				__METHOD__ . ' could not find an URL for the given content_id',
+				array( 'data' => $data )
+			);
 			return $url;
 		}
 

@@ -26,15 +26,71 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'class.tx_hook_abstract.p
 class tx_callback_catcher extends tx_hook_abstract {
 
 	/**
-	 * Pre render hook
+	 * Hook handler for ['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess']
+	 * Flush all buffered by handlers content
+	 *
+	 * @param mixed $parameters Array of input parameters
+				'jsLibs'               => &$jsLibs,
+				'jsFiles'              => &$jsFiles,
+				'jsFooterFiles'        => &$jsFooterFiles,
+				'cssFiles'             => &$cssFiles,
+				'headerData'           => &$this->headerData,
+				'footerData'           => &$this->footerData,
+				'jsInline'             => &$jsInline,
+				'cssInline'            => &$cssInline,
+				'xmlPrologAndDocType'  => &$this->xmlPrologAndDocType,
+				'htmlTag'              => &$this->htmlTag,
+				'headTag'              => &$this->headTag,
+				'charSet'              => &$this->charSet,
+				'metaCharsetTag'       => &$this->metaCharsetTag,
+				'shortcutTag'          => &$this->shortcutTag,
+				'inlineComments'       => &$this->inlineComments,
+				'baseUrl'              => &$this->baseUrl,
+				'baseUrlTag'           => &$this->baseUrlTag,
+				'favIcon'              => &$this->favIcon,
+				'iconMimeType'         => &$this->iconMimeType,
+				'titleTag'             => &$this->titleTag,
+				'title'                => &$this->title,
+				'metaTags'             => &$metaTags,
+				'jsFooterInline'       => &$jsFooterInline,
+				'jsFooterLibs'         => &$jsFooterLibs,
+				'bodyContent'          => &$this->bodyContent
+	 * @param object $pObj Instance t3lib_PageRenderer
 	 *
 	 * @return void
 	 */
-	public function preRenderHook() {
+	public function preRenderHook(&$parameters, &$pObj) {
 		// if we in admin part - nothing to do here
 		if (TYPO3_MODE == 'BE') {
 			return;
 		}
+		$pObj->addJsInlineCode(
+			'laterpay-post-view',
+			tx_laterpay_helper_render::getLocalizeScript('lpVars', array(
+					'ajaxUrl'               => 'ajax.php',
+//                 'post_id'               => get_the_ID(),
+//                 'debug'                 => (bool) $this->config->get( 'debug_mode' ),
+//                 'caching'               => (bool) $this->config->get( 'caching.compatible_mode' ),
+//                 'nonces'                => array(
+//                     'content'           => wp_create_nonce( 'laterpay_post_load_purchased_content' ),
+//                     'statistic'         => wp_create_nonce( 'laterpay_post_statistic_render' ),
+//                     'tracking'          => wp_create_nonce( 'laterpay_post_track_views' ),
+//                     'rating'            => wp_create_nonce( 'laterpay_post_rating_summary' ),
+//                     'voucher'           => wp_create_nonce( 'laterpay_redeem_voucher_code' ),
+//                     'gift'              => wp_create_nonce( 'laterpay_get_gift_card_actions' ),
+//                 ),
+//                 'i18n'                  => array(
+//                     'alert'             => __( 'In Live mode, your visitors would now see the LaterPay purchase dialog.', 'laterpay' ),
+//                     'validVoucher'      => __( 'Voucher code accepted.', 'laterpay' ),
+//                     'invalidVoucher'    => __( ' is not a valid voucher code!', 'laterpay' ),
+//                     'codeTooShort'      => __( 'Please enter a six-digit voucher code.', 'laterpay' ),
+//                     'generalAjaxError'  => __( 'An error occurred. Please try again.', 'laterpay' ),
+//                 ),
+//                 'download_attachment'   => $attachment_url,
+//                 'default_currency'      => get_option( 'laterpay_currency' ),
+				)
+			)
+		);
 			// get/set token if needed
 		$this->createToken();
 
@@ -48,27 +104,25 @@ class tx_callback_catcher extends tx_hook_abstract {
 	 */
 	public function createToken() {
 		// @TODO : fix browscap data
-		// $browser_supports_cookies = tx_laterpay_helper_browser::browserSupportsCookies();
-		// $browser_is_crawler = tx_laterpay_helper_browser::isCrawler();
-		$browserSupportsCookies = TRUE;
-		$browserIsCrawler = FALSE;
+		$browserSupportsCookies = tx_laterpay_helper_browser::browserSupportsCookies();
+		$browserIsCrawler = tx_laterpay_helper_browser::isCrawler();
+// 		$browserSupportsCookies = TRUE;
+// 		$browserIsCrawler = TRUE;
 
 		$context = array(
 			'support_cookies' => $browserSupportsCookies,
 			'is_crawler' => $browserIsCrawler
 		);
 
-		// @TODO : uncoment when logger will be available
-		// $this->logger->info(
-		// __METHOD__,
-		// $context
-		// );
+		$this->logger->info(
+			__METHOD__,
+			$context
+		);
 
 		// don't assign tokens to crawlers and other user agents that can't handle cookies
 		if (! $browserSupportsCookies || $browserIsCrawler) {
 			return;
 		}
-
 		$clientOptions = tx_laterpay_helper_config::getPhpClientOptions();
 		$laterpayClient = new LaterPay_Client($clientOptions['cp_key'], $clientOptions['api_key'], $clientOptions['api_root'],
 			$clientOptions['web_root'], $clientOptions['token_name']);
@@ -130,11 +184,10 @@ class tx_callback_catcher extends tx_hook_abstract {
 				'hash' => t3lib_div::_GET('hash')
 			);
 
-			// @TODO : uncomment when time will come
-			// $this->logger->info(
-			// __METHOD__ . ' - set payment history',
-			// $data
-			// );
+			$this->logger->info(
+				__METHOD__ . ' - set payment history',
+				$data
+			);
 			$paymentHistoryModel = new tx_laterpay_model_payment_history();
 			$paymentHistoryModel->setPaymentHistory($data);
 		}

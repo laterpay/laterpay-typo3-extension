@@ -42,6 +42,7 @@ return array(
 	'tx_laterpay_helper_date' => $extensionPath . 'lib/helper/date.php',
 	'tx_laterpay_helper_config' => $extensionPath . 'lib/helper/config.php',
 	'tx_laterpay_helper_browser' => $extensionPath . 'lib/helper/browser.php',
+	'tx_laterpay_helper_render' => $extensionPath . 'lib/helper/render.php',
 	'tx_laterpay_helper_string' => $extensionPath . 'lib/helper/string.php',
 
 	'tx_laterpay_wrapper_interface' => $extensionPath . 'lib/interface/wrapper.php',
