@@ -84,6 +84,23 @@
 
     // Custom Globals
     "globals"       : {
-        // add variables here as they are created...
+        "d3"                        : true,
+        "dynamicPricingWidget"      : true,
+        "DynamicPricingWidget"      : true,
+        "lpInvoiceIndicatorVars"    : true,
+        "lpVars"                    : true,
+        "lpAccountLinksUrl"         : true,
+        "lpAccountNextUrl"          : true,
+        "lpMerchantId"              : true,
+        "lpAccountNextUrl"          : true,
+        "lpMerchantId"              : true,
+        "lpMerchantId"              : true,
+        "lpAccountNextUrl"          : true,
+        "lpMerchantId"              : true,
+        "lpAccountLinksUrl"         : true,
+        "ajaxurl"                   : true,
+        "setMessage"                : true,
+        "showLoadingIndicator"      : true,
+        "removeLoadingIndicator"    : true
     }
 }

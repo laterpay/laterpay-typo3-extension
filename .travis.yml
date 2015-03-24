@@ -18,7 +18,7 @@ before_script:
 script:
   - find . \( -name '*.php' -o -name '*.inc' -o -name '*.phtml' \) -exec php -lf {} \;
   - phpcs -s -n --standard=TYPO3CMS --extensions=php --ignore='lib/laterpay/*,lib/browscap/*' ./
-#  - jshint .
+  - jshint ./asset_sources
 
 notifications:
   slack: laterpay:3DYypQbldQxT4cbSs5ytZA3D

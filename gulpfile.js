@@ -27,6 +27,7 @@ var autoprefixer    = require('gulp-autoprefixer'),
     p               = {
                         allfiles    : [
                                             './**/*.php',
+                                            './**/*.phtml',
                                             './asset_sources/stylus/**/*.styl',
                                             './asset_sources/js/*.js'
                                       ],
