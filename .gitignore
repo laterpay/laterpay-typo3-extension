@@ -16,3 +16,22 @@
 /t3lib
 # Ignore temp directory.
 /typo3temp/
+
+# IDE dirs
+# net beans
+/nbproject
+# phpstorm
+/.idea
+#eclipse
+/.settings
+.project
+.buildpath
+
+# Resources
+/res/css/*.css
+/res/css/*.css_wp
+/res/js/*.js
+/res/img
+!/res/img/.gitkeep
+res/fonts
+!/res/fonts/.gitkeep
