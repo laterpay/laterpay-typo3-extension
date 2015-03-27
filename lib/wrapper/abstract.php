@@ -116,7 +116,6 @@ abstract class tx_laterpay_wrapper_abstract implements tx_laterpay_wrapper_inter
 
 		$finalTeaserContent = $this->afterRender($wrappedTeaser);
 
-		// @TODO : find a way to avoid such action in Typo3
 		$content = preg_replace('/[\n\r]+/', '', $finalTeaserContent);
 		$content = preg_replace('/>\s+</', '><', $content);
 
@@ -137,33 +136,23 @@ abstract class tx_laterpay_wrapper_abstract implements tx_laterpay_wrapper_inter
 	/**
 	 * JavaScript files setter
 	 *
-	 * @TODO : investigate - is there any other ways
-	 *
 	 * @return void
 	 */
 	public function setJs() {
-		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay_jquery'] = 'http://code.jquery.com/jquery-1.11.1.js';
-		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay_jquery.']['external'] = 1;
-
-		$config = tx_laterpay_config::getInstance();
-		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay_yui'] = $config->getInstance()->get(tx_laterpay_config::LATERPAY_YUI_JS);
-		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay_yui.']['external'] = 1;
-
-		$js = t3lib_extMgm::siteRelPath('laterpay') . 'res/js/laterpay-post-view.js';
-		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay'] = $js;
-		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay.']['external'] = 1;
+		// Load any JS if needed
+		// You can do it in a way like:
+		// $GLOBALS['TSFE']->pSetup['includeJS.']['laterpay_<somename>'] = <path to JS file>
 	}
 
 	/**
 	 * CSS files setter
 	 *
-	 * @TODO : investigate - is there any other ways
-	 *
 	 * @return void
 	 */
 	public function setCss() {
-		$css = t3lib_extMgm::siteRelPath('laterpay') . 'res/css/laterpay-post-view.css';
-		$GLOBALS['TSFE']->getPageRenderer()->addCssFile($css);
+		// Load any CSS if needed
+		// You can do it in a way like:
+		// $GLOBALS['TSFE']->getPageRenderer()->addCssFile(<path to CSS file>);
 	}
 
 	/**
