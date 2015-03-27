@@ -55,7 +55,10 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 			'admin_menu' => tx_laterpay_helper_view::getAdminMenu(),
 			'is_rating_enabled' => $this->config->get('ratings_enabled'),
 			'purchase_button_positioned_manually' => get_option('laterpay_purchase_button_positioned_manually'),
-			'time_passes_positioned_manually' => get_option('laterpay_time_passes_positioned_manually')
+			'time_passes_positioned_manually' => get_option('laterpay_time_passes_positioned_manually'),
+			'teaser_percentage_of_content' => get_option('laterpay_teaser_percentage_of_content'),
+			'teaser_min_words_count' => get_option('laterpay_teaser_min_words_count'),
+			'teaser_max_words_count' => get_option('laterpay_teaser_max_words_count'),
 		);
 		$this->assign('laterpay', $viewArgs);
 		return $this->render('backend/appearance');
@@ -224,6 +227,12 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 					}
 				}
 				break;
+			case 'auto_teaser_configuration':
+				$array = $this->updateAutoTeaserConfiguration($ajaxObj);
+				$ajaxObj->setContent(
+					$array
+				);
+				break;
 
 			default:
 				$ajaxObj->setContent(
@@ -233,5 +242,63 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 					)
 				);
 		}
+	}
+
+	/**
+	 * Set auto teaser generation configurations
+	 *
+	 * @return type
+	 */
+	protected function updateAutoTeaserConfiguration()
+	{
+		$percentageFieldName = 'teaser_percentage_of_content';
+		$minWordsFieldName = 'teaser_min_words_count';
+		$maxWordsFieldName = 'teaser_max_words_count';
+
+		$success = TRUE;
+		$error_messages = array();
+		$errors = array();
+
+		$percentage = t3lib_div::_POST($percentageFieldName);
+		$minWords = t3lib_div::_POST($minWordsFieldName);
+		$maxWords =  t3lib_div::_POST($maxWordsFieldName);
+
+		if (!is_numeric($percentage) or $percentage % 1 > 0 or 1 > $percentage or $percentage > 100) {
+			$success = FALSE;
+			$error_messages[$percentageFieldName] = __('Percentage must be not negative integer and have value between 1 and 100', 'laterpay');
+			$errors[] = $percentageFieldName;
+		}
+
+		if (!is_numeric($minWords) or $minWords < 0 ) {
+			$success = FALSE;
+			$error_messages[$minWordsFieldName] = __('Min count of words must be not negative integer more than 0', 'laterpay');
+			$errors[] = $minWordsFieldName;
+		}
+
+		if (!is_numeric($maxWords) or $maxWords < 0 ) {
+			$success = FALSE;
+			$error_messages[$maxWordsFieldName] = __('Max count of words must be not negative integer more than 0', 'laterpay');
+			$errors[] = $maxWordsFieldName;
+		}
+
+		if($maxWords <= $minWords) {
+			$success = FALSE;
+			$error_messages[$maxWordsFieldName] = __('Max count of words must more than min count of words', 'laterpay');
+			$errors[] = $maxWordsFieldName;
+		}
+
+		if($success) {
+			$message = __('new values saved successfully');
+			update_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT, $percentage);
+			update_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX, $maxWords);
+			update_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN, $minWords);
+		}
+
+		return array(
+			'success' => $success,
+			'message' => $message,
+			'error_message' => $error_messages,
+			'errors' => $errors,
+		);
 	}
 }

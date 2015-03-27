@@ -22,7 +22,7 @@
 class tx_field_checker {
 
 	/**
-	 * Hook which checking, if price and revenue model selected correctly. If no, then rewrite incorrect values in database.
+	 * Hook which checking, if price and revenue model selected correctly, also create auto teaser if needed. If no, then rewrite incorrect values in database.
 	 *
 	 * @param string $status Is item new or only updated.
 	 * @param string $table Table name data from which will be updated.
@@ -33,7 +33,7 @@ class tx_field_checker {
 	 * @return void
 	 */
 	// @codingStandardsIgnoreStart
-	public function processDatamap_afterDatabaseOperations($status, $table, $contentId, $fieldArray, t3lib_TCEmain $caller) {
+	public function processDatamap_postProcessFieldArray($status, $table, $contentId, &$fieldArray, t3lib_TCEmain $caller) {
 	// @codingStandardsIgnoreEnd
 		if ($table != tx_laterpay_model_content::$contentTable) {
 			return;
@@ -43,11 +43,15 @@ class tx_field_checker {
 
 		$priceFieldName = 'laterpay_price';
 		$revenueFieldName = 'laterpay_revenue_model';
+		$teaserFieldName = 'laterpay_teaser';
+
+		$content = tx_laterpay_model_content::getContentData($contentId);
+
+		if (!$content) {
+			$content = $fieldArray;
+		}
 
 		if (in_array($priceFieldName, $searchArray) or in_array($revenueFieldName, $searchArray)) {
-			$insertArray = array();
-
-			$content = tx_laterpay_model_content::getContentData($contentId);
 			$revenueModel = isset($fieldArray[$revenueFieldName]) ? $fieldArray[$revenueFieldName] : $content[$revenueFieldName];
 			$price        = isset($fieldArray[$priceFieldName]) ? $fieldArray[$priceFieldName] : $content[$priceFieldName];
 
@@ -56,11 +60,13 @@ class tx_field_checker {
 			$validRevenueModel = tx_laterpay_helper_pricing::ensureValidRevenueModel($revenueModel, $price);
 
 			if ($validRevenueModel != $revenueModel or $price != $roundedPrice) {
-				$insertArray[$revenueFieldName] = $validRevenueModel;
-				$insertArray[$priceFieldName]   = $roundedPrice;
-
-				tx_laterpay_model_content::updateContentData($contentId, $insertArray);
+				$fieldArray[$revenueFieldName] = $validRevenueModel;
+				$fieldArray[$priceFieldName]   = $roundedPrice;
 			}
+		}
+
+		if (empty(trim(strip_tags($fieldArray[$teaserFieldName])))) {
+			$fieldArray[$teaserFieldName] = tx_laterpay_helper_content::getTeaser($content['bodytext']);
 		}
 	}
 }

@@ -233,6 +233,31 @@ class tx_laterpay_config implements t3lib_Singleton {
 			);
 		}
 
+		// Auto teaser generation
+		if ($registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT) == NULL) {
+			$registry->set(
+				self::PLUGIN_NAME_SPACE,
+				self::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT,
+				10
+			);
+		}
+
+		if ($registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX) == NULL) {
+			$registry->set(
+				self::PLUGIN_NAME_SPACE,
+				self::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX,
+				100
+			);
+		}
+
+		if ($registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN) == NULL) {
+			$registry->set(
+				self::PLUGIN_NAME_SPACE,
+				self::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN,
+				25
+			);
+		}
+
 		/**
 		 * LaterPay API endpoints and API default settings.
 		 *

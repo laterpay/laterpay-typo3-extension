@@ -306,6 +306,52 @@ iVBORw0KGgoAAAANSUhEUgAAANwAAAA6CAYAAADbRzceAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFn
             <strong>Action:</strong> <?php echo htmlspecialchars( "<?php do_action( 'laterpay_account_links', 'https://yourpage.com/style.css' ); ?>" ); ?>
             </code>
         </div>
+
+        <hr class="lp_u_m-1-0 lp_u_m-b3">
+
+        <div class="lp_row">
+            <h2><?php _e( 'Auto-teaser configuration', 'laterpay' ); ?></h2>
+        </div>
+
+		<form id="lp_js_autoTeaserContent" method="post">
+			<input type="hidden" name="form" value="auto_teaser_configuration">
+			<input type="hidden" name="action" value="laterpay_appearance">
+			
+			<table>
+				<tr>
+					<td>
+						<label><?php _e('Percentage of Content', 'laterpay')?></label>
+					</td>
+					<td>
+						<input class="lp_input" name="teaser_percentage_of_content" type="text" value="<?php echo $laterpay['laterpay_teaser_percentage_of_content']?>">
+						<span name="teaser_percentage_of_content"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label><?php _e('Minimum words count', 'laterpay')?></label>
+					</td>
+					<td>
+						<input class="lp_input" name="teaser_min_words_count" type="text" value="<?php echo $laterpay['laterpay_teaser_min_words_count']?>">
+						<span name="teaser_min_words_count"></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label><?php _e('Maximum words count', 'laterpay')?></label>
+					</td>
+					<td>
+						<input class="lp_input" name="teaser_max_words_count" type="text" value="<?php echo $laterpay['laterpay_teaser_max_words_count']?>">
+						<span name="teaser_max_words_count"></span>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<a data-icon="f" class="lp_editLink lp_saveLink lp_u_inlineBlock lp_u_m-l1 lp_u_pd-0-05" id="lp_js_AutoTeaserContentSave" href="#"><?php _e('Save','laterpay')?></a>
+					</td>
+				</tr>
+			</table>
+		</form>
     </div>
 
 </div>
