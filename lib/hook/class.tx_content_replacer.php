@@ -129,7 +129,14 @@ class tx_content_replacer extends tx_hook_abstract {
 	 * @return void
 	 */
 	public function replaceContent(tslib_cObj $contentObject) {
-		$wrapper = $this->getWrapper($contentObject, $contentObject->data['laterpay_teaser']);
+
+		if ($contentObject->data['laterpay_teaser']) {
+			$laterpayTeaser = $contentObject->data['laterpay_teaser'];
+		} else {
+			$laterpayTeaser = tx_laterpay_helper_content::getTeaser($contentObject->data['bodytext']);
+			tx_laterpay_model_content::updateContentData($this->getId($contentObject), array('laterpay_teaser' => $laterpayTeaser));
+		}
+		$wrapper = $this->getWrapper($contentObject, $laterpayTeaser);
 		$purchaseUrl = $this->getPurchaseUrl($contentObject);
 
 		// Set variables into wrapper
@@ -139,7 +146,7 @@ class tx_content_replacer extends tx_hook_abstract {
 		$wrapper->setWrapperArgument('isInVisibleTestMode', get_option(tx_laterpay_config::REG_LATERPAY_IS_IN_VISIBLE_TEST_MODE) ? : NULL);
 		$wrapper->setWrapperArgument('previewAsVisitor', tx_laterpay_helper_user::previewAsVisitor());
 
-		$contentObject->data['bodytext'] = $wrapper->render($contentObject->data['laterpay_teaser']);
+		$contentObject->data['bodytext'] = $wrapper->render($laterpayTeaser);
 
 		$wrapper->setJs();
 		$wrapper->setCss();

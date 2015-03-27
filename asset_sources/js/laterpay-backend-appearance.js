@@ -18,6 +18,10 @@
                 timePassPositionForm            : $('#lp_js_timePassesPositionForm'),
                 toggleTimePassesPosition        : $('#lp_js_toggleTimePassesPosition'),
                 timePassesExplanation           : $('#lp_js_timePassesPosition__explanation'),
+
+                //auto-teaser generation
+                teaserConfigForm                : $('#lp_js_autoTeaserContent'),
+                teaserSaveConfigLink            : $('#lp_js_AutoTeaserContentSave'),
             },
 
             bindEvents = function() {
@@ -57,6 +61,29 @@
                     } else {
                         $o.timePassesExplanation.slideDown(250);
                     }
+                });
+
+                $o.teaserSaveConfigLink
+                .click(function() {
+                    $.post(
+                        ajaxurl,
+                        $o.teaserConfigForm.serializeArray(),
+                        function(data) {
+                            if (data.success) {
+                                $o.teaserConfigForm.find('input').removeClass('error');
+                                $o.teaserConfigForm.find('span').empty();
+                                setMessage(data);
+                            } else {
+                                setMessage(data);
+
+                                for (var error_field_name in data.errors) {
+                                    $o.teaserConfigForm.find('input[name='+data.errors[error_field_name]+']').addClass('error');
+                                    $o.teaserConfigForm.find('span[name='+data.errors[error_field_name]+']').empty().append(data.error_message[data.errors[error_field_name]]);
+                                }
+                            }
+                        }
+                    );
+                    return false;
                 });
             },
 
