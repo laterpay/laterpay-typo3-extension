@@ -40,7 +40,7 @@ class tx_laterpay_model_payment_history extends tx_laterpay_model_query_abstract
 			array(
 				'type' => 'INNER',
 				'fields' => array(
-					'header'
+					'header as post_title'
 				),
 				'table' => $this->joinTable,
 				'on' => array(
