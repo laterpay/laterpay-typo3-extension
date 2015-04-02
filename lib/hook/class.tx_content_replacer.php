@@ -101,6 +101,9 @@ class tx_content_replacer extends tx_hook_abstract {
 
 		if (! $price) {
 			return FALSE;
+		} else {
+			$GLOBALS['TSFE']->set_no_cache();
+			$this->logger->info(__METHOD__ . ' - Cache disabled for page', array('id' => $id));
 		}
 
 		$clientOptions = tx_laterpay_helper_config::getPhpClientOptions();

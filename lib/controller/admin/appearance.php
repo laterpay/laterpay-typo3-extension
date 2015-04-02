@@ -249,14 +249,13 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 	 *
 	 * @return type
 	 */
-	protected function updateAutoTeaserConfiguration()
-	{
+	protected function updateAutoTeaserConfiguration() {
 		$percentageFieldName = 'teaser_percentage_of_content';
 		$minWordsFieldName = 'teaser_min_words_count';
 		$maxWordsFieldName = 'teaser_max_words_count';
 
 		$success = TRUE;
-		$error_messages = array();
+		$errorMessages = array();
 		$errors = array();
 
 		$percentage = t3lib_div::_POST($percentageFieldName);
@@ -265,29 +264,29 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 
 		if (!is_numeric($percentage) or $percentage % 1 > 0 or 1 > $percentage or $percentage > 100) {
 			$success = FALSE;
-			$error_messages[$percentageFieldName] = __('Percentage must be not negative integer and have value between 1 and 100', 'laterpay');
+			$errorMessages[$percentageFieldName] = __('Percentage must be not negative integer and have value between 1 and 100', 'laterpay');
 			$errors[] = $percentageFieldName;
 		}
 
 		if (!is_numeric($minWords) or $minWords < 0 ) {
 			$success = FALSE;
-			$error_messages[$minWordsFieldName] = __('Min count of words must be not negative integer more than 0', 'laterpay');
+			$errorMessages[$minWordsFieldName] = __('Min count of words must be not negative integer more than 0', 'laterpay');
 			$errors[] = $minWordsFieldName;
 		}
 
 		if (!is_numeric($maxWords) or $maxWords < 0 ) {
 			$success = FALSE;
-			$error_messages[$maxWordsFieldName] = __('Max count of words must be not negative integer more than 0', 'laterpay');
+			$errorMessages[$maxWordsFieldName] = __('Max count of words must be not negative integer more than 0', 'laterpay');
 			$errors[] = $maxWordsFieldName;
 		}
 
-		if($maxWords <= $minWords) {
+		if ($maxWords <= $minWords) {
 			$success = FALSE;
-			$error_messages[$maxWordsFieldName] = __('Max count of words must more than min count of words', 'laterpay');
+			$errorMessages[$maxWordsFieldName] = __('Max count of words must more than min count of words', 'laterpay');
 			$errors[] = $maxWordsFieldName;
 		}
 
-		if($success) {
+		if ($success) {
 			$message = __('new values saved successfully');
 			update_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT, $percentage);
 			update_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX, $maxWords);
@@ -297,7 +296,7 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 		return array(
 			'success' => $success,
 			'message' => $message,
-			'error_message' => $error_messages,
+			'error_message' => $errorMessages,
 			'errors' => $errors,
 		);
 	}
