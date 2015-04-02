@@ -20,24 +20,25 @@
  * Author URI: https://laterpay.net/
  */
 class tx_laterpay_helper_content {
-	
+
 	/**
 	 * Return teaser from some text
 	 *
 	 * @param string $text text of content
+	 *
 	 * @return string
 	 */
 	public static function getTeaser($text) {
 
 		$textWithoutTags = strip_tags($text);
 		$preparedText = preg_replace('/\s{2,}/', ' ', $textWithoutTags);
-		
+
 		$totalCountOfWords = tx_laterpay_helper_string::determineNumberOfWords($preparedText);
-		
+
 		$percentage = get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT);
 		$min = get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN);
 		$max = get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX);
-		
+
 		$neededWordsCount = floor($totalCountOfWords * $percentage / 100);
 
 		if ($neededWordsCount < $min) {
@@ -48,5 +49,5 @@ class tx_laterpay_helper_content {
 
 		return tx_laterpay_helper_string::limitWords($preparedText, $neededWordsCount);
 	}
-	
+
 }
