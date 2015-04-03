@@ -46,7 +46,11 @@ class tx_content_replacer extends tx_hook_abstract {
 	 */
 	public function cObjGetSingleExt($name, $conf, $tsKey, tslib_cObj $contentObject) {
 		// set Javascript and CSS
+<<<<<<< HEAD
 		if (!$this->cssAndJsSetted and TYPO3_MODE != 'BE') {
+=======
+		if (!$this->cssAndJsSetted && TYPO3_MODE != 'BE') {
+>>>>>>> Formal fixes (whitespace, English); aggressive removal of unused code
 			$this->setJsAndCss();
 			$this->cssAndJsSetted = TRUE;
 		}
@@ -61,9 +65,18 @@ class tx_content_replacer extends tx_hook_abstract {
 
 		// if we get data from tt_content (default table for content) and page_id,id pair was not processed earlier
 		// that possibly need to replace main content by teaser
+<<<<<<< HEAD
 		if ($needToWrap and ($tsKey == tx_laterpay_model_content::$contentTable) and
 			(! isset($this->processedContent[$pageId]) or ! in_array($this->processedContent[$pageId], $id)))
 		{
+=======
+		if (
+		    $needToWrap && ($tsKey == tx_laterpay_model_content::$contentTable) &&
+			(
+			 	! isset($this->processedContent[$pageId]) ||
+			 	! in_array($this->processedContent[$pageId], $id))
+		) {
+>>>>>>> Formal fixes (whitespace, English); aggressive removal of unused code
 			if ($this->isPaymentNeeded($contentObject)) {
 				$this->replaceContent($contentObject);
 
@@ -81,7 +94,7 @@ class tx_content_replacer extends tx_hook_abstract {
 		// system object render
 		$content = $contentObject->getContentObject($name)->render($conf);
 
-		if (isset($this->processedContent[$pageId]) and in_array($id, $this->processedContent[$pageId])) {
+		if (isset($this->processedContent[$pageId]) && in_array($id, $this->processedContent[$pageId])) {
 			return htmlspecialchars_decode($content);
 		} else {
 			return $content;
