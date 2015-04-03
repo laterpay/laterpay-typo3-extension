@@ -51,22 +51,6 @@ class tx_laterpay_form_apikey extends tx_laterpay_form_abstract {
 				)
 			));
 
-		/*
-		 * $this->setField(
-		 * '_wpnonce',
-		 * array(
-		 * 'validators' => array(
-		 * 'is_string',
-		 * 'cmp' => array(
-		 * array(
-		 * 'ne' => null,
-		 * ),
-		 * ),
-		 * ),
-		 * )
-		 * );
-		 */
-
 		$this->setField('api_key',
 			array(
 				'validators' => array(
@@ -81,4 +65,3 @@ class tx_laterpay_form_apikey extends tx_laterpay_form_abstract {
 			));
 	}
 }
-

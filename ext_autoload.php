@@ -90,6 +90,4 @@ return array(
 	'tx_laterpay_core_logger_processor_web' => $extensionPath . 'lib/core/logger/processor/web.php',
 
 	'tx_laterpay_evaluate_price' => $extensionPath . 'lib/evaluate/price.php',
-
 );
-

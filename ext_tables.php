@@ -72,9 +72,7 @@ t3lib_extMgm::addToAllTCAtypes('tt_content', 'laterpay_teaser;;1001;;', '', 'aft
 if (TYPO3_MODE == 'BE') {
 	if (t3lib_div::int_from_ver(TYPO3_version) >= 4000000) {
 		if (t3lib_div::int_from_ver(TYPO3_version) >= 4002000) {
-// 			t3lib_extMgm::addModulePath('txlaterpayM1', t3lib_extMgm::extPath($_EXTKEY) . 'mod1/');
 			t3lib_extMgm::addModule('tools', 'txttlaterpayM1', '', t3lib_extMgm::extPath($_EXTKEY) . 'mod1/');
 		}
 	}
 }
-

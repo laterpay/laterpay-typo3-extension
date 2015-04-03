@@ -51,22 +51,6 @@ class tx_laterpay_form_paidcontentpreview extends tx_laterpay_form_abstract {
 				)
 			));
 
-		/*
-		 * $this->setField(
-		 * '_wpnonce',
-		 * array(
-		 * 'validators' => array(
-		 * 'is_string',
-		 * 'cmp' => array(
-		 * array(
-		 * 'ne' => null,
-		 * ),
-		 * ),
-		 * ),
-		 * )
-		 * );
-		 */
-
 		$this->setField('paid_content_preview',
 			array(
 				'validators' => array(
@@ -82,4 +66,3 @@ class tx_laterpay_form_paidcontentpreview extends tx_laterpay_form_abstract {
 			));
 	}
 }
-

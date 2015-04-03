@@ -51,22 +51,6 @@ class tx_laterpay_form_landingpage extends tx_laterpay_form_abstract {
 				)
 			));
 
-		/*
-		 * $this->setField(
-		 * '_wpnonce',
-		 * array(
-		 * 'validators' => array(
-		 * 'is_string',
-		 * 'cmp' => array(
-		 * array(
-		 * 'ne' => null,
-		 * ),
-		 * ),
-		 * )
-		 * )
-		 * );
-		 */
-
 		$this->setField('landing_url',
 			array(
 				'validators' => array(

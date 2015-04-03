@@ -45,8 +45,7 @@ class tx_content_replacer extends tx_hook_abstract {
 	 * @return string
 	 */
 	public function cObjGetSingleExt($name, $conf, $tsKey, tslib_cObj $contentObject) {
-
-		//set Js And Css
+		// set Javascript and CSS
 		if (!$this->cssAndJsSetted and TYPO3_MODE != 'BE') {
 			$this->setJsAndCss();
 			$this->cssAndJsSetted = TRUE;
@@ -54,6 +53,7 @@ class tx_content_replacer extends tx_hook_abstract {
 
 		// get page id
 		$pageId = $this->getPageId($contentObject);
+
 		// get content block id
 		$id = $this->getId($contentObject);
 
@@ -61,22 +61,23 @@ class tx_content_replacer extends tx_hook_abstract {
 
 		// if we get data from tt_content (default table for content) and page_id,id pair was not processed earlier
 		// that possibly need to replace main content by teaser
-
 		if ($needToWrap and ($tsKey == tx_laterpay_model_content::$contentTable) and
-
-			(! isset($this->processedContent[$pageId]) or ! in_array($this->processedContent[$pageId], $id))) {
+			(! isset($this->processedContent[$pageId]) or ! in_array($this->processedContent[$pageId], $id)))
+		{
 			if ($this->isPaymentNeeded($contentObject)) {
 				$this->replaceContent($contentObject);
+
 				// added key pair into processed array
 				if (isset($this->processedContent[$pageId])) {
 					array_push($this->processedContent[$pageId], $id);
 				} else {
 					$this->processedContent[$pageId] = array(
-						$id
+						$id,
 					);
 				}
 			}
 		}
+
 		// system object render
 		$content = $contentObject->getContentObject($name)->render($conf);
 
@@ -88,7 +89,7 @@ class tx_content_replacer extends tx_hook_abstract {
 	}
 
 	/**
-	 * Is payemnt needed or not
+	 * Is purchase needed or not.
 	 *
 	 * @param object $contentObject Conetnt object
 	 *
@@ -96,7 +97,7 @@ class tx_content_replacer extends tx_hook_abstract {
 	 */
 	public function isPaymentNeeded($contentObject) {
 		$id = $this->getId($contentObject);
-		// Additional checks must be added here
+		// additional checks must be added here
 		$price = tx_laterpay_helper_pricing::getContentPrice($contentObject);
 
 		if (! $price) {
@@ -125,24 +126,24 @@ class tx_content_replacer extends tx_hook_abstract {
 	}
 
 	/**
-	 * Replace payed content by teaser
+	 * Replace paid content by teaser.
 	 *
 	 * @param tslib_cObj $contentObject Content object
 	 *
 	 * @return void
 	 */
 	public function replaceContent(tslib_cObj $contentObject) {
-
 		if ($contentObject->data['laterpay_teaser']) {
 			$laterpayTeaser = $contentObject->data['laterpay_teaser'];
 		} else {
 			$laterpayTeaser = tx_laterpay_helper_content::getTeaser($contentObject->data['bodytext']);
 			tx_laterpay_model_content::updateContentData($this->getId($contentObject), array('laterpay_teaser' => $laterpayTeaser));
 		}
-		$wrapper = $this->getWrapper($contentObject, $laterpayTeaser);
-		$purchaseUrl = $this->getPurchaseUrl($contentObject);
 
-		// Set variables into wrapper
+		$wrapper 		= $this->getWrapper($contentObject, $laterpayTeaser);
+		$purchaseUrl 	= $this->getPurchaseUrl($contentObject);
+
+		// set variables into wrapper
 		$wrapper->setWrapperArgument('price', tx_laterpay_helper_pricing::getContentPrice($contentObject));
 		$wrapper->setWrapperArgument('purchaseURL', $purchaseUrl);
 		$wrapper->setWrapperArgument('revenueModel', tx_laterpay_helper_pricing::getContentRevenueModel($contentObject));
@@ -156,7 +157,7 @@ class tx_content_replacer extends tx_hook_abstract {
 	}
 
 	/**
-	 * Page id getter
+	 * Page id getter.
 	 *
 	 * @param tslib_cObj $contentObject Conetnt object
 	 *
@@ -167,7 +168,7 @@ class tx_content_replacer extends tx_hook_abstract {
 	}
 
 	/**
-	 * Id getter
+	 * Id getter.
 	 *
 	 * @param tslib_cObj $contentObject Content object
 	 *
@@ -178,8 +179,8 @@ class tx_content_replacer extends tx_hook_abstract {
 	}
 
 	/**
-	 * Prototype Method wich must return wrapper for teaser content
-	 * type of wrapper based on current configurations
+	 * Prototype method which must return wrapper for teaser content
+	 * type of wrapper based on current configuration.
 	 *
 	 * @param tslib_cObj $contentObject Content object
 	 * @param string $teaserText Teaser text
@@ -193,12 +194,14 @@ class tx_content_replacer extends tx_hook_abstract {
 		} else {
 			$wraperName .= 'block';
 		}
+
 		$wrapper = new $wraperName();
+
 		return $wrapper;
 	}
 
 	/**
-	 * Get header
+	 * Get header.
 	 *
 	 * @param tslib_cObj $contentObject Conetnt object
 	 *
@@ -209,47 +212,45 @@ class tx_content_replacer extends tx_hook_abstract {
 	}
 
 	/**
-	 * Get purchase url
+	 * Get purchase URL.
 	 *
 	 * @param tslib_cObj $contentObject Conetnt object
 	 *
 	 * @return string
 	 */
 	public function getPurchaseUrl(tslib_cObj $contentObject) {
-
 		$contentBlockId = $this->getId($contentObject);
-		$config = tx_laterpay_config::getInstance();
+		$config 		= tx_laterpay_config::getInstance();
 
-		$currency = $config->get(tx_laterpay_config::REG_LATERPAY_CURRENCY);
-		$price = tx_laterpay_helper_pricing::getContentPrice($contentObject);
-		$revenueModel = tx_laterpay_helper_pricing::getContentRevenueModel($contentObject);
+		$currency 		= $config->get(tx_laterpay_config::REG_LATERPAY_CURRENCY);
+		$price 			= tx_laterpay_helper_pricing::getContentPrice($contentObject);
+		$revenueModel 	= tx_laterpay_helper_pricing::getContentRevenueModel($contentObject);
+		$currencyModel 	= new tx_laterpay_model_currency();
 
-		$currencyModel = new tx_laterpay_model_currency();
-		$clientOptions = tx_laterpay_helper_config::getPhpClientOptions();
-		$client = new LaterPay_Client($clientOptions['cp_key'], $clientOptions['api_key'], $clientOptions['api_root'],
+		$clientOptions 	= tx_laterpay_helper_config::getPhpClientOptions();
+		$client 		= new LaterPay_Client($clientOptions['cp_key'], $clientOptions['api_key'], $clientOptions['api_root'],
 			$clientOptions['web_root'], $clientOptions['token_name']);
 
 		// data to register purchase after redirect from LaterPay
 		$urlParams = array(
-			'post_id' => $contentBlockId,
-			'id_currency' => $currencyModel->getCurrencyNameByIso4217Code($currency),
-			'price' => $price,
-			'date' => time(),
-			'buy' => 'TRUE',
-			'ip' => ip2long($_SERVER['REMOTE_ADDR']),
-			'revenue_model' => $revenueModel
+			'post_id' 		=> $contentBlockId,
+			'id_currency' 	=> $currencyModel->getCurrencyNameByIso4217Code($currency),
+			'price' 		=> $price,
+			'date' 			=> time(),
+			'buy' 			=> 'TRUE',
+			'ip' 			=> ip2long($_SERVER['REMOTE_ADDR']),
+			'revenue_model' => $revenueModel,
 		);
 
-		$url = $this->getAfterPurchaseRedirectUrl($urlParams);
-		$hash = tx_laterpay_helper_pricing::getHashByUrl($url);
+		$url 	= $this->getAfterPurchaseRedirectUrl($urlParams);
+		$hash 	= tx_laterpay_helper_pricing::getHashByUrl($url);
 
 		// parameters for LaterPay purchase form
 		$params = array(
-			'article_id' => $contentBlockId,
-			'pricing' => $currency . ($price * 100),
-			'vat' => $config->get(tx_laterpay_config::CURRENCY_DEFAULT_VAT),
-			'url' => $url . '&hash=' . $hash,
-			'title' => $this->getHeader($contentObject)
+			'article_id' 	=> $contentBlockId,
+			'pricing' 		=> $currency . ($price * 100),
+			'url' 			=> $url . '&hash=' . $hash,
+			'title' 		=> $this->getHeader($contentObject)
 		);
 
 		$this->logger->info(
@@ -267,7 +268,7 @@ class tx_content_replacer extends tx_hook_abstract {
 	}
 
 	/**
-	 * Add tab with selector for preview mode (user or admin)
+	 * Add tab with selector for preview mode (user or admin).
 	 *
 	 * @param mixed $params Page parameters.
 	 * @param t3lib_PageRenderer $caller Object caller. As default this t3lib_PageRenderer.
@@ -275,12 +276,12 @@ class tx_content_replacer extends tx_hook_abstract {
 	 * @return void
 	 */
 	public function addPreviewModeSelector(&$params, t3lib_PageRenderer $caller) {
-		// if we in admin part - nothing to do here
+		// if we are in admin part - nothing to do here
 		if (TYPO3_MODE == 'BE') {
 			return;
 		}
 
-		// This action allowed only for admin
+		// action is only allowed for admin
 		if (!tx_laterpay_helper_user::isAdmin()) {
 			return;
 		}
@@ -300,8 +301,8 @@ class tx_content_replacer extends tx_hook_abstract {
 	 * @return bool
 	 */
 	protected function needToWrap() {
-
 		$liveMode = get_option(tx_laterpay_config::REG_IS_IN_LIVE_MODE);
+
 		if (tx_laterpay_helper_user::isAdmin()) {
 			if (!get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_AS_VISITOR)) {
 				return FALSE;
@@ -317,12 +318,12 @@ class tx_content_replacer extends tx_hook_abstract {
 	}
 
 	/**
-	 * JS and CSS setter
+	 * JS and CSS setter.
 	 *
 	 * @return void
 	 */
 	public function setJsAndCss() {
-		// set basic js
+		// set basic JS
 		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay_jquery'] = 'http://code.jquery.com/jquery-1.11.1.js';
 		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay_jquery.']['external'] = 1;
 
@@ -334,7 +335,7 @@ class tx_content_replacer extends tx_hook_abstract {
 		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay'] = $js;
 		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay.']['external'] = 1;
 
-		//set basic css
+		// set basic CSS
 		$css = t3lib_extMgm::siteRelPath('laterpay') . 'res/css/laterpay-post-view.css';
 		$GLOBALS['TSFE']->getPageRenderer()->addCssFile($css);
 	}

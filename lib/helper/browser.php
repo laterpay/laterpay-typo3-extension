@@ -44,9 +44,11 @@ class tx_laterpay_helper_browser {
 		if (empty(self::$browscap)) {
 			self::$browscap = new Browscap($config->get('cache_dir'));
 			self::$browscap->doAutoUpdate = $config->get('browscap.autoupdate');
+
 			if ($config->has('browscap.manually_updated_copy')) {
 				self::$browscap->localFile = $config->get('browscap.manually_updated_copy');
 			}
+
 			self::$browscap->silent = $config->get('browscap.silent');
 		}
 
@@ -75,19 +77,22 @@ class tx_laterpay_helper_browser {
 	 */
 	public static function browserSupportsCookies() {
 		$browserInfo = self::phpBrowserInfo();
+
 		if (empty($browserInfo)) {
 			return TRUE;
 		}
+
 		if (isset($browserInfo['Cookies'])) {
 			if ($browserInfo['Cookies'] == 1 || $browserInfo['Cookies'] == 'true') {
 				return TRUE;
 			}
 		}
+
 		return FALSE;
 	}
 
 	/**
-	 * Conditional to test for crawler
+	 * Conditional to test for crawler.
 	 *
 	 * @param string $version Specific browser version
 	 *
@@ -95,9 +100,11 @@ class tx_laterpay_helper_browser {
 	 */
 	public static function isCrawler($version = '') {
 		$browserInfo = self::phpBrowserInfo();
+
 		if (empty($browserInfo)) {
 			return FALSE;
 		}
+
 		if (isset($browserInfo['Crawler']) && ($browserInfo['Crawler'] == 1 || $browserInfo['Crawler'] == 'true')) {
 			if ($version == '') {
 				return TRUE;

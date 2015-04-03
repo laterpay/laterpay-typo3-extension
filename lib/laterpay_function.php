@@ -28,10 +28,9 @@ function lpPranslateAndLog($text) {
 	if (!isset($allProcessed)) {
 		$allProcessed = array();
 	}
-// 	$GLOBALS['LANG']->debugKey = FALSE;
+
 	if ($GLOBALS['LANG']) {
 		$result = $GLOBALS['LANG']->getLL($text);
-	// 	$GLOBALS['LANG']->debugKey = FALSE;
 		if (empty($result)) {
 			if (!in_array($text, $allProcessed)) {
 				$allProcessed[] = $text;
@@ -43,6 +42,7 @@ function lpPranslateAndLog($text) {
 	} else {
 		$result = $text;
 	}
+
 	return $result;
 }
 
@@ -54,6 +54,7 @@ function _e($text, $domain) {
 function _x($text, $context, $domain) {
 	$textTr = lpPranslateAndLog($text);
 	$contextTr = lpPranslateAndLog($context);
+
 	return $textTr . '|' . $contextTr;
 }
 
@@ -72,6 +73,7 @@ function __($text, $domain) {
  */
 function urlencode_deep($value) {
 	$value = is_array($value) ? array_map('urlencode_deep', $value) : urlencode($value);
+
 	return $value;
 }
 

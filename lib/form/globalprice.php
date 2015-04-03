@@ -51,22 +51,6 @@ class tx_laterpay_form_globalprice extends tx_laterpay_form_abstract {
 				)
 			));
 
-		/*
-		 * $this->setField(
-		 * '_wpnonce',
-		 * array(
-		 * 'validators' => array(
-		 * 'is_string',
-		 * 'cmp' => array(
-		 * array(
-		 * 'ne' => null,
-		 * ),
-		 * ),
-		 * ),
-		 * )
-		 * );
-		 */
-
 		$this->setField('laterpay_global_price_revenue_model',
 			array(
 				'validators' => array(
@@ -138,4 +122,3 @@ class tx_laterpay_form_globalprice extends tx_laterpay_form_abstract {
 			));
 	}
 }
-

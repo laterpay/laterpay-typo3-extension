@@ -59,8 +59,8 @@ class tx_laterpay_helper_voucher {
 	 * @return string voucher code
 	 */
 	public static function generateVoucherCode($length = self::VOUCHER_CODE_LENGTH) {
-		$voucherCode = '';
-		$possibleChars = self::VOUCHER_CHARS;
+		$voucherCode 	= '';
+		$possibleChars 	= self::VOUCHER_CHARS;
 
 		for ($i = 0; $i < $length; $i ++) {
 			mt_srand();
@@ -82,9 +82,9 @@ class tx_laterpay_helper_voucher {
 	 * @return void
 	 */
 	public static function savePassVouchers($passId, $vouchersData, $noExplode = FALSE, $isGift = FALSE) {
-		$vouchers = self::getAllVouchers($isGift);
-		$newVouchers = array();
-		$optionName = $isGift ? self::GIFT_CODES_OPTION : self::VOUCHER_CODES_OPTION;
+		$vouchers 		= self::getAllVouchers($isGift);
+		$newVouchers 	= array();
+		$optionName 	= $isGift ? self::GIFT_CODES_OPTION : self::VOUCHER_CODES_OPTION;
 
 		if ($vouchersData && is_array($vouchersData)) {
 			foreach ($vouchersData as $voucher) {
@@ -93,9 +93,10 @@ class tx_laterpay_helper_voucher {
 					break;
 				}
 
-				list ($code, $price) = explode('|', $voucher);
+				list($code, $price) = explode('|', $voucher);
+
 				// format and save price
-				$price = number_format((float) str_replace(',', '.', $price), 2);
+				$price 				= number_format((float) str_replace(',', '.', $price), 2);
 				$newVouchers[$code] = $price;
 			}
 		}
@@ -108,6 +109,7 @@ class tx_laterpay_helper_voucher {
 
 		// save new voucher data
 		update_option($optionName, $vouchers);
+
 		// actualize voucher statistic
 		self::actualizeVoucherStatistic($isGift);
 	}
@@ -138,7 +140,7 @@ class tx_laterpay_helper_voucher {
 	 */
 	public static function getAllVouchers($isGift = FALSE) {
 		$optionName = $isGift ? self::GIFT_CODES_OPTION : self::VOUCHER_CODES_OPTION;
-		$vouchers = get_option($optionName);
+		$vouchers 	= get_option($optionName);
 		if (! $vouchers || ! is_array($vouchers)) {
 			update_option($optionName, '');
 
@@ -186,9 +188,9 @@ class tx_laterpay_helper_voucher {
 			foreach ($passVouchers as $voucherCode => $voucherPrice) {
 				if ($code === $voucherCode) {
 					$voucherData = array(
-						'pass_id' => $passId,
-						'code' => $voucherCode,
-						'price' => $voucherPrice
+						'pass_id' 	=> $passId,
+						'code' 		=> $voucherCode,
+						'price' 	=> $voucherPrice,
 					);
 
 					return $voucherData;
@@ -269,6 +271,7 @@ class tx_laterpay_helper_voucher {
 		if ($passVouchers && isset($passVouchers[$code])) {
 			// get all voucher statistics for this pass
 			$voucherStatisticData = self::getTimePassVouchersStatistic($passId, $isGift);
+
 			// check, if statistic is empty
 			if ($voucherStatisticData) {
 				// increment counter by 1, if statistic exists
@@ -315,7 +318,7 @@ class tx_laterpay_helper_voucher {
 	 */
 	public static function getAllVouchersStatistic($isGift = FALSE) {
 		$optionName = $isGift ? self::GIFT_STAT_OPTION : self::VOUCHER_STAT_OPTION;
-		$statistic = get_option($optionName);
+		$statistic 	= get_option($optionName);
 		if (! $statistic || ! is_array($statistic)) {
 			update_option($optionName, '');
 
@@ -326,7 +329,7 @@ class tx_laterpay_helper_voucher {
 	}
 
 	/**
-	 * Get gift code usages count
+	 * Get gift code usages count.
 	 *
 	 * @param mixed $code Gift code
 	 *
@@ -334,11 +337,12 @@ class tx_laterpay_helper_voucher {
 	 */
 	public static function getGiftCodeUsagesCount($code) {
 		$usages = get_option('laterpay_gift_codes_usages');
+
 		return $usages && isset($usages[$code]) ? $usages[$code] : 0;
 	}
 
 	/**
-	 * Update gift code usages
+	 * Update gift code usage count.
 	 *
 	 * @param mixed $code Gift code
 	 *
@@ -349,24 +353,28 @@ class tx_laterpay_helper_voucher {
 		if (! $usages) {
 			$usages = array();
 		}
+
 		isset($usages[$code]) ? $usages[$code] += 1 : $usages[$code] = 1;
+
 		update_option('laterpay_gift_codes_usages', $usages);
+
 		return TRUE;
 	}
 
 	/**
-	 * Check if gift code usages exceed limits
+	 * Check if gift code usages exceed limit.
 	 *
 	 * @param mixed $code Gift code
 	 *
 	 * @return bool
 	 */
 	public static function checkGiftCodeUsagesLimit($code) {
-		$limit = get_option('laterpay_maximum_redemptions_per_gift_code');
+		$limit 	= get_option('laterpay_maximum_redemptions_per_gift_code');
 		$usages = self::getGiftCodeUsagesCount($code);
 		if (($usages + 1) <= $limit) {
 			return TRUE;
 		}
+
 		return FALSE;
 	}
 }

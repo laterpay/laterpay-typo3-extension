@@ -19,7 +19,7 @@ class tx_laterpay_controller_abstract
 {
 
 	/**
-	 * Template instance
+	 * Template instance.
 	 *
 	 * @var template
 	 */
@@ -37,12 +37,10 @@ class tx_laterpay_controller_abstract
 		$this->assign( 'config', $this->config );
 
 		$this->initialize();
-
 	}
 
 	/**
-	 * Function which will be called on constructor and can be overwritten by
-	 * child class.
+	 * Function which will be called on constructor and can be overwritten by child class.
 	 *
 	 * @return void
 	 */
@@ -57,7 +55,6 @@ class tx_laterpay_controller_abstract
 	public function loadAssets() {
 	}
 
-
 	/**
 	 * Render HTML file.
 	 *
@@ -69,6 +66,7 @@ class tx_laterpay_controller_abstract
 		foreach ($this->variables as $key => $value) {
 			${$key} = $value;
 		}
+
 		$viewFile = t3lib_extMgm::extPath('laterpay') . 'view/' . $file . '.phtml';
 		if (! file_exists($viewFile)) {
 			$msg = sprintf($GLOBALS['LANG']->getLL('%s : <code>%s</code> not found', 'laterpay'),
@@ -76,19 +74,21 @@ class tx_laterpay_controller_abstract
 
 			$this->logger->error(__METHOD__ . ' - ' . $msg,
 					array(
-							'view_file' => $viewFile
+						'view_file' => $viewFile,
 					));
 
 			return;
 		}
 
 		$this->logger->info(__METHOD__ . ' - ' . $file, $this->variables);
+
 		// @codingStandardsIgnoreStart
 		ob_start();
 		include ($viewFile);
 		$out = ob_get_contents();
 		ob_end_clean();
 		// @codingStandardsIgnoreEnd
+
 		return $out;
 	}
 
@@ -115,6 +115,7 @@ class tx_laterpay_controller_abstract
 		foreach ($this->variables as $key => $value) {
 			${$key} = $value;
 		}
+
 		$viewFile = $extPath = t3lib_extMgm::extPath('laterpay') . 'view/' . $file . '.phtml';
 		if (!file_exists($viewFile)) {
 			$msg = sprintf(__('%s : <code>%s</code> not found', 'laterpay'),
@@ -122,19 +123,21 @@ class tx_laterpay_controller_abstract
 
 			$this->logger->error(__METHOD__ . ' - ' . $msg,
 					array(
-							'view_file' => $viewFile
+						'view_file' => $viewFile,
 					));
 
 			return '';
 		}
 
 		$this->logger->info(__METHOD__ . ' - ' . $file, $this->variables);
+
 		// @codingStandardsIgnoreStart
 		ob_start();
 		include ($viewFile);
 		$html = ob_get_contents();
 		ob_end_clean();
 		//@codingStandardsIgnoreEnd
+
 		return $html;
 	}
 
@@ -150,7 +153,7 @@ class tx_laterpay_controller_abstract
 	}
 
 	/**
-	 * Generate Javascript declaration of variable
+	 * Generate Javascript declaration of variable.
 	 *
 	 * @param mixed $objectName Name of variable
 	 * @param mixed $l10nVals Array of fields for creating JS object

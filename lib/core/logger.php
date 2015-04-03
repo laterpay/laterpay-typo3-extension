@@ -24,20 +24,13 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	/**
 	 * Logger levels
 	 */
-	const DEBUG = 100;
-
-	const INFO = 200;
-
-	const NOTICE = 250;
-
-	const WARNING = 300;
-
-	const ERROR = 400;
-
-	const CRITICAL = 500;
-
-	const ALERT = 550;
-
+	const DEBUG 	= 100;
+	const INFO 		= 200;
+	const NOTICE 	= 250;
+	const WARNING 	= 300;
+	const ERROR 	= 400;
+	const CRITICAL 	= 500;
+	const ALERT 	= 550;
 	const EMERGENCY = 600;
 
 	/**
@@ -53,30 +46,30 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 		400 => 'ERROR',
 		500 => 'CRITICAL',
 		550 => 'ALERT',
-		600 => 'EMERGENCY'
+		600 => 'EMERGENCY',
 	);
 
 	/**
-	 * Time zone
+	 * Time zone.
 	 * @var \DateTimeZone
 	 */
 	protected $timezone;
 
 	/**
-	 * Name of logger
+	 * Name of logger.
 	 * @var string
 	 */
 	protected $name;
 
 	/**
-	 * The handler stack
+	 * The handler stack.
 	 *
 	 * @var tx_laterpay_core_logger_handler_interface[]
 	 */
 	protected $handlers;
 
 	/**
-	 * Processors that will process all log records
+	 * Processors that will process all log records.
 	 *
 	 * To process records of a single handler instead, add the processor on that specific handler
 	 *
@@ -85,23 +78,23 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	protected $processors;
 
 	/**
-	 * Constructor of object
+	 * Constructor of object.
 	 *
 	 * @param string $name The logging channel
 	 * @param array $handlers Optional stack of handlers, the first one in the array is called first, etc.
 	 * @param array $processors Optional array of processors
 	 */
 	public function __construct($name = 'default', array $handlers = array(), array $processors = array()) {
-		$this->name = $name;
-		$this->handlers = $handlers;
-		$this->processors = $processors;
-		$this->timezone = new DateTimeZone(date_default_timezone_get() ? date_default_timezone_get() : 'UTC');
+		$this->name 		= $name;
+		$this->handlers 	= $handlers;
+		$this->processors 	= $processors;
+		$this->timezone 	= new DateTimeZone(date_default_timezone_get() ? date_default_timezone_get() : 'UTC');
 
 		$this->initLogger();
 	}
 
 	/**
-	 * Init Logger
+	 * Init logger.
 	 *
 	 * @return void
 	 */
@@ -123,14 +116,16 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 				new tx_laterpay_core_logger_processor_memoryusage(),
 				new tx_laterpay_core_logger_processor_memorypeakusage(),
 		);
+
 		$GLOBALS['TYPO3_DB']->store_lastBuiltQuery = TRUE;
-		$this->name = $name;
-		$this->handlers = $handlers;
-		$this->processors = $processors;
+
+		$this->name 		= $name;
+		$this->handlers 	= $handlers;
+		$this->processors 	= $processors;
 	}
 
 	/**
-	 * Create instance if class
+	 * Create instance of class.
 	 *
 	 * @return Ambigous <object, mixed, array<t3lib_Singleton>, t3lib_Singleton>
 	 */
@@ -163,7 +158,7 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	}
 
 	/**
-	 * Adds a log record at the INFO level.
+	 * Add a log record at the INFO level.
 	 *
 	 * @param string $message The log message
 	 * @param array $context The log context
@@ -175,7 +170,7 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	}
 
 	/**
-	 * Adds a log record at the NOTICE level.
+	 * Add a log record at the NOTICE level.
 	 *
 	 * @param string $message The log message
 	 * @param array $context The log context
@@ -187,7 +182,7 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	}
 
 	/**
-	 * Adds a log record at the WARNING level.
+	 * Add a log record at the WARNING level.
 	 *
 	 * @param mixed $message The log message
 	 * @param array $context The log context
@@ -199,7 +194,7 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	}
 
 	/**
-	 * Adds a log record at the CRITICAL level.
+	 * Add a log record at the CRITICAL level.
 	 *
 	 * @param string $message The log message
 	 * @param array $context The log context
@@ -211,7 +206,7 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	}
 
 	/**
-	 * Adds a log record at the ALERT level.
+	 * Add a log record at the ALERT level.
 	 *
 	 * @param string $message The log message
 	 * @param array $context The log context
@@ -223,7 +218,7 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	}
 
 	/**
-	 * Adds a log record at the EMERGENCY level.
+	 * Add a log record at the EMERGENCY level.
 	 *
 	 * @param string $message The log message
 	 * @param array $context The log context
@@ -251,13 +246,13 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 		$dateTime = new DateTime('now', $this->timezone);
 
 		$record = array(
-			'message' => (string) $message,
-			'context' => $context,
-			'level' => $level,
-			'level_name' => self::getLevelName($level),
-			'channel' => $this->name,
-			'datetime' => $dateTime,
-			'extra' => array()
+			'message' 		=> (string) $message,
+			'context' 		=> $context,
+			'level' 		=> $level,
+			'level_name' 	=> self::getLevelName($level),
+			'channel' 		=> $this->name,
+			'datetime' 		=> $dateTime,
+			'extra' 		=> array(),
 		);
 
 		// check, if any handler will handle this message
@@ -286,7 +281,7 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	}
 
 	/**
-	 * Get name of logger
+	 * Get name of logger.
 	 *
 	 * @return str
 	 */
@@ -295,7 +290,7 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	}
 
 	/**
-	 * Pushes a handler onto the stack.
+	 * Push a handler onto the stack.
 	 *
 	 * @param tx_laterpay_core_logger_handler_interface $handler Handler instance
 	 *
@@ -306,7 +301,7 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	}
 
 	/**
-	 * Pops a handler from the stack.
+	 * Pop a handler from the stack.
 	 *
 	 * @return tx_laterpay_core_logger_handler_interface
 	 */
@@ -314,11 +309,12 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 		if (! $this->handlers) {
 			throw new \LogicException('You tried to pop from an empty handler stack.');
 		}
+
 		return array_shift($this->handlers);
 	}
 
 	/**
-	 * Get list of handlers
+	 * Get list of handlers.
 	 *
 	 * @return tx_laterpay_core_logger_handler_interface[]
 	 */
@@ -327,7 +323,7 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	}
 
 	/**
-	 * Adds a processor onto the stack.
+	 * Add a processor onto the stack.
 	 *
 	 * @param tx_laterpay_core_logger_processor_interface $callback Call back
 	 *
@@ -338,7 +334,7 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	}
 
 	/**
-	 * Removes the processor on top of the stack and returns it.
+	 * Remove the processor on top of the stack and return it.
 	 *
 	 * @return callable
 	 */
@@ -351,7 +347,7 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	}
 
 	/**
-	 * Get processors
+	 * Get processors.
 	 *
 	 * @return callable[]
 	 */
@@ -360,7 +356,7 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	}
 
 	/**
-	 * Checks whether the Logger has a handler that listens on the given level
+	 * Check, if the Logger has a handler that listens on the given level.
 	 *
 	 * @param int $level Level
 	 *

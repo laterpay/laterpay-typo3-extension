@@ -27,12 +27,13 @@ class tx_laterpay_helper_user {
 	 * @return bool
 	 */
 	public static function isAdmin() {
-
 		if (isset($GLOBALS['BE_USER']) and $GLOBALS['BE_USER']) {
-			$isAdmin = (bool) isset($GLOBALS['BE_USER']->user['admin']) ? $GLOBALS['BE_USER']->user['admin'] : FALSE;
-			$hasAccess = $GLOBALS['BE_USER']->check('modules', 'laterpay');
+			$isAdmin 	= (bool) isset($GLOBALS['BE_USER']->user['admin']) ? $GLOBALS['BE_USER']->user['admin'] : FALSE;
+			$hasAccess 	= $GLOBALS['BE_USER']->check('modules', 'laterpay');
+
 			return $isAdmin or $hasAccess;
 		}
+
 		return FALSE;
 	}
 
@@ -48,7 +49,4 @@ class tx_laterpay_helper_user {
 
 		return (bool) get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_AS_VISITOR);
 	}
-
 }
-
-

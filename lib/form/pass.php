@@ -27,21 +27,6 @@ class tx_laterpay_form_pass extends tx_laterpay_form_abstract {
 	 * @return void
 	 */
 	public function init() {
-		/*
-		 * $this->setField(
-		 * '_wpnonce',
-		 * array(
-		 * 'validators' => array(
-		 * 'is_string',
-		 * 'cmp' => array(
-		 * array(
-		 * 'ne' => null,
-		 * ),
-		 * ),
-		 * ),
-		 * )
-		 * );
-		 */
 		$this->setField('pass_id',
 			array(
 				'validators' => array(

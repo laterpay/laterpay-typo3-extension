@@ -13,18 +13,18 @@
  */
 
 /**
- * Interface for wrappers
+ * Interface for wrappers.
  */
 interface tx_laterpay_wrapper_interface {
 	/**
-	 * Prewrap hook
+	 * Prewrap hook.
 	 *
 	 * @return string
 	 */
 	public function preWrap();
 
 	/**
-	 * Wrap hook
+	 * Wrap hook.
 	 *
 	 * @param string $teaserContent Teaser content
 	 *
@@ -33,7 +33,7 @@ interface tx_laterpay_wrapper_interface {
 	public function wrap($teaserContent);
 
 	/**
-	 * Postwrap hook
+	 * Postwrap hook.
 	 *
 	 * @return string
 	 */

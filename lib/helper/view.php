@@ -29,30 +29,30 @@ class tx_laterpay_helper_view {
 	public static function getAdminMenu() {
 		return array(
 			'dashboard' => array(
-				'url' => 'laterpay-dashboard-tab',
-				'title' => __('Dashboard <sup class="lp_is-beta">beta</sup>', 'laterpay'),
-				'submenu' => array(
-					'url' => '#',
-					'title' => __('Time Passes', 'laterpay'),
-					'id' => 'lp_js_switchDashboardView',
-					'data' => array(
-						'view' => 'time-passes',
-						'label' => __('Standard KPIs', 'laterpay')
-					)
-				)
+				'url' 		=> 'laterpay-dashboard-tab',
+				'title' 	=> __('Dashboard <sup class="lp_is-beta">beta</sup>', 'laterpay'),
+				'submenu' 	=> array(
+					'url' 		=> '#',
+					'title' 	=> __('Time Passes', 'laterpay'),
+					'id' 		=> 'lp_js_switchDashboardView',
+					'data' 	=> array(
+						'view' 	=> 'time-passes',
+						'label' => __('Standard KPIs', 'laterpay'),
+					),
+				),
 			),
-			'pricing' => array(
-				'url' => 'laterpay-pricing-tab',
-				'title' => __('Pricing', 'laterpay')
+			'pricing' 	=> array(
+				'url' 		=> 'laterpay-pricing-tab',
+				'title' 	=> __('Pricing', 'laterpay'),
 			),
 			'appearance' => array(
-				'url' => 'laterpay-appearance-tab',
-				'title' => __('Appearance', 'laterpay')
+				'url' 		=> 'laterpay-appearance-tab',
+				'title' 	=> __('Appearance', 'laterpay'),
 			),
-			'account' => array(
-				'url' => 'laterpay-account-tab',
-				'title' => __('Account', 'laterpay')
-			)
+			'account' 	=> array(
+				'url' 		=> 'laterpay-account-tab',
+				'title' 	=> __('Account', 'laterpay'),
+			),
 		);
 	}
 
@@ -107,11 +107,13 @@ class tx_laterpay_helper_view {
 			if ($result !== '') {
 				$result .= $delimiter;
 			}
+
 			if (isset($statistic[$date])) {
 				$result .= $statistic[$date][$type];
 			} else {
 				$result .= '0';
 			}
+
 			$date = self::getNextDay($date);
 		}
 
@@ -124,13 +126,10 @@ class tx_laterpay_helper_view {
 	 * @return bool
 	 */
 	public static function pluginIsWorking() {
-		$isInLiveMode = get_option('laterpay_plugin_is_in_live_mode');
-		$sandboxApiKey = get_option('laterpay_sandbox_api_key');
-		$liveApiKey = get_option('laterpay_live_api_key');
-		$isInVisibleTestMode = get_option('laterpay_is_in_visible_test_mode');
-// 		if (! function_exists('wp_get_current_user')) {
-// 			include_once (ABSPATH . 'wp-includes/pluggable.php');
-// 		}
+		$isInLiveMode 			= get_option('laterpay_plugin_is_in_live_mode');
+		$sandboxApiKey 			= get_option('laterpay_sandbox_api_key');
+		$liveApiKey 			= get_option('laterpay_live_api_key');
+		$isInVisibleTestMode 	= get_option('laterpay_is_in_visible_test_mode');
 
 		// check, if plugin operates in live mode and Live API key exists
 		if ($isInLiveMode && empty($liveApiKey)) {
@@ -147,8 +146,7 @@ class tx_laterpay_helper_view {
 			return TRUE;
 		}
 
-		// check, if plugin is not in live mode and current user has sufficient
-		// capabilities
+		// check, if plugin is not in live mode and current user has sufficient capabilities
 		if (! $isInLiveMode && ! LaterPay_Helper_User::can('laterpay_read_post_statistics', NULL, FALSE)) {
 			return FALSE;
 		}
@@ -193,30 +191,18 @@ class tx_laterpay_helper_view {
 				// format values between 200 and 10,000 without digits
 				$formatted = number_format($number, 0);
 			} else {
-				// reduce values above 10,000 to thousands and format them with
-				// one digit
+				// reduce values above 10,000 to thousands and format them with one digit
 				$formatted = number_format($number / 1000, 1) . __('k', 'laterpay');
-				// k
-				// ->
-				// short
-				// for
-				// kilo
-				// (thousands)
+				// 'k' = short for kilo (thousands)
 			}
 		} else {
 			// format count values
 			if ($number < 10000) {
 				$formatted = number_format($number);
 			} else {
-				// reduce values above 10,000 to thousands and format them with
-				// one digit
+				// reduce values above 10,000 to thousands and format them with one digit
 				$formatted = number_format($number / 1000, 1) . __('k', 'laterpay');
-				// k
-				// ->
-				// short
-				// for
-				// kilo
-				// (thousands)
+				// 'k' = short for kilo (thousands)
 			}
 		}
 

@@ -22,7 +22,7 @@
 class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abstract {
 
 	/**
-	 * Load assets
+	 * Load assets.
 	 *
 	 * @see tx_laterpay_controller_abstract::loadAssets()
 	 *
@@ -39,7 +39,7 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 	}
 
 	/**
-	 * Render page
+	 * Render page.
 	 *
 	 * @see tx_laterpay_controller_abstract::renderPage()
 	 *
@@ -49,17 +49,18 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 		$this->loadAssets();
 
 		$viewArgs = array(
-			'plugin_is_in_live_mode' => $this->config->get('is_in_live_mode'),
-			'show_teaser_content_only' => get_option('laterpay_teaser_content_only') == 1,
-			'top_nav' => $this->getMenu(),
-			'admin_menu' => tx_laterpay_helper_view::getAdminMenu(),
-			'is_rating_enabled' => $this->config->get('ratings_enabled'),
-			'purchase_button_positioned_manually' => get_option('laterpay_purchase_button_positioned_manually'),
-			'time_passes_positioned_manually' => get_option('laterpay_time_passes_positioned_manually'),
-			'teaser_percentage_of_content' => get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT),
-			'teaser_min_words_count' => get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN),
-			'teaser_max_words_count' => get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX),
+			'plugin_is_in_live_mode' 				=> $this->config->get('is_in_live_mode'),
+			'show_teaser_content_only' 				=> get_option('laterpay_teaser_content_only') == 1,
+			'top_nav' 								=> $this->getMenu(),
+			'admin_menu' 							=> tx_laterpay_helper_view::getAdminMenu(),
+			'is_rating_enabled' 					=> $this->config->get('ratings_enabled'),
+			'purchase_button_positioned_manually' 	=> get_option('laterpay_purchase_button_positioned_manually'),
+			'time_passes_positioned_manually' 		=> get_option('laterpay_time_passes_positioned_manually'),
+			'teaser_percentage_of_content' 			=> get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT),
+			'teaser_min_words_count' 				=> get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN),
+			'teaser_max_words_count' 				=> get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX),
 		);
+
 		$this->assign('laterpay', $viewArgs);
 		return $this->render('backend/appearance');
 	}
@@ -76,18 +77,6 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 		$post = t3lib_div::_POST();
 		$postData = t3lib_div::_POST('form');
 
-		// check for required capabilities to perform action
-/* 		if (! current_user_can('activate_plugins')) {
-			array(
-					'success' => false,
-					'message' => __('You don\'t have sufficient user capabilities to do this.', 'laterpay')
-				));
-		}
-
-		if (function_exists('check_admin_referer')) {
-			check_admin_referer('laterpay_form');
-		}
- */
 		switch ($postData) {
 			// update presentation mode for paid content
 			case 'paid_content_preview':
@@ -227,6 +216,7 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 					}
 				}
 				break;
+
 			case 'auto_teaser_configuration':
 				$array = $this->updateAutoTeaserConfiguration($ajaxObj);
 				$ajaxObj->setContent(
@@ -245,59 +235,59 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 	}
 
 	/**
-	 * Set auto teaser generation configurations
+	 * Set auto teaser generation configurations.
 	 *
 	 * @return type
 	 */
 	protected function updateAutoTeaserConfiguration() {
-		$percentageFieldName = 'teaser_percentage_of_content';
-		$minWordsFieldName = 'teaser_min_words_count';
-		$maxWordsFieldName = 'teaser_max_words_count';
+		$percentageFieldName 	= 'teaser_percentage_of_content';
+		$minWordsFieldName 		= 'teaser_min_words_count';
+		$maxWordsFieldName 		= 'teaser_max_words_count';
 
-		$success = TRUE;
-		$errorMessages = array();
-		$errors = array();
+		$success 		= TRUE;
+		$errorMessages 	= array();
+		$errors 		= array();
 
-		$percentage = t3lib_div::_POST($percentageFieldName);
-		$minWords = t3lib_div::_POST($minWordsFieldName);
-		$maxWords =  t3lib_div::_POST($maxWordsFieldName);
+		$percentage 	= t3lib_div::_POST($percentageFieldName);
+		$minWords 		= t3lib_div::_POST($minWordsFieldName);
+		$maxWords 		=  t3lib_div::_POST($maxWordsFieldName);
 
 		if (!is_numeric($percentage) or $percentage % 1 > 0 or 1 > $percentage or $percentage > 100) {
 			$success = FALSE;
-			$errorMessages[$percentageFieldName] = __('Percentage must be not negative integer and have value between 1 and 100', 'laterpay');
+			$errorMessages[$percentageFieldName] = __('Percentage must be a positive integer between 1 and 100', 'laterpay');
 			$errors[] = $percentageFieldName;
 		}
 
 		if (!is_numeric($minWords) or $minWords < 0 ) {
 			$success = FALSE;
-			$errorMessages[$minWordsFieldName] = __('Min count of words must be not negative integer more than 0', 'laterpay');
+			$errorMessages[$minWordsFieldName] = __('Min count of words must be a positive integer greater than 0', 'laterpay');
 			$errors[] = $minWordsFieldName;
 		}
 
 		if (!is_numeric($maxWords) or $maxWords < 0 ) {
 			$success = FALSE;
-			$errorMessages[$maxWordsFieldName] = __('Max count of words must be not negative integer more than 0', 'laterpay');
+			$errorMessages[$maxWordsFieldName] = __('Max count of words must be a positive integer greater than 0', 'laterpay');
 			$errors[] = $maxWordsFieldName;
 		}
 
 		if ($maxWords <= $minWords) {
 			$success = FALSE;
-			$errorMessages[$maxWordsFieldName] = __('Max count of words must more than min count of words', 'laterpay');
+			$errorMessages[$maxWordsFieldName] = __('Max count of words must be greater than min count of words', 'laterpay');
 			$errors[] = $maxWordsFieldName;
 		}
 
 		if ($success) {
-			$message = __('new values saved successfully');
+			$message = __('New values saved successfully', 'laterpay');
 			update_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT, $percentage);
 			update_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX, $maxWords);
 			update_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN, $minWords);
 		}
 
 		return array(
-			'success' => $success,
-			'message' => $message,
+			'success' 		=> $success,
+			'message' 		=> $message,
 			'error_message' => $errorMessages,
-			'errors' => $errors,
+			'errors' 		=> $errors,
 		);
 	}
 }

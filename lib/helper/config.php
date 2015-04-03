@@ -24,26 +24,26 @@ class tx_laterpay_helper_config {
 	private static $options = array();
 
 	/**
-	 * Get options for LaterPay PHP client
+	 * Get options for LaterPay PHP client.
 	 *
 	 * @return array
 	 */
 	public static function getPhpClientOptions() {
-
 		$config = tx_laterpay_config::getInstance();
 		if (empty(self::$options)) {
 			if ($config->get(tx_laterpay_config::IS_IN_LIVE_MODE)) {
-				self::$options['cp_key'] = get_option('laterpay_live_merchant_id');
-				self::$options['api_key'] = get_option('laterpay_live_api_key');
-				self::$options['api_root'] = get_option(tx_laterpay_config::REG_LATERPAY_LIVE_BACKEND_API_URL);
-				self::$options['web_root'] = get_option(tx_laterpay_config::REG_LATERPAY_LIVE_DIALOG_API_URL);
+				self::$options['cp_key'] 	= get_option('laterpay_live_merchant_id');
+				self::$options['api_key'] 	= get_option('laterpay_live_api_key');
+				self::$options['api_root'] 	= get_option(tx_laterpay_config::REG_LATERPAY_LIVE_BACKEND_API_URL);
+				self::$options['web_root'] 	= get_option(tx_laterpay_config::REG_LATERPAY_LIVE_DIALOG_API_URL);
 			} else {
-				self::$options['cp_key'] = get_option('laterpay_sandbox_merchant_id');
-				self::$options['api_key'] = get_option('laterpay_sandbox_api_key');
-				self::$options['api_root'] = get_option(tx_laterpay_config::REG_LATERPAY_SANDBOX_BACKEND_API_URL);
-				self::$options['web_root'] = get_option(tx_laterpay_config::REG_LATERPAY_SANDBOX_DIALOG_API_URL);
+				self::$options['cp_key'] 	= get_option('laterpay_sandbox_merchant_id');
+				self::$options['api_key'] 	= get_option('laterpay_sandbox_api_key');
+				self::$options['api_root'] 	= get_option(tx_laterpay_config::REG_LATERPAY_SANDBOX_BACKEND_API_URL);
+				self::$options['web_root'] 	= get_option(tx_laterpay_config::REG_LATERPAY_SANDBOX_DIALOG_API_URL);
 			}
-			self::$options['token_name'] = $config->get(tx_laterpay_config::API_TOKEN_NAME);
+
+			self::$options['token_name'] 	= $config->get(tx_laterpay_config::API_TOKEN_NAME);
 		}
 
 		return self::$options;

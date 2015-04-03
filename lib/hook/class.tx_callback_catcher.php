@@ -67,50 +67,29 @@ class tx_callback_catcher extends tx_hook_abstract {
 		$pObj->addJsInlineCode(
 			'laterpay-post-view',
 			tx_laterpay_helper_render::getLocalizeScript('lpVars', array(
-					'ajaxUrl'               => 'ajax.php',
-//                 'post_id'               => get_the_ID(),
-//                 'debug'                 => (bool) $this->config->get( 'debug_mode' ),
-//                 'caching'               => (bool) $this->config->get( 'caching.compatible_mode' ),
-//                 'nonces'                => array(
-//                     'content'           => wp_create_nonce( 'laterpay_post_load_purchased_content' ),
-//                     'statistic'         => wp_create_nonce( 'laterpay_post_statistic_render' ),
-//                     'tracking'          => wp_create_nonce( 'laterpay_post_track_views' ),
-//                     'rating'            => wp_create_nonce( 'laterpay_post_rating_summary' ),
-//                     'voucher'           => wp_create_nonce( 'laterpay_redeem_voucher_code' ),
-//                     'gift'              => wp_create_nonce( 'laterpay_get_gift_card_actions' ),
-//                 ),
-//                 'i18n'                  => array(
-//                     'alert'             => __( 'In Live mode, your visitors would now see the LaterPay purchase dialog.', 'laterpay' ),
-//                     'validVoucher'      => __( 'Voucher code accepted.', 'laterpay' ),
-//                     'invalidVoucher'    => __( ' is not a valid voucher code!', 'laterpay' ),
-//                     'codeTooShort'      => __( 'Please enter a six-digit voucher code.', 'laterpay' ),
-//                     'generalAjaxError'  => __( 'An error occurred. Please try again.', 'laterpay' ),
-//                 ),
-//                 'download_attachment'   => $attachment_url,
-//                 'default_currency'      => get_option( 'laterpay_currency' ),
+					'ajaxUrl' => 'ajax.php',
 				)
 			)
 		);
-			// get/set token if needed
+
+		// get / set token if needed
 		$this->createToken();
 
 		$this->buyPost();
 	}
 
 	/**
-	 * Create token
+	 * Create token.
 	 *
 	 * @return void
 	 */
 	public function createToken() {
 		$browserSupportsCookies = tx_laterpay_helper_browser::browserSupportsCookies();
-		$browserIsCrawler = tx_laterpay_helper_browser::isCrawler();
-// 		$browserSupportsCookies = TRUE;
-// 		$browserIsCrawler = TRUE;
+		$browserIsCrawler 		= tx_laterpay_helper_browser::isCrawler();
 
 		$context = array(
-			'support_cookies' => $browserSupportsCookies,
-			'is_crawler' => $browserIsCrawler
+			'support_cookies' 	=> $browserSupportsCookies,
+			'is_crawler' 		=> $browserIsCrawler,
 		);
 
 		$this->logger->info(
@@ -122,6 +101,7 @@ class tx_callback_catcher extends tx_hook_abstract {
 		if (! $browserSupportsCookies || $browserIsCrawler) {
 			return;
 		}
+
 		$clientOptions = tx_laterpay_helper_config::getPhpClientOptions();
 		$laterpayClient = new LaterPay_Client($clientOptions['cp_key'], $clientOptions['api_key'], $clientOptions['api_root'],
 			$clientOptions['web_root'], $clientOptions['token_name']);
@@ -136,7 +116,7 @@ class tx_callback_catcher extends tx_hook_abstract {
 	}
 
 	/**
-	 * Buy post
+	 * Buy post.
 	 *
 	 * @return void
 	 */
@@ -148,24 +128,25 @@ class tx_callback_catcher extends tx_hook_abstract {
 
 		// data to create and hash-check the URL
 		$urlData = array(
-			'post_id' => t3lib_div::_GET('post_id'),
-			'id_currency' => t3lib_div::_GET('id_currency'),
-			'price' => t3lib_div::_GET('price'),
-			'date' => t3lib_div::_GET('date'),
-			'buy' => t3lib_div::_GET('buy'),
-			'ip' => t3lib_div::_GET('ip'),
-			'revenue_model' => t3lib_div::_GET('revenue_model')
+			'post_id' 		=> t3lib_div::_GET('post_id'),
+			'id_currency' 	=> t3lib_div::_GET('id_currency'),
+			'price' 		=> t3lib_div::_GET('price'),
+			'date' 			=> t3lib_div::_GET('date'),
+			'buy' 			=> t3lib_div::_GET('buy'),
+			'ip' 			=> t3lib_div::_GET('ip'),
+			'revenue_model' => t3lib_div::_GET('revenue_model'),
 		);
 
-		$url = $this->getAfterPurchaseRedirectUrl($urlData);
-		$hash = tx_laterpay_helper_pricing::getHashByUrl($url);
+		$url 	= $this->getAfterPurchaseRedirectUrl($urlData);
+		$hash 	= tx_laterpay_helper_pricing::getHashByUrl($url);
 
 		// update lptoken, if we got it
 		$lpToken = t3lib_div::_GET('lptoken');
 		if (isset($lpToken)) {
-			$clientOptions = tx_laterpay_helper_config::getPhpClientOptions();
-			$client = new LaterPay_Client($clientOptions['cp_key'], $clientOptions['api_key'], $clientOptions['api_root'],
+			$clientOptions 	= tx_laterpay_helper_config::getPhpClientOptions();
+			$client 		= new LaterPay_Client($clientOptions['cp_key'], $clientOptions['api_key'], $clientOptions['api_root'],
 				$clientOptions['web_root'], $clientOptions['token_name']);
+
 			$client->set_token($lpToken);
 		}
 
@@ -174,24 +155,27 @@ class tx_callback_catcher extends tx_hook_abstract {
 		// check, if the parameters of $_GET are valid and not manipulated
 		if ($hash === t3lib_div::_GET('hash')) {
 			$data = array(
-				'post_id' => $postId,
-				'id_currency' => t3lib_div::_GET('id_currency'),
-				'price' => t3lib_div::_GET('price'),
-				'date' => t3lib_div::_GET('date'),
-				'ip' => t3lib_div::_GET('ip'),
+				'post_id' 		=> $postId,
+				'id_currency' 	=> t3lib_div::_GET('id_currency'),
+				'price' 		=> t3lib_div::_GET('price'),
+				'date' 			=> t3lib_div::_GET('date'),
+				'ip' 			=> t3lib_div::_GET('ip'),
 				'revenue_model' => t3lib_div::_GET('revenue_model'),
-				'hash' => t3lib_div::_GET('hash')
+				'hash' 			=> t3lib_div::_GET('hash'),
 			);
 
 			$this->logger->info(
 				__METHOD__ . ' - set payment history',
 				$data
 			);
+
 			$paymentHistoryModel = new tx_laterpay_model_payment_history();
 			$paymentHistoryModel->setPaymentHistory($data);
 		}
+
 		$redirectUrl = self::getPageUrl();
 		t3lib_utility_Http::redirect($redirectUrl);
+
 		exit();
 	}
 }

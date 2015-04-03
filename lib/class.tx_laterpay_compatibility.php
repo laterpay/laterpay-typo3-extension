@@ -17,7 +17,7 @@
  */
 class tx_laterpay_compatibility implements t3lib_Singleton {
 	/**
-	 * Get instance of class
+	 * Get instance of class.
 	 *
 	 * @return tx_laterpay_compatibility
 	 */
@@ -26,7 +26,7 @@ class tx_laterpay_compatibility implements t3lib_Singleton {
 	}
 
 	/**
-	 * Creates this object.
+	 * Create this object.
 	 */
 	public function __construct() {
 	}
@@ -40,6 +40,7 @@ class tx_laterpay_compatibility implements t3lib_Singleton {
 	 */
 	public function versionToInt($version) {
 		$verParts = explode('.', $version);
-		return (int)sprintf('%03d%03d%03d', $verParts[0], $verParts[1], $verParts[2]);
+
+		return (int) sprintf('%03d%03d%03d', $verParts[0], $verParts[1], $verParts[2]);
 	}
 }

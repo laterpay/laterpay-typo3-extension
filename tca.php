@@ -23,4 +23,3 @@ $confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['tt_laterpa
 // ******************************************************************
 $TCA['tt_laterpay'] = Array (
 );
-

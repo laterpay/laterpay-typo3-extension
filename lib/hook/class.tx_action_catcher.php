@@ -17,7 +17,7 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'class.tx_hook_abstract.p
 // @codingStandardsIgnoreEnd
 
 /**
- * Inner actions catcher class
+ * Inner actions catcher class.
  *
  * Plugin Name: LaterPay
  * Plugin URI: https://github.com/laterpay/laterpay-typo3-extension
@@ -26,12 +26,12 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'class.tx_hook_abstract.p
 class tx_action_catcher extends tx_hook_abstract {
 
 	/**
-	 * Laterpay post AJAX action catcher.
+	 * LaterPay post Ajax action catcher.
 	 *
 	 * @return void
 	 */
 	public function catchLaterpayAction() {
-		// if we in admin part - nothing to do here
+		// if we are in admin part - nothing to do here
 		if (TYPO3_MODE == 'BE') {
 			return;
 		}
@@ -46,7 +46,7 @@ class tx_action_catcher extends tx_hook_abstract {
 	}
 
 	/**
-	 * Action Performer
+	 * Action performer.
 	 *
 	 * @param string $actionName name of action to perform
 	 *
@@ -59,12 +59,12 @@ class tx_action_catcher extends tx_hook_abstract {
 	}
 
 	/**
-	 * Action answer for changing preview type
+	 * Action answer for changing preview type.
 	 *
 	 * @return mixed
 	 */
 	private function postStatisticTogglePreview() {
-		// This action allowed only for admin
+		// action is only allowed for admin
 		if (!tx_laterpay_helper_user::isAdmin()) {
 			return;
 		}
@@ -83,12 +83,12 @@ class tx_action_catcher extends tx_hook_abstract {
 	}
 
 	/**
-	 * Action answer for changing statistics tab visibility
+	 * Action answer for changing statistics tab visibility.
 	 *
 	 * @return mixed
 	 */
 	private function postStatisticVisibility() {
-		// This action allowed only for admin
+		// action is only allowed for admin
 		if (!tx_laterpay_helper_user::isAdmin()) {
 			return;
 		}

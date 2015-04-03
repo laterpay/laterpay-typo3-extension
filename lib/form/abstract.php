@@ -48,24 +48,8 @@ abstract class tx_laterpay_form_abstract {
 	 * @var array
 	 */
 	public static $filters = array(
-
 		// sanitize string value
 		'text' => 'sanitize_text_field',
-
-		// sanitize email
-// 		'email' => 'sanitize_email',
-
-		// sanitize xml
-// 		'xml' => 'ent2ncr',
-
-		// sanitize url
-// 		'url' => 'esc_url',
-
-		// sanitize js
-// 		'js' => 'esc_js',
-
-		// sanitize sql
-// 		'sql' => 'esc_sql',
 
 		// convert to int, abs
 		'to_int' => 'toabsint',
@@ -83,18 +67,18 @@ abstract class tx_laterpay_form_abstract {
 		// replace - replacement
 		'replace' => array(
 			'tx_laterpay_form_abstract',
-			'replace'
+			'replace',
 		),
 
 		// format number with given decimal places
 		'format_num' => 'number_format',
 
 		// strip slashes
-		'unslash' => 'unslash'
+		'unslash' => 'unslash',
 	);
 
 	/**
-	 * Constructor.of object
+	 * Constructor of object.
 	 *
 	 * @param mixed $data Initial data
 	 */
@@ -109,7 +93,7 @@ abstract class tx_laterpay_form_abstract {
 	}
 
 	/**
-	 * Init form
+	 * Init form.
 	 *
 	 * @return void
 	 */
@@ -133,17 +117,20 @@ abstract class tx_laterpay_form_abstract {
 		} else {
 			// field name
 			$data = array();
+
 			// validators
 			$data['validators'] = isset($options['validators']) ? $options['validators'] : array();
+
 			// filters (sanitize)
 			$data['filters'] = isset($options['filters']) ? $options['filters'] : array();
+
 			// default value
 			$data['value'] = isset($options['default_value']) ? $options['default_value'] : NULL;
+
 			// do not apply filters to null value
 			$data['can_be_null'] = isset($options['can_be_null']) ? $options['can_be_null'] : FALSE;
 
-			// name not strict, value searched in data by part of the name (for
-			// dynamic params)
+			// name not strict, value searched in data by part of the name (for dynamic params)
 			if (isset($options['not_strict_name']) && $options['not_strict_name']) {
 				$this->setNostrict($name);
 			}
@@ -202,7 +189,7 @@ abstract class tx_laterpay_form_abstract {
 	}
 
 	/**
-	 * Set 'value' for field.
+	 * Set value for field.
 	 *
 	 * @param mixed $fieldName Field name
 	 * @param mixed $value Value
@@ -229,7 +216,7 @@ abstract class tx_laterpay_form_abstract {
 	}
 
 	/**
-	 * Check if field value is null and can be null
+	 * Check, if field value is null and can be null.
 	 *
 	 * @param mixed $field Field name
 	 *
@@ -246,7 +233,7 @@ abstract class tx_laterpay_form_abstract {
 	}
 
 	/**
-	 * Add condition to the field validation
+	 * Add condition to the field validation.
 	 *
 	 * @param mixed $field Field name
 	 * @param mixed $condition Conditional as array
@@ -265,7 +252,7 @@ abstract class tx_laterpay_form_abstract {
 	}
 
 	/**
-	 * Validate data in fields
+	 * Validate data in fields.
 	 *
 	 * @param mixed $data Data array
 	 *
@@ -273,21 +260,23 @@ abstract class tx_laterpay_form_abstract {
 	 */
 	public function isValid($data = array()) {
 		$this->errors = array();
-		// If data passed set data to the form
+		// set data to the form, if any data was passed
 		if (! empty($data)) {
 			$this->setData($data);
 		}
 
 		$fields = $this->getFields();
+
 		// validation logic
 		if (is_array($fields)) {
 			foreach ($fields as $name => $field) {
 				$validators = $field['validators'];
+
 				foreach ($validators as $validatorKey => $validatorValue) {
 					$validatorOption = is_int($validatorKey) ? $validatorValue : $validatorKey;
 					$validatorParams = is_int($validatorKey) ? NULL : $validatorValue;
 
-					// continue loop if field can be null and has null value
+					// continue loop, if field can be null and has null value
 					if ($this->checkIfFieldCanBeNull($name) && $this->getFieldValue($name) === NULL) {
 						continue;
 					}
@@ -296,26 +285,28 @@ abstract class tx_laterpay_form_abstract {
 					if (! $isValid) {
 						// data not valid
 						$this->errors[] = array(
-							'name' => $name,
-							'value' => $field['value'],
+							'name' 		=> $name,
+							'value' 	=> $field['value'],
 							'validator' => $validatorOption,
-							'options' => $validatorParams
+							'options' 	=> $validatorParams,
 						);
 					}
 				}
 			}
 		}
+
 		return empty($this->errors);
 	}
 
 	/**
-	 * Get validation errors
+	 * Get validation errors.
 	 *
 	 * @return multitype:
 	 */
 	public function getErrors() {
-		$aux = $this->errors;
-		$this->errors = array();
+		$aux 			= $this->errors;
+		$this->errors 	= array();
+
 		return $aux;
 	}
 
@@ -331,11 +322,12 @@ abstract class tx_laterpay_form_abstract {
 		if (is_array($fields)) {
 			foreach ($fields as $name => $field) {
 				$filters = $field['filters'];
+
 				foreach ($filters as $filterKey => $filterValue) {
 					$filterOption = is_int($filterKey) ? $filterValue : $filterKey;
 					$filterParams = is_int($filterKey) ? NULL : $filterValue;
 
-					// continue loop if field can be null and has null value
+					// continue loop, if field can be null and has null value
 					if ($this->checkIfFieldCanBeNull($name) && $this->getFieldValue($name) === NULL) {
 						continue;
 					}
@@ -391,7 +383,7 @@ abstract class tx_laterpay_form_abstract {
 	}
 
 	/**
-	 * Validate value by selected validator and its value optionally.
+	 * Validate value by selected validator and optionally by its value.
 	 *
 	 * @param mixed $value Value
 	 * @param mixed $validator Validator
@@ -412,15 +404,14 @@ abstract class tx_laterpay_form_abstract {
 					foreach ($validatorParams as $validatorsSet) {
 						foreach ($validatorsSet as $operator => $param) {
 							$isValid = $this->compareValues($operator, $value, $param);
-							// if comparison not valid break the loop and go to
-							// the next validation set
+
+							// if comparison is not valid break the loop and go to the next validation set
 							if (! $isValid) {
 								break;
 							}
 						}
 
-						// if comparison valid after full validation set check
-						// then do not need to check others
+						// if comparison is valid after full validation, set check then do not need to check others
 						if ($isValid) {
 							break;
 						}
@@ -449,7 +440,8 @@ abstract class tx_laterpay_form_abstract {
 					foreach ($validatorParams as $extraValidator => $validatorData) {
 						// recursively call extra validator
 						$isValid = $this->validateValue(strlen($value), $extraValidator, $validatorData);
-						// break loop if something not valid
+
+						// break loop if something is not valid
 						if (! $isValid) {
 							break;
 						}
@@ -464,7 +456,7 @@ abstract class tx_laterpay_form_abstract {
 				}
 				break;
 
-			// check if value is an array
+			// check, if value is an array
 			case 'is_array':
 				$isValid = is_array($value);
 				break;
@@ -482,25 +474,26 @@ abstract class tx_laterpay_form_abstract {
 
 			case 'depends':
 				if ($validatorParams && is_array($validatorParams)) {
-					// get all dependency
+					// get all dependencies
 					foreach ($validatorParams as $dependency) {
-						// if dependency match
+						// if dependency matches
 						if (! isset($dependency['value']) || $value === $dependency['value']) {
-							// loop for dependencies conditions and check if all
-							// of them is valid
+							// loop for dependencies conditions and check, if all of them are valid
 							foreach ($dependency['conditions'] as $vkey => $vparams) {
 								$extraValidator = is_int($vkey) ? $vparams : $vkey;
-								$validatorData = is_int($vkey) ? NULL : $vparams;
+								$validatorData 	= is_int($vkey) ? NULL : $vparams;
+
 								// recursively call extra validator
 								$isValid = $this->validateValue($this->getFieldValue($dependency['field']), $extraValidator,
 									$validatorData);
-								// break loop if something not valid
+
+								// break loop if something is not valid
 								if (! $isValid) {
 									break;
 								}
 							}
 
-							// dependency matched, break process
+							// dependency matched -> break process
 							break;
 						} else {
 							$isValid = TRUE;
@@ -520,7 +513,7 @@ abstract class tx_laterpay_form_abstract {
 	}
 
 	/**
-	 * Compare two values
+	 * Compare two values.
 	 *
 	 * @param mixed $comparisonOperator Comparation operator
 	 * @param mixed $firstValue Left value
@@ -547,7 +540,7 @@ abstract class tx_laterpay_form_abstract {
 				$result = ($firstValue > $secondValue);
 				break;
 
-			// greater than or equal >=
+			// greater than or equal to >=
 			case 'gte':
 				$result = ($firstValue >= $secondValue);
 				break;
@@ -557,18 +550,17 @@ abstract class tx_laterpay_form_abstract {
 				$result = ($firstValue < $secondValue);
 				break;
 
-			// less than or equal <=
+			// less than or equal to <=
 			case 'lte':
 				$result = ($firstValue <= $secondValue);
 				break;
 
-			// search if string present in value
+			// search, if string is present in value
 			case 'like':
 				$result = (strpos($firstValue, $secondValue) !== FALSE);
 				break;
 
 			default:
-
 				// incorrect comparison operator, do nothing
 		}
 
@@ -627,16 +619,18 @@ abstract class tx_laterpay_form_abstract {
 			if ($notNull && ($fieldData['value'] === NULL)) {
 				continue;
 			}
+
 			if ($prefix && (strpos($name, $prefix) === FALSE)) {
 				continue;
 			}
+
 			if (is_array($exclude) && in_array($name, $exclude)) {
 				continue;
 			}
+
 			$data[$name] = $fieldData['value'];
 		}
 
 		return $data;
 	}
 }
-

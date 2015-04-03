@@ -43,18 +43,18 @@ class tx_laterpay_helper_string {
 	 * @return int $numberOfWords
 	 */
 	public static function determineNumberOfWords($content) {
-		$content = preg_replace('/\s+/', ' ', $content);
-		$totalWords = count(explode(' ', $content));
+		$content 		= preg_replace('/\s+/', ' ', $content);
+		$totalWords 	= count(explode(' ', $content));
 
-		$config = tx_laterpay_config::getInstance();
+		$config 		= tx_laterpay_config::getInstance();
 
-		$percent = (int) $config->get('content.preview_percentage_of_content');
-		$percent = max(min($percent, 100), 1);
-		$min = (int) $config->get('content.preview_word_count_min');
-		$max = (int) $config->get('content.preview_word_count_max');
+		$percent 		= (int) $config->get('content.preview_percentage_of_content');
+		$percent 		= max(min($percent, 100), 1);
+		$min 			= (int) $config->get('content.preview_word_count_min');
+		$max 			= (int) $config->get('content.preview_word_count_max');
 
-		$numberOfWords = $totalWords * ($percent / 100);
-		$numberOfWords = max(min($numberOfWords, $max), $min);
+		$numberOfWords 	= $totalWords * ($percent / 100);
+		$numberOfWords 	= max(min($numberOfWords, $max), $min);
 
 		return $numberOfWords;
 	}
@@ -81,16 +81,18 @@ class tx_laterpay_helper_string {
 	 */
 	public static function truncate($text, $length = 100, $options = array()) {
 		$default = array(
-			'ellipsis' => ' ...',
-			'exact' => TRUE,
-			'html' => FALSE,
-			'words' => FALSE
+			'ellipsis' 	=> ' ...',
+			'exact' 	=> TRUE,
+			'html' 		=> FALSE,
+			'words' 	=> FALSE,
 		);
+
 		if (isset($options['ending'])) {
 			$default['ellipsis'] = $options['ending'];
 		} elseif (! empty($options['html'])) {
 			$default['ellipsis'] = "\xe2\x80\xa6";
 		}
+
 		$options = array_merge($default, $options);
 		extract($options);
 
@@ -100,15 +102,18 @@ class tx_laterpay_helper_string {
 
 		if ($html) {
 			$text = preg_replace('/<! --(.*?)-->/i', '', $text);
+
 			if ($words) {
 				$length = mb_strlen(self::limitWords(preg_replace('/<.*?>/', '', $text), $length));
 			}
+
 			if (mb_strlen(preg_replace('/<.*?>/', '', $text)) <= $length) {
 				return $text;
 			}
-			$totalLength = mb_strlen(strip_tags($ellipsis));
-			$openTags = array();
-			$truncate = '';
+
+			$totalLength 	= mb_strlen(strip_tags($ellipsis));
+			$openTags 		= array();
+			$truncate 		= '';
 
 			preg_match_all('/(<\/?([\w+]+)[^>]*>)?([^<>]*)/', $text, $tags, PREG_SET_ORDER);
 			foreach ($tags as $tag) {

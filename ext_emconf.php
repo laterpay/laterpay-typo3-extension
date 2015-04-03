@@ -11,24 +11,23 @@
  ***************************************************************/
 
 $EM_CONF[$_EXTKEY] = array (
-	'title' => 'LaterPay',
-	'description' => 'LaterPay plugin.',
-	'category' => 'fe',
-	'version' => '0.0.0',
-	'state' => 'alpha',
-	'uploadfolder' => FALSE,
-	'createDirs' => '',
-	'clearcacheonload' => TRUE,
-	'author' => 'admin@laterpay.com',
-	'author_email' => 'admin@laterpay.com',
-	'author_company' => 'Laterpay AG',
-	'constraints' => array (
-		'depends' =>
+	'title' 			=> 'LaterPay',
+	'description' 		=> 'LaterPay plugin.',
+	'category' 			=> 'fe',
+	'version' 			=> '0.0.0',
+	'state' 			=> 'alpha',
+	'uploadfolder' 		=> FALSE,
+	'createDirs' 		=> '',
+	'clearcacheonload' 	=> TRUE,
+	'author' 			=> 'admin@laterpay.com',
+	'author_email' 		=> 'admin@laterpay.com',
+	'author_company' 	=> 'Laterpay AG',
+	'constraints' 		=> array (
+		'depends' 			=>
 		array (
-			'typo3' => '4.3.0-6.2.99',
+			'typo3' 			=> '4.3.0-6.2.99',
 		),
-		'conflicts' => array (),
-		'suggests' => array (),
+		'conflicts' 		=> array (),
+		'suggests' 			=> array (),
 	),
 );
-

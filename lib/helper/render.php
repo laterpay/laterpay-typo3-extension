@@ -22,7 +22,7 @@
 class tx_laterpay_helper_render {
 
 	/**
-	 * Generate Javascript declaration of variable
+	 * Generate Javascript declaration of variable.
 	 *
 	 * @param mixed $objectName Name of variable
 	 * @param mixed $l10nVals Array of fields for creating JS object
@@ -34,6 +34,7 @@ class tx_laterpay_helper_render {
 			if ( !is_scalar($value) ) {
 				continue;
 			}
+
 			$l10nVals[$key] = html_entity_decode((string) $value, ENT_QUOTES, 'UTF-8');
 		}
 
@@ -41,6 +42,7 @@ class tx_laterpay_helper_render {
 		if (isset($afterScript)) {
 			unset($l10nVals['l10n_print_after']);
 		}
+
 		$script = 'var ' . $objectName . ' = ' . json_encode( $l10nVals ) . ';' . LF;
 		$script .= $afterScript . LF;
 

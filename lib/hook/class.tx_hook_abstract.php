@@ -22,14 +22,14 @@
 class tx_hook_abstract {
 
 	/**
-	 * Constructor of object
+	 * Constructor of object.
 	 */
 	public function __construct() {
 		$this->logger = tx_laterpay_core_logger::getInstance();
 	}
 
 	/**
-	 * Get page url
+	 * Get page URL.
 	 *
 	 * @return string
 	 */
@@ -41,7 +41,7 @@ class tx_hook_abstract {
 	}
 
 	/**
-	 * Get after purchase url for redirect
+	 * Get after purchase URL for redirect.
 	 *
 	 * @param array $data Array of data
 	 *
@@ -52,8 +52,9 @@ class tx_hook_abstract {
 		if (! $url) {
 			$this->logger->error(
 				__METHOD__ . ' could not find an URL for the given content_id',
-				array( 'data' => $data )
+				array('data' => $data,)
 			);
+
 			return $url;
 		}
 

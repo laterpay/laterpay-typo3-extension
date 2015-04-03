@@ -32,15 +32,15 @@ class tx_laterpay_helper_timepass {
 	public static function getDefaultOptions($key = NULL) {
 		// Default time range. Used during passes creation.
 		$defaults = array(
-			'pass_id' => '0',
-			'duration' => '1',
-			'period' => '1',
-			'access_to' => '0',
-			'access_category' => '',
-			'price' => '0.99',
-			'revenue_model' => 'ppu',
-			'title' => __('24-Hour Pass', 'laterpay'),
-			'description' => __('24 hours access to all content on this website', 'laterpay')
+			'pass_id' 			=> '0',
+			'duration' 			=> '1',
+			'period' 			=> '1',
+			'access_to' 		=> '0',
+			'access_category' 	=> '',
+			'price' 			=> '0.99',
+			'revenue_model' 	=> 'ppu',
+			'title' 			=> __('24-Hour Pass', 'laterpay'),
+			'description' 		=> __('24 hours access to all content on this website', 'laterpay'),
 		);
 
 		if (isset($key)) {
@@ -84,7 +84,7 @@ class tx_laterpay_helper_timepass {
 			21,
 			22,
 			23,
-			24
+			24,
 		);
 
 		if (isset($key)) {
@@ -111,7 +111,7 @@ class tx_laterpay_helper_timepass {
 			__('Day', 'laterpay'),
 			__('Week', 'laterpay'),
 			__('Month', 'laterpay'),
-			__('Year', 'laterpay')
+			__('Year', 'laterpay'),
 		);
 
 		// pluralized periods
@@ -120,7 +120,7 @@ class tx_laterpay_helper_timepass {
 			__('Days', 'laterpay'),
 			__('Weeks', 'laterpay'),
 			__('Months', 'laterpay'),
-			__('Years', 'laterpay')
+			__('Years', 'laterpay'),
 		);
 
 		$selectedArray = $pluralized ? $periodsPluralized : $periods;
@@ -144,7 +144,7 @@ class tx_laterpay_helper_timepass {
 	public static function getRevenueModelOptions($key = NULL) {
 		$revenues = array(
 			'ppu' => __('later', 'laterpay'),
-			'sis' => __('immediately', 'laterpay')
+			'sis' => __('immediately', 'laterpay'),
 		);
 
 		if (isset($key)) {
@@ -167,8 +167,6 @@ class tx_laterpay_helper_timepass {
 		$accessTo = array(
 			__('All content', 'laterpay')
 		);
-		// __( 'All content except for category', 'laterpay' ),
-		// __( 'All content in category', 'laterpay' ),
 
 		if (isset($key)) {
 			if (isset($accessTo[$key])) {
@@ -191,9 +189,9 @@ class tx_laterpay_helper_timepass {
 		$details = array();
 
 		if (! $timePass) {
-			$timePass['duration'] = self::getDefaultOptions('duration');
-			$timePass['period'] = self::getDefaultOptions('period');
-			$timePass['access_to'] = self::getDefaultOptions('access_to');
+			$timePass['duration'] 	= self::getDefaultOptions('duration');
+			$timePass['period'] 	= self::getDefaultOptions('period');
+			$timePass['access_to'] 	= self::getDefaultOptions('access_to');
 		}
 
 		$currency = get_option('laterpay_currency');
@@ -205,8 +203,8 @@ class tx_laterpay_helper_timepass {
 		// also display category, price, and revenue model, if fullInfo flag is used
 		if ($fullInfo) {
 			if ($timePass['access_to'] > 0) {
-				$categoryId = $timePass['access_category'];
-				$details['category'] = '"' . get_the_category_by_ID($categoryId) . '"';
+				$categoryId 			= $timePass['access_category'];
+				$details['category'] 	= '"' . get_the_category_by_ID($categoryId) . '"';
 			}
 
 			$details['price'] = __('for', 'laterpay') . ' ' .
@@ -231,18 +229,18 @@ class tx_laterpay_helper_timepass {
 
 		switch ($type) {
 			case 'duration':
-				$elements = self::getDurationOptions();
-				$defaultValue = self::getDefaultOptions('duration');
+				$elements 		= self::getDurationOptions();
+				$defaultValue 	= self::getDefaultOptions('duration');
 				break;
 
 			case 'period':
-				$elements = self::getPeriodOptions();
-				$defaultValue = self::getDefaultOptions('period');
+				$elements 		= self::getPeriodOptions();
+				$defaultValue 	= self::getDefaultOptions('period');
 				break;
 
 			case 'access':
-				$elements = self::getAccessOptions();
-				$defaultValue = self::getDefaultOptions('access_to');
+				$elements 		= self::getAccessOptions();
+				$defaultValue 	= self::getDefaultOptions('access_to');
 				break;
 
 			default:
@@ -459,39 +457,39 @@ class tx_laterpay_helper_timepass {
 			$data = array();
 		}
 
-		$currency = get_option('laterpay_currency');
-		$currencyModel = new tx_laterpay_model_currency();
-		$price = isset($data['price']) ? $data['price'] : $timePass['price'];
-		$revenueModel = tx_laterpay_helper_pricing::ensureValidRevenueModel($timePass['revenue_model'], $price);
+		$currency 		= get_option('laterpay_currency');
+		$currencyModel 	= new tx_laterpay_model_currency();
+		$price 			= isset($data['price']) ? $data['price'] : $timePass['price'];
+		$revenueModel 	= tx_laterpay_helper_pricing::ensureValidRevenueModel($timePass['revenue_model'], $price);
 
-		$clientOptions = tx_laterpay_helper_config::getPhpClientOptions();
-		$client = new tx_laterpay_client($clientOptions['cp_key'], $clientOptions['api_key'], $clientOptions['api_root'],
+		$clientOptions 	= tx_laterpay_helper_config::getPhpClientOptions();
+		$client 		= new tx_laterpay_client($clientOptions['cp_key'], $clientOptions['api_key'], $clientOptions['api_root'],
 			$clientOptions['web_root'], $clientOptions['token_name']);
 
-		$link = isset($data['link']) ? $data['link'] : get_permalink();
+		$link 			= isset($data['link']) ? $data['link'] : get_permalink();
 
 		// prepare URL
 		$urlParams = array(
-			'pass_id' => self::getTokenizedTimePassId($timePassId),
-			'id_currency' => $currencyModel->getCurrencyIdByIso4217Code($currency),
-			'price' => $price,
-			'date' => time(),
-			'ip' => ip2long($_SERVER['REMOTE_ADDR']),
+			'pass_id' 		=> self::getTokenizedTimePassId($timePassId),
+			'id_currency' 	=> $currencyModel->getCurrencyIdByIso4217Code($currency),
+			'price' 		=> $price,
+			'date' 			=> time(),
+			'ip' 			=> ip2long($_SERVER['REMOTE_ADDR']),
 			'revenue_model' => $revenueModel,
-			'link' => $link
+			'link' 			=> $link,
 		);
 
-		$url = add_query_arg(array_merge($urlParams, $data), $link);
-		$hash = tx_laterpay_helper_pricing::getHashByUrl($url);
-		$url = $url . '&hash=' . $hash;
+		$url 	= add_query_arg(array_merge($urlParams, $data), $link);
+		$hash 	= tx_laterpay_helper_pricing::getHashByUrl($url);
+		$url 	= $url . '&hash=' . $hash;
 
 		// parameters for LaterPay purchase form
 		$params = array(
-			'pricing' => $currency . ($price * 100),
-			'expiry' => '+' . self::getTimePassExpiryTime($timePass),
-			'vat' => tx_laterpay_config::getInstance()->get('currency.default_vat'),
-			'url' => $url,
-			'title' => isset($data['voucher']) ? $timePass['title'] . ', Code: ' . $data['voucher'] : $timePass['title']
+			'pricing' 	=> $currency . ($price * 100),
+			'expiry' 	=> '+' . self::getTimePassExpiryTime($timePass),
+			'vat' 		=> tx_laterpay_config::getInstance()->get('currency.default_vat'),
+			'url' 		=> $url,
+			'title' 	=> isset($data['voucher']) ? $timePass['title'] . ', Code: ' . $data['voucher'] : $timePass['title'],
 		);
 		if (isset($data['voucher'])) {
 			$params['article_id'] = '[#' . $data['voucher'] . ']';
@@ -555,25 +553,28 @@ class tx_laterpay_helper_timepass {
 	 * @return array return summary and individual statistics
 	 */
 	public static function getTimePassesStatistic() {
-		$historyModel = new tx_laterpay_model_payment_history();
-		$timePasses = self::getAllTimePasses();
-		$summaryActive = 0;
-		$summaryUnredeemed = 0;
-		$summaryRevenue = 0;
-		$summarySold = 0;
+		$historyModel 		= new tx_laterpay_model_payment_history();
+		$timePasses 		= self::getAllTimePasses();
+		$summaryActive 		= 0;
+		$summaryUnredeemed 	= 0;
+		$summaryRevenue 	= 0;
+		$summarySold 		= 0;
 
 		if ($timePasses) {
 			foreach ($timePasses as $timePass) {
-				$timePass = (array) $timePass;
-				$timePassHistory = $historyModel->getTimePassHistory($timePass['pass_id']);
+				$timePass 			= (array) $timePass;
+				$timePassHistory 	= $historyModel->getTimePassHistory($timePass['pass_id']);
+
 				// in seconds
-				$duration = self::getTimePassExpiryTime($timePass);
+				$duration 			= self::getTimePassExpiryTime($timePass);
 
 				// calculate time pass KPIs
 				// total value of purchased time passes
 				$committedRevenue = 0;
+
 				// number of unredeemed gift codes
 				$unredeemed = 0;
+
 				// number of active time passes
 				$active = 0;
 
@@ -604,11 +605,11 @@ class tx_laterpay_helper_timepass {
 				}
 
 				$timePassStatistics = array(
-					'data' => $timePass,
-					'active' => tx_laterpay_helper_view::formatNumber($active, FALSE),
-					'sold' => tx_laterpay_helper_view::formatNumber(count($timePassHistory), FALSE),
-					'unredeemed' => tx_laterpay_helper_view::formatNumber($unredeemed, FALSE),
-					'committed_revenue' => number_format($committedRevenue, 2)
+					'data' 				=> $timePass,
+					'active' 			=> tx_laterpay_helper_view::formatNumber($active, FALSE),
+					'sold' 				=> tx_laterpay_helper_view::formatNumber(count($timePassHistory), FALSE),
+					'unredeemed' 		=> tx_laterpay_helper_view::formatNumber($unredeemed, FALSE),
+					'committed_revenue' => number_format($committedRevenue, 2),
 				);
 
 				$statistic['individual'][$timePass['pass_id']] = $timePassStatistics;
@@ -626,10 +627,10 @@ class tx_laterpay_helper_timepass {
 		}
 
 		$statistic['summary'] = array(
-			'active' => tx_laterpay_helper_view::formatNumber($summaryActive, FALSE),
-			'sold' => tx_laterpay_helper_view::formatNumber($summarySold, FALSE),
-			'unredeemed' => tx_laterpay_helper_view::formatNumber($summaryUnredeemed, FALSE),
-			'committed_revenue' => number_format($summaryRevenue, 2)
+			'active' 			=> tx_laterpay_helper_view::formatNumber($summaryActive, FALSE),
+			'sold' 				=> tx_laterpay_helper_view::formatNumber($summarySold, FALSE),
+			'unredeemed' 		=> tx_laterpay_helper_view::formatNumber($summaryUnredeemed, FALSE),
+			'committed_revenue' => number_format($summaryRevenue, 2),
 		);
 
 		return $statistic;
@@ -644,9 +645,9 @@ class tx_laterpay_helper_timepass {
 	 * @return array
 	 */
 	public static function getTimePassExpiryByWeeks($timePassId, $ticks) {
-		$historyModel = new tx_laterpay_model_payment_history();
-		$data = array();
-		$duration = 0;
+		$historyModel 	= new tx_laterpay_model_payment_history();
+		$data 			= array();
+		$duration 		= 0;
 
 		// initialize array
 		if (! $ticks) {
@@ -661,18 +662,18 @@ class tx_laterpay_helper_timepass {
 
 		if ($timePassId) {
 			// get history for one given time pass
-			$timePass = (array) self::getTimePassById($timePassId);
-			$duration = self::getTimePassExpiryTime($timePass);
-			$history = $historyModel->getTimePassHistory($timePassId);
+			$timePass 	= (array) self::getTimePassById($timePassId);
+			$duration 	= self::getTimePassExpiryTime($timePass);
+			$history 	= $historyModel->getTimePassHistory($timePassId);
 		} else {
 			// get history for all time passes
-			$history = $historyModel->getTimePassHistory();
+			$history 	= $historyModel->getTimePassHistory();
 		}
 
 		if ($history && is_array($history)) {
 			// in seconds
-			$weekDuration = 7 * 24 * 60 * 60;
-			$currentDate = time();
+			$weekDuration 	= 7 * 24 * 60 * 60;
+			$currentDate 	= time();
 
 			// get expiry data for each time pass
 			foreach ($history as $hist) {
@@ -682,7 +683,7 @@ class tx_laterpay_helper_timepass {
 				// determine expiry date of time pass
 				if (! $duration) {
 					$timePassId = $hist->passId;
-					$timePass = (array) self::getTimePassById($timePassId);
+					$timePass 	= (array) self::getTimePassById($timePassId);
 					$expiryDate = $startDate + self::getTimePassExpiryTime($timePass);
 				} else {
 					$expiryDate = $startDate + $duration;

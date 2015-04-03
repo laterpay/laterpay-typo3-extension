@@ -35,14 +35,14 @@ class tx_laterpay_helper_dashboard {
 
 		if (! file_exists($filePath)) {
 			tx_laterpay_core_logger::getInstance()->error(__METHOD__ . ' - cache-file not found', array(
-				'file_path' => $filePath
+				'file_path' => $filePath,
 			));
 
 			return array();
 		}
 
-		$cacheData = file_get_contents($filePath);
-		$unsCacheData = @unserialize($cacheData);
+		$cacheData 		= file_get_contents($filePath);
+		$unsCacheData 	= @unserialize($cacheData);
 		if ($unsCacheData !== FALSE) {
 			$cacheData = $unsCacheData;
 			unset($unsCacheData);
@@ -51,8 +51,8 @@ class tx_laterpay_helper_dashboard {
 		if (! is_array($cacheData)) {
 			tx_laterpay_core_logger::getInstance()->error(__METHOD__ . ' - invalid cache data',
 				array(
-					'file_path' => $filePath,
-					'cache_data' => $cacheData
+					'file_path' 	=> $filePath,
+					'cache_data' 	=> $cacheData,
 				));
 
 			return array();
@@ -60,8 +60,8 @@ class tx_laterpay_helper_dashboard {
 
 		tx_laterpay_core_logger::getInstance()->info(__METHOD__,
 			array(
-				'file_path' => $filePath,
-				'cache_data' => $cacheData
+				'file_path' 	=> $filePath,
+				'cache_data' 	=> $cacheData,
 			));
 
 		return $cacheData;
@@ -82,20 +82,21 @@ class tx_laterpay_helper_dashboard {
 	public static function refreshCacheData($options, $data) {
 		$timestamp = strtotime('now GMT');
 		$data['last_update'] = array(
-			'date' => date('d.m.Y H.i:s', $timestamp),
-			'timestamp' => $timestamp
+			'date' 		=> date('d.m.Y H.i:s', $timestamp),
+			'timestamp' => $timestamp,
 		);
 
-		$cacheDir = $options['cache_dir'];
-		$cacheFilename = $options['cache_filename'];
+		$cacheDir 		= $options['cache_dir'];
+		$cacheFilename 	= $options['cache_filename'];
 
 		// create the cache dir, if it doesn't exist
 		if (!file_exists($cacheDir)) {
 			mkdir($cacheDir, 0770, TRUE);
 		}
 
-		$context = $options;
-		$context['data'] = $data;
+		$context 			= $options;
+		$context['data'] 	= $data;
+
 		tx_laterpay_core_logger::getInstance()->info(__METHOD__, $context);
 
 		// write the data to the cache dir
@@ -115,10 +116,11 @@ class tx_laterpay_helper_dashboard {
 		}
 
 		$cacheDir = tx_laterpay_config::getInstance()->get('cache_dir') . 'cron/' . gmdate('Y/m/d', $timestamp) . '/';
+
 		tx_laterpay_core_logger::getInstance()->info(__METHOD__,
 			array(
 				'timestamp' => $timestamp,
-				'cache_dir' => $cacheDir
+				'cache_dir' => $cacheDir,
 			));
 
 		return $cacheDir;
@@ -133,13 +135,14 @@ class tx_laterpay_helper_dashboard {
 	 */
 	public static function getCacheFilename($options) {
 		unset($options['start_timestamp']);
-		$arrayValues = array_values($options);
-		$cacheFilename = implode('-', $arrayValues) . '.cache';
+
+		$arrayValues 	= array_values($options);
+		$cacheFilename 	= implode('-', $arrayValues) . '.cache';
 
 		tx_laterpay_core_logger::getInstance()->info(__METHOD__,
 			array(
-				'options' => $options,
-				'cache_filename' => $cacheFilename
+				'options' 			=> $options,
+				'cache_filename' 	=> $cacheFilename,
 			));
 
 		return $cacheFilename;
@@ -157,8 +160,9 @@ class tx_laterpay_helper_dashboard {
 			'day',
 			'week',
 			'2-weeks',
-			'month'
+			'month',
 		);
+
 		$interval = sanitize_text_field((string) $interval);
 
 		if (! in_array($interval, $allowedIntervals)) {
@@ -191,6 +195,7 @@ class tx_laterpay_helper_dashboard {
 				}
 			}
 		}
+
 		return $endTimestamp;
 	}
 
@@ -205,7 +210,7 @@ class tx_laterpay_helper_dashboard {
 	public static function formatAmountValueMostLeastData($items, $decimal = 2) {
 		foreach ($items as $key => $item) {
 			$item['amount'] = number_format($item['amount'], $decimal);
-			$items[$key] = $item;
+			$items[$key] 	= $item;
 		}
 
 		return $items;
@@ -226,6 +231,7 @@ class tx_laterpay_helper_dashboard {
 				return 'month';
 			}
 		}
+
 		return 'day';
 	}
 
@@ -244,6 +250,7 @@ class tx_laterpay_helper_dashboard {
 				return 'month';
 			}
 		}
+
 		return 'date';
 	}
 
@@ -260,12 +267,12 @@ class tx_laterpay_helper_dashboard {
 		$sparkline = array();
 
 		if ($interval === 'day') {
-			$itemsByHour = self::sortItemsByHour($items);
-			$items = self::fillEmptyHours($itemsByHour, $startTimestamp);
+			$itemsByHour 	= self::sortItemsByHour($items);
+			$items 			= self::fillEmptyHours($itemsByHour, $startTimestamp);
 		} else {
-			$itemsByDay = self::sortItemsByDate($items);
-			$days = self::getDaysAsArray($startTimestamp, $interval);
-			$items = self::fillEmptyDays($itemsByDay, $days);
+			$itemsByDay 	= self::sortItemsByDate($items);
+			$days 			= self::getDaysAsArray($startTimestamp, $interval);
+			$items 			= self::fillEmptyDays($itemsByDay, $days);
 		}
 
 		foreach ($items as $item) {
@@ -298,16 +305,16 @@ class tx_laterpay_helper_dashboard {
 	public static function convertHistoryResultToDiagramData($items, $startTimestamp, $interval = 'week') {
 		$data = array(
 			'x' => array(),
-			'y' => array()
+			'y' => array(),
 		);
 
 		if ($interval === 'day') {
-			$itemsByHour = self::sortItemsByHour($items);
-			$items = self::fillEmptyHours($itemsByHour, $startTimestamp);
+			$itemsByHour 	= self::sortItemsByHour($items);
+			$items 			= self::fillEmptyHours($itemsByHour, $startTimestamp);
 		} else {
-			$itemsByDay = self::sortItemsByDate($items);
-			$days = self::getDaysAsArray($startTimestamp, $interval);
-			$items = self::fillEmptyDays($itemsByDay, $days);
+			$itemsByDay 	= self::sortItemsByDate($items);
+			$days 			= self::getDaysAsArray($startTimestamp, $interval);
+			$items 			= self::fillEmptyDays($itemsByDay, $days);
 		}
 
 		$key = 1;
@@ -315,29 +322,32 @@ class tx_laterpay_helper_dashboard {
 			if ($interval === 'day') {
 				$data['x'][] = array(
 					$key,
-					$item['hour']
+					$item['hour'],
 				);
+
 				$data['y'][] = array(
 					$key,
-					$item['quantity']
+					$item['quantity'],
 				);
 			} else {
 				$data['x'][] = array(
 					$key,
-					date('D', strtotime($item['date']))
+					date('D', strtotime($item['date'])),
 				);
+
 				$data['y'][] = array(
 					$key,
-					$item['quantity']
+					$item['quantity'],
 				);
 			}
+
 			$key = $key + 1;
 		}
 
 		tx_laterpay_core_logger::getInstance()->info(__METHOD__,
 			array(
 				'input' => $items,
-				'result' => $data
+				'result' => $data,
 			));
 
 		return $data;
@@ -374,8 +384,8 @@ class tx_laterpay_helper_dashboard {
 
 		tx_laterpay_core_logger::getInstance()->info(__METHOD__,
 			array(
-				'input' => $items,
-				'output' => $itemsByDate
+				'input' 	=> $items,
+				'output' 	=> $itemsByDate,
 			));
 
 		return $itemsByDate;
@@ -411,8 +421,8 @@ class tx_laterpay_helper_dashboard {
 
 		tx_laterpay_core_logger::getInstance()->info(__METHOD__,
 			array(
-				'input' => $items,
-				'output' => $itemsByHour
+				'input' 	=> $items,
+				'output' 	=> $itemsByHour,
 			));
 
 		return $itemsByHour;
@@ -438,11 +448,13 @@ class tx_laterpay_helper_dashboard {
 				$days = 31;
 			}
 		}
+
 		for ($i = 0; $i < $days; $i ++) {
-			$timestamp = strtotime('-' . $i . ' days', $startTimestamp);
-			$item = array(
-				'date' => date('Y-m-d', $timestamp),
-				'dayName' => date('D', $timestamp)
+			$timestamp 	= strtotime('-' . $i . ' days', $startTimestamp);
+
+			$item 		= array(
+				'date' 		=> date('Y-m-d', $timestamp),
+				'dayName' 	=> date('D', $timestamp),
 			);
 
 			$lastDays[] = $item;
@@ -450,10 +462,10 @@ class tx_laterpay_helper_dashboard {
 
 		tx_laterpay_core_logger::getInstance()->info(__METHOD__,
 			array(
-				'end_timestamp' => $startTimestamp,
-				'formatted_end_timestamp' => date('Y-m-d', $startTimestamp),
-				'interval' => $interval,
-				'last_days' => $lastDays
+				'end_timestamp' 			=> $startTimestamp,
+				'formatted_end_timestamp' 	=> date('Y-m-d', $startTimestamp),
+				'interval' 					=> $interval,
+				'last_days' 				=> $lastDays,
 			));
 
 		return $lastDays;
@@ -473,9 +485,10 @@ class tx_laterpay_helper_dashboard {
 
 			if (! array_key_exists($date, $items)) {
 				$item = array(
-					'quantity' => 0,
-					'date' => $date,
+					'quantity' 	=> 0,
+					'date' 		=> $date,
 				);
+
 				$items[$date] = $item;
 			}
 		}
@@ -484,8 +497,8 @@ class tx_laterpay_helper_dashboard {
 
 		tx_laterpay_core_logger::getInstance()->info(__METHOD__,
 			array(
-				'items' => $items,
-				'last_days' => $lastDays
+				'items' 	=> $items,
+				'last_days' => $lastDays,
 			));
 
 		return $items;
@@ -505,10 +518,10 @@ class tx_laterpay_helper_dashboard {
 		for ($hour = 0; $hour < 24; $hour ++) {
 			if (! array_key_exists($hour, $items)) {
 				$item = array(
-					'hour' => $hour,
-					'day' => date('d', $startTimestamp),
-					'date' => date('Y-m-d', $startTimestamp),
-					'quantity' => 0,
+					'hour' 		=> $hour,
+					'day' 		=> date('d', $startTimestamp),
+					'date' 		=> date('Y-m-d', $startTimestamp),
+					'quantity' 	=> 0,
 				);
 			} else {
 				$item = $items[$hour];
@@ -519,8 +532,8 @@ class tx_laterpay_helper_dashboard {
 
 		tx_laterpay_core_logger::getInstance()->info(__METHOD__,
 			array(
-				'input' => $items,
-				'output' => $filledItems
+				'input' 	=> $items,
+				'output' 	=> $filledItems,
 			));
 
 		return $filledItems;
@@ -536,7 +549,7 @@ class tx_laterpay_helper_dashboard {
 	public static function timePassExpiryDiagram($passId) {
 		$data = array(
 			'x' => array(),
-			'y' => array()
+			'y' => array(),
 		);
 
 		$expiry = tx_laterpay_helper_timepass::getTimePassExpiryByWeeks($passId, self::TIME_PASSES_WEEKS);
@@ -546,11 +559,12 @@ class tx_laterpay_helper_dashboard {
 		while ($key <= self::TIME_PASSES_WEEKS) {
 			$data['x'][] = array(
 				$key,
-				(string) $key
+				(string) $key,
 			);
+
 			$data['y'][] = array(
 				$key,
-				$expiry[$key]
+				$expiry[$key],
 			);
 
 			$key ++;
