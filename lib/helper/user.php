@@ -27,9 +27,11 @@ class tx_laterpay_helper_user {
 	 * @return bool
 	 */
 	public static function isAdmin() {
+
 		if (isset($GLOBALS['BE_USER']) and $GLOBALS['BE_USER']) {
 			$isAdmin = (bool) isset($GLOBALS['BE_USER']->user['admin']) ? $GLOBALS['BE_USER']->user['admin'] : FALSE;
-			return $isAdmin;
+			$hasAccess = $GLOBALS['BE_USER']->check('modules', 'laterpay');
+			return $isAdmin or $hasAccess;
 		}
 		return FALSE;
 	}

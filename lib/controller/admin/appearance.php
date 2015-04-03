@@ -56,9 +56,9 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 			'is_rating_enabled' => $this->config->get('ratings_enabled'),
 			'purchase_button_positioned_manually' => get_option('laterpay_purchase_button_positioned_manually'),
 			'time_passes_positioned_manually' => get_option('laterpay_time_passes_positioned_manually'),
-			'teaser_percentage_of_content' => get_option('laterpay_teaser_percentage_of_content'),
-			'teaser_min_words_count' => get_option('laterpay_teaser_min_words_count'),
-			'teaser_max_words_count' => get_option('laterpay_teaser_max_words_count'),
+			'teaser_percentage_of_content' => get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT),
+			'teaser_min_words_count' => get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN),
+			'teaser_max_words_count' => get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX),
 		);
 		$this->assign('laterpay', $viewArgs);
 		return $this->render('backend/appearance');

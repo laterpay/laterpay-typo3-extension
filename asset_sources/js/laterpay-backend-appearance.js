@@ -77,8 +77,15 @@
                                 setMessage(data);
 
                                 for (var error_field_name in data.errors) {
-                                    $o.teaserConfigForm.find('input[name='+data.errors[error_field_name]+']').addClass('error');
-                                    $o.teaserConfigForm.find('span[name='+data.errors[error_field_name]+']').empty().append(data.error_message[data.errors[error_field_name]]);
+                                    if(data.errors.hasOwnProperty(error_field_name)) {
+
+                                        $o.teaserConfigForm.find(
+                                            'input[name='+data.errors[error_field_name]+']'
+                                        ).addClass('error');
+                                        $o.teaserConfigForm.find(
+                                            'span[name='+data.errors[error_field_name]+']'
+                                        ).empty().append(data.error_message[data.errors[error_field_name]]);
+                                    }
                                 }
                             }
                         }
