@@ -24,7 +24,7 @@ class tx_laterpay_helper_content {
 	/**
 	 * Return teaser from some text
 	 *
-	 * @param string $text text of content
+	 * @param string $text Text of content
 	 *
 	 * @return string
 	 */

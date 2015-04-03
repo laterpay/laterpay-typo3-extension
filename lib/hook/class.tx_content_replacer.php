@@ -274,7 +274,7 @@ class tx_content_replacer extends tx_hook_abstract {
 	 *
 	 * @return void
 	 */
-	public function addPreviewModeSelector($params, t3lib_PageRenderer $caller) {
+	public function addPreviewModeSelector(&$params, t3lib_PageRenderer $caller) {
 		// if we in admin part - nothing to do here
 		if (TYPO3_MODE == 'BE') {
 			return;
