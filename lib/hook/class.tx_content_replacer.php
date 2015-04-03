@@ -62,10 +62,10 @@ class tx_content_replacer extends tx_hook_abstract {
 		// if we get data from tt_content (default table for content) and page_id,id pair was not processed earlier
 		// that possibly need to replace main content by teaser
 		if (
-		    $needToWrap && ($tsKey == tx_laterpay_model_content::$contentTable) &&
+			$needToWrap && ($tsKey == tx_laterpay_model_content::$contentTable) &&
 			(
-			 	! isset($this->processedContent[$pageId]) ||
-			 	! in_array($this->processedContent[$pageId], $id))
+				! isset($this->processedContent[$pageId]) ||
+				! in_array($this->processedContent[$pageId], $id))
 		) {
 			if ($this->isPaymentNeeded($contentObject)) {
 				$this->replaceContent($contentObject);
