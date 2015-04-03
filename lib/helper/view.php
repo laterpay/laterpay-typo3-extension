@@ -57,70 +57,6 @@ class tx_laterpay_helper_view {
 	}
 
 	/**
-	 * Get date of next day.
-	 *
-	 * @param string $date Date
-	 *
-	 * @return string $nextDay
-	 */
-	protected static function getNextDay($date) {
-		$nextDay = date('Y-m-d',
-			mktime(date('H', strtotime($date)), date('i', strtotime($date)), date('s', strtotime($date)),
-				date('m', strtotime($date)), date('d', strtotime($date)) + 1, date('Y', strtotime($date))));
-
-		return $nextDay;
-	}
-
-	/**
-	 * Get date a given number of days prior to a given date.
-	 *
-	 * @param string $date Date
-	 * @param int $ago Number of days ago
-	 *
-	 * @return string $priorDate
-	 */
-	protected static function getDateDaysAgo($date, $ago = 30) {
-		$ago = absint($ago);
-		$priorDate = date('Y-m-d',
-			mktime(date('H', strtotime($date)), date('i', strtotime($date)), date('s', strtotime($date)),
-				date('m', strtotime($date)), date('d', strtotime($date)) - $ago, date('Y', strtotime($date))));
-
-		return $priorDate;
-	}
-
-	/**
-	 * Get the statistics data for the last 30 days as string, joined by a given
-	 * delimiter.
-	 *
-	 * @param mixed $statistic Array of statistic data
-	 * @param string $type Type
-	 * @param string $delimiter Delimiter
-	 *
-	 * @return string
-	 */
-	public static function getDaysStatisticsAsString($statistic, $type = 'quantity', $delimiter = ',') {
-		$today = date('Y-m-d');
-		$date = self::getDateDaysAgo(date($today), 30);
-
-		$result = '';
-		while ($date <= $today) {
-			if ($result !== '') {
-				$result .= $delimiter;
-			}
-
-			if (isset($statistic[$date])) {
-				$result .= $statistic[$date][$type];
-			} else {
-				$result .= '0';
-			}
-
-			$date = self::getNextDay($date);
-		}
-
-		return $result;
-	}
-
-	/**
 	 * Check, if plugin is fully functional.
 	 *
 	 * @return bool
@@ -152,20 +88,6 @@ class tx_laterpay_helper_view {
 		}
 
 		return TRUE;
-	}
-
-	/**
-	 * Remove extra spaces from string.
-	 *
-	 * @param string $string Input data
-	 *
-	 * @return string
-	 */
-	public static function removeExtraSpaces($string) {
-		$string = trim(preg_replace('/>\s+</', '><', $string));
-		$string = preg_replace('/\n\s*\n/', '', $string);
-
-		return $string;
 	}
 
 	/**
