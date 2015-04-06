@@ -163,7 +163,7 @@ class tx_laterpay_form_bulkprice extends tx_laterpay_form_abstract {
 				'validators' => array(
 					'is_string',
 					'in_array' => array(
-						get_option('laterpay_currency'),
+						tx_laterpay_config::getOption('laterpay_currency'),
 						'percent'
 					)
 				),

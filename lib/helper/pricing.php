@@ -263,7 +263,7 @@ class tx_laterpay_helper_pricing {
 	 * @return mixed|null
 	 */
 	public static function getBulkOperations() {
-		$operations = get_option('laterpay_bulk_operations');
+		$operations = tx_laterpay_config::getOption('laterpay_bulk_operations');
 
 		return $operations ? unserialize($operations) : NULL;
 	}
@@ -303,7 +303,7 @@ class tx_laterpay_helper_pricing {
 			'data' 		=> $data,
 			'message' 	=> $message,
 		);
-		update_option('laterpay_bulk_operations', serialize($operations));
+		tx_laterpay_config::updateOption('laterpay_bulk_operations', serialize($operations));
 
 		end($operations);
 
@@ -326,7 +326,7 @@ class tx_laterpay_helper_pricing {
 				unset($operations[$id]);
 				$wasDeleted = TRUE;
 				$operations = $operations ? $operations : '';
-				update_option('laterpay_bulk_operations', serialize($operations));
+				tx_laterpay_config::updateOption('laterpay_bulk_operations', serialize($operations));
 			}
 		}
 

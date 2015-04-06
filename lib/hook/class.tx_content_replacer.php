@@ -150,7 +150,7 @@ class tx_content_replacer extends tx_hook_abstract {
 		$wrapper->setWrapperArgument('price', tx_laterpay_helper_pricing::getContentPrice($contentObject));
 		$wrapper->setWrapperArgument('purchaseURL', $purchaseUrl);
 		$wrapper->setWrapperArgument('revenueModel', tx_laterpay_helper_pricing::getContentRevenueModel($contentObject));
-		$wrapper->setWrapperArgument('isInVisibleTestMode', get_option(tx_laterpay_config::REG_LATERPAY_IS_IN_VISIBLE_TEST_MODE) ? : NULL);
+		$wrapper->setWrapperArgument('isInVisibleTestMode', tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_IS_IN_VISIBLE_TEST_MODE) ? : NULL);
 		$wrapper->setWrapperArgument('previewAsVisitor', tx_laterpay_helper_user::previewAsVisitor());
 
 		$contentObject->data['bodytext'] = $wrapper->render($laterpayTeaser);
@@ -192,7 +192,7 @@ class tx_content_replacer extends tx_hook_abstract {
 	 */
 	public function getWrapper(tslib_cObj $contentObject, $teaserText) {
 		$wraperName = 'tx_laterpay_wrapper_';
-		if (get_option('laterpay_teaser_content_only')) {
+		if (tx_laterpay_config::getOption('laterpay_teaser_content_only')) {
 			$wraperName .= 'teaser';
 		} else {
 			$wraperName .= 'block';
@@ -290,8 +290,8 @@ class tx_content_replacer extends tx_hook_abstract {
 		}
 
 		$render = new tx_laterpay_controller_abstract(NULL);
-		$render->assign('preview_as_visitor', get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_AS_VISITOR));
-		$render->assign('hide_statistics_pane', get_option(tx_laterpay_config::REG_LATERPAY_STATISTICS_TAB_IS_HIDDEN));
+		$render->assign('preview_as_visitor', tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_AS_VISITOR));
+		$render->assign('hide_statistics_pane', tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_STATISTICS_TAB_IS_HIDDEN));
 
 		$tab = $render->getTextView('frontend/page/select_preview_mode_tab');
 
@@ -304,15 +304,15 @@ class tx_content_replacer extends tx_hook_abstract {
 	 * @return bool
 	 */
 	protected function needToWrap() {
-		$liveMode = get_option(tx_laterpay_config::REG_IS_IN_LIVE_MODE);
+		$liveMode = tx_laterpay_config::getOption(tx_laterpay_config::REG_IS_IN_LIVE_MODE);
 
 		if (tx_laterpay_helper_user::isAdmin()) {
-			if (!get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_AS_VISITOR)) {
+			if (!tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_AS_VISITOR)) {
 				return FALSE;
 			}
 		} elseif (!$liveMode) {
 			// if in test mode and test mode is invisible
-			if (!get_option(tx_laterpay_config::REG_LATERPAY_IS_IN_VISIBLE_TEST_MODE)) {
+			if (!tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_IS_IN_VISIBLE_TEST_MODE)) {
 				return FALSE;
 			}
 		}

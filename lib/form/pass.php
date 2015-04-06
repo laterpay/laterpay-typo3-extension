@@ -34,7 +34,7 @@ class tx_laterpay_form_pass extends tx_laterpay_form_abstract {
 				),
 				'filters' => array(
 					'to_int',
-					'unslash'
+					'tx_laterpay_helper_string::unslash'
 				)
 			));
 
@@ -45,7 +45,7 @@ class tx_laterpay_form_pass extends tx_laterpay_form_abstract {
 				),
 				'filters' => array(
 					'to_int',
-					'unslash'
+					'tx_laterpay_helper_string::unslash'
 				)
 			));
 
@@ -57,7 +57,7 @@ class tx_laterpay_form_pass extends tx_laterpay_form_abstract {
 				),
 				'filters' => array(
 					'to_int',
-					'unslash'
+					'tx_laterpay_helper_string::unslash'
 				),
 				'can_be_null' => FALSE
 			));
@@ -70,7 +70,7 @@ class tx_laterpay_form_pass extends tx_laterpay_form_abstract {
 				),
 				'filters' => array(
 					'to_int',
-					'unslash'
+					'tx_laterpay_helper_string::unslash'
 				),
 				'can_be_null' => FALSE
 			));
@@ -84,7 +84,7 @@ class tx_laterpay_form_pass extends tx_laterpay_form_abstract {
 		 * ),
 		 * 'filters' => array(
 		 * 'to_int',
-		 * 'unslash',
+		 * 'tx_laterpay_helper_string::unslash',
 		 * )
 		 * )
 		 * );
@@ -127,7 +127,7 @@ class tx_laterpay_form_pass extends tx_laterpay_form_abstract {
 				),
 				'filters' => array(
 					'to_string',
-					'unslash'
+					'tx_laterpay_helper_string::unslash'
 				)
 			));
 
@@ -138,7 +138,7 @@ class tx_laterpay_form_pass extends tx_laterpay_form_abstract {
 				),
 				'filters' => array(
 					'to_string',
-					'unslash'
+					'tx_laterpay_helper_string::unslash'
 				)
 			));
 
