@@ -35,3 +35,7 @@
 !/res/img/.gitkeep
 res/fonts
 !/res/fonts/.gitkeep
+
+* gulp and node stuff
+node_modules/
+.gulp
