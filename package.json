@@ -1,0 +1,38 @@
+{
+  "name": "laterpay-typo3-extension",
+  "version": "1.0.0",
+  "description": "Extension for using LaterPay in TYPO3.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/laterpay/laterpay-typo3-extension.git"
+  },
+  "keywords": [
+    "subscription, LaterPay, paid content"
+  ],
+  "author": "drodler@laterpay.net",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/laterpay/laterpay-typo3-extension/issues"
+  },
+  "homepage": "https://github.com/laterpay/laterpay-typo3-extension",
+  "devDependencies": {
+    "del": "^0.1.3",
+    "gulp": "^3.8.11",
+    "gulp-autoprefixer": "^2.1.0",
+    "gulp-cached": "^1.0.1",
+    "gulp-git": "^0.5.2",
+    "gulp-jshint": "^1.8.5",
+    "gulp-load-plugins": "^0.8.1",
+    "gulp-minify-css": "^0.4.5",
+    "gulp-notify": "^2.0.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-sourcemaps": "^1.2.2",
+    "gulp-stylus": "^2.0.1",
+    "gulp-uglify": "^1.0.1",
+    "jshint-stylish": "^1.0.0"
+  }
+}
