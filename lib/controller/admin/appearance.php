@@ -50,15 +50,15 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 
 		$viewArgs = array(
 			'plugin_is_in_live_mode' 				=> $this->config->get('is_in_live_mode'),
-			'show_teaser_content_only' 				=> get_option('laterpay_teaser_content_only') == 1,
+			'show_teaser_content_only' => tx_laterpay_config::getOption('laterpay_teaser_content_only') == 1,
 			'top_nav' 								=> $this->getMenu(),
 			'admin_menu' 							=> tx_laterpay_helper_view::getAdminMenu(),
 			'is_rating_enabled' 					=> $this->config->get('ratings_enabled'),
-			'purchase_button_positioned_manually' 	=> get_option('laterpay_purchase_button_positioned_manually'),
-			'time_passes_positioned_manually' 		=> get_option('laterpay_time_passes_positioned_manually'),
-			'teaser_percentage_of_content' 			=> get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT),
-			'teaser_min_words_count' 				=> get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN),
-			'teaser_max_words_count' 				=> get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX),
+			'purchase_button_positioned_manually' => tx_laterpay_config::getOption('laterpay_purchase_button_positioned_manually'),
+			'time_passes_positioned_manually' => tx_laterpay_config::getOption('laterpay_time_passes_positioned_manually'),
+			'teaser_percentage_of_content' => tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT),
+			'teaser_min_words_count' => tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN),
+			'teaser_max_words_count' => tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX),
 		);
 
 		$this->assign('laterpay', $viewArgs);
@@ -86,26 +86,26 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 					$ajaxObj->setContent(
 						array(
 							'success' => FALSE,
-							'message' => __('An error occurred when trying to save your settings. Please try again.', 'laterpay')
+							'message' => tx_laterpay_helper_string::tr('An error occurred when trying to save your settings. Please try again.', 'laterpay')
 						)
 					);
 				} else {
-					$result = update_option('laterpay_teaser_content_only',
+					$result = tx_laterpay_config::updateOption('laterpay_teaser_content_only',
 						$paidContentPreviewForm->getFieldValue('paid_content_preview'));
 
 					if ($result) {
-						if (get_option('laterpay_teaser_content_only')) {
+						if (tx_laterpay_config::getOption('laterpay_teaser_content_only')) {
 							$ajaxObj->setContent(
 								array(
 									'success' => TRUE,
-									'message' => __('Visitors will now see only the teaser content of paid posts.', 'laterpay')
+									'message' => tx_laterpay_helper_string::tr('Visitors will now see only the teaser content of paid posts.', 'laterpay')
 								)
 							);
 						} else {
 							$ajaxObj->setContent(
 								array(
 									'success' => TRUE,
-									'message' => __(
+									'message' => tx_laterpay_helper_string::tr(
 										'Visitors will now see the teaser content of paid posts plus an excerpt of the real content under an overlay.',
 										'laterpay')
 								)
@@ -123,25 +123,25 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 					$ajaxObj->setContent(
 						array(
 							'success' => FALSE,
-							'message' => __('An error occurred when trying to save your settings. Please try again.', 'laterpay')
+							'message' => tx_laterpay_helper_string::tr('An error occurred when trying to save your settings. Please try again.', 'laterpay')
 						)
 					);
 				} else {
-					$result = update_option('laterpay_ratings', ! ! $ratingsForm->getFieldValue('enable_ratings'));
+					$result = tx_laterpay_config::updateOption('laterpay_ratings', ! ! $ratingsForm->getFieldValue('enable_ratings'));
 
 					if ($result) {
-						if (get_option('laterpay_ratings')) {
+						if (tx_laterpay_config::getOption('laterpay_ratings')) {
 							$ajaxObj->setContent(
 								array(
 									'success' => TRUE,
-									'message' => __('Visitors can now rate the posts they have purchased.', 'laterpay')
+									'message' => tx_laterpay_helper_string::tr('Visitors can now rate the posts they have purchased.', 'laterpay')
 								)
 							);
 						} else {
 							$ajaxObj->setContent(
 								array(
 									'success' => TRUE,
-									'message' => __('The rating of posts has been disabled.', 'laterpay')
+									'message' => tx_laterpay_helper_string::tr('The rating of posts has been disabled.', 'laterpay')
 								)
 							);
 						}
@@ -156,26 +156,26 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 					$ajaxObj->setContent(
 						array(
 							'success' => FALSE,
-							'message' => __('An error occurred when trying to save your settings. Please try again.', 'laterpay')
+							'message' => tx_laterpay_helper_string::tr('An error occurred when trying to save your settings. Please try again.', 'laterpay')
 						)
 					);
 				} else {
-					$result = update_option('laterpay_purchase_button_positioned_manually',
+					$result = tx_laterpay_config::updateOption('laterpay_purchase_button_positioned_manually',
 						! ! $purchaseButtonPosForm->getFieldValue('purchase_button_positioned_manually'));
 
 					if ($result) {
-						if (get_option('laterpay_purchase_button_positioned_manually')) {
+						if (tx_laterpay_config::getOption('laterpay_purchase_button_positioned_manually')) {
 							$ajaxObj->setContent(
 								array(
 									'success' => TRUE,
-									'message' => __('Purchase buttons are now rendered at a custom position.', 'laterpay')
+									'message' => tx_laterpay_helper_string::tr('Purchase buttons are now rendered at a custom position.', 'laterpay')
 								)
 							);
 						} else {
 							$ajaxObj->setContent(
 								array(
 									'success' => TRUE,
-									'message' => __('Purchase buttons are now rendered at their default position.', 'laterpay')
+									'message' => tx_laterpay_helper_string::tr('Purchase buttons are now rendered at their default position.', 'laterpay')
 								)
 							);
 						}
@@ -190,26 +190,26 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 					$ajaxObj->setContent(
 						array(
 							'success' => FALSE,
-							'message' => __('An error occurred when trying to save your settings. Please try again.', 'laterpay')
+							'message' => tx_laterpay_helper_string::tr('An error occurred when trying to save your settings. Please try again.', 'laterpay')
 						)
 					);
 				} else {
-					$result = update_option('laterpay_time_passes_positioned_manually',
+					$result = tx_laterpay_config::updateOption('laterpay_time_passes_positioned_manually',
 						! ! $timePassesPosForm->getFieldValue('time_passes_positioned_manually'));
 
 					if ($result) {
-						if (get_option('laterpay_time_passes_positioned_manually')) {
+						if (tx_laterpay_config::getOption('laterpay_time_passes_positioned_manually')) {
 							$ajaxObj->setContent(
 								array(
 									'success' => TRUE,
-									'message' => __('Time passes are now rendered at a custom position.', 'laterpay')
+									'message' => tx_laterpay_helper_string::tr('Time passes are now rendered at a custom position.', 'laterpay')
 								)
 							);
 						} else {
 							$ajaxObj->setContent(
 								array(
 									'success' => TRUE,
-									'message' => __('Time passes are now rendered at their default position.', 'laterpay')
+									'message' => tx_laterpay_helper_string::tr('Time passes are now rendered at their default position.', 'laterpay')
 								)
 							);
 						}
@@ -228,7 +228,7 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 				$ajaxObj->setContent(
 					array(
 						'success' => FALSE,
-						'message' => __('An error occurred when trying to save your settings. Please try again.', 'laterpay')
+						'message' => tx_laterpay_helper_string::tr('An error occurred when trying to save your settings. Please try again.', 'laterpay')
 					)
 				);
 		}
@@ -254,33 +254,33 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 
 		if (!is_numeric($percentage) or $percentage % 1 > 0 or 1 > $percentage or $percentage > 100) {
 			$success = FALSE;
-			$errorMessages[$percentageFieldName] = __('Percentage must be a positive integer between 1 and 100', 'laterpay');
+			$errorMessages[$percentageFieldName] = tx_laterpay_helper_string::tr('Percentage must be not negative integer and have value between 1 and 100', 'laterpay');
 			$errors[] = $percentageFieldName;
 		}
 
 		if (!is_numeric($minWords) or $minWords < 0 ) {
 			$success = FALSE;
-			$errorMessages[$minWordsFieldName] = __('Min count of words must be a positive integer greater than 0', 'laterpay');
+			$errorMessages[$minWordsFieldName] = tx_laterpay_helper_string::tr('Min count of words must be not negative integer more than 0', 'laterpay');
 			$errors[] = $minWordsFieldName;
 		}
 
 		if (!is_numeric($maxWords) or $maxWords < 0 ) {
 			$success = FALSE;
-			$errorMessages[$maxWordsFieldName] = __('Max count of words must be a positive integer greater than 0', 'laterpay');
+			$errorMessages[$maxWordsFieldName] = tx_laterpay_helper_string::tr('Max count of words must be not negative integer more than 0', 'laterpay');
 			$errors[] = $maxWordsFieldName;
 		}
 
 		if ($maxWords <= $minWords) {
 			$success = FALSE;
-			$errorMessages[$maxWordsFieldName] = __('Max count of words must be greater than min count of words', 'laterpay');
+			$errorMessages[$maxWordsFieldName] = tx_laterpay_helper_string::tr('Max count of words must more than min count of words', 'laterpay');
 			$errors[] = $maxWordsFieldName;
 		}
 
 		if ($success) {
-			$message = __('New values saved successfully', 'laterpay');
-			update_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT, $percentage);
-			update_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX, $maxWords);
-			update_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN, $minWords);
+			$message = tx_laterpay_helper_string::tr('new values saved successfully');
+			tx_laterpay_config::updateOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT, $percentage);
+			tx_laterpay_config::updateOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX, $maxWords);
+			tx_laterpay_config::updateOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN, $minWords);
 		}
 
 		return array(

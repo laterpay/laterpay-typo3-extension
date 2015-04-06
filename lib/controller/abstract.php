@@ -118,7 +118,7 @@ class tx_laterpay_controller_abstract
 
 		$viewFile = $extPath = t3lib_extMgm::extPath('laterpay') . 'view/' . $file . '.phtml';
 		if (!file_exists($viewFile)) {
-			$msg = sprintf(__('%s : <code>%s</code> not found', 'laterpay'),
+			$msg = sprintf(tx_laterpay_helper_string::tr('%s : <code>%s</code> not found', 'laterpay'),
 					__METHOD__, $file);
 
 			$this->logger->error(__METHOD__ . ' - ' . $msg,

@@ -47,6 +47,6 @@ class tx_laterpay_helper_user {
 			return FALSE;
 		}
 
-		return (bool) get_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_AS_VISITOR);
+		return (bool) tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_AS_VISITOR);
 	}
 }

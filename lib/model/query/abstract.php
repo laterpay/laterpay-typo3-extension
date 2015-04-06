@@ -178,7 +178,7 @@ class tx_laterpay_model_query_abstract {
 			return '';
 		}
 
-		return ' LIMIT ' . toabsint($limit) . ' ';
+		return ' LIMIT ' . tx_laterpay_helper_string::toAbsInt($limit) . ' ';
 	}
 
 	/**
@@ -242,7 +242,7 @@ class tx_laterpay_model_query_abstract {
 	 * @return string
 	 */
 	protected function dateTimeToStr($datetime) {
-		$datetime = array_map( 'toabsint', $datetime );
+		$datetime = array_map( 'tx_laterpay_helper_string::toAbsInt', $datetime );
 
 		if ( ! isset( $datetime['year'] ) ) {
 			$datetime['year'] = gmdate( 'Y', $now );

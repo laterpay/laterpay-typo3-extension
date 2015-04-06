@@ -58,7 +58,7 @@ class tx_hook_abstract {
 			return $url;
 		}
 
-		$url = add_query_arg($data, $url);
+		$url = tx_laterpay_helper_string::addQueryArg($data, $url);
 
 		return $url;
 	}
