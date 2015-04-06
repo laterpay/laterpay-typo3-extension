@@ -634,4 +634,30 @@ class tx_laterpay_config implements t3lib_Singleton {
 	public function __isset($name) {
 		return $this->has($name);
 	}
+
+	/**
+	 * Get data from typo: registry
+	 *
+	 * @param string $name NAme of parameter
+	 *
+	 * @return mixed
+	 */
+	public static function getOption($name) {
+		$registry = t3lib_div::makeInstance('t3lib_Registry');
+		return $registry->get(self::PLUGIN_NAME_SPACE, $name);
+	}
+
+	/**
+	 * Set option in typo: registry
+	 *
+	 * @param string $name Name of parameter
+	 * @param mixed $value Stored data
+	 *
+	 * @return bool
+	 */
+	public static function updateOption($name, $value) {
+		$registry = t3lib_div::makeInstance('t3lib_Registry');
+		$registry->set(self::PLUGIN_NAME_SPACE, $name, $value);
+		return TRUE;
+	}
 }

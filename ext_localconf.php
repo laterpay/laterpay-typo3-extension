@@ -81,5 +81,4 @@ $TYPO3_CONF_VARS['BE']['AJAX']['txttlaterpayM1::appearance'] = t3lib_extMgm::ext
 $TYPO3_CONF_VARS['BE']['AJAX']['txttlaterpayM1::dashboard'] = t3lib_extMgm::extPath('laterpay') . 'mod1/index.php:tx_laterpay_module1->dashboardProcessAjaxRequests';
 // @codingStandardsIgnoreStart
 require_once (t3lib_extMgm::extPath('laterpay').'lib/class.tx_laterpay_compatibility.php');
-require_once (t3lib_extMgm::extPath('laterpay').'lib/laterpay_function.php');
 // @codingStandardsIgnoreEnd

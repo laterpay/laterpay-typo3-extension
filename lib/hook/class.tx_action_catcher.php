@@ -74,7 +74,7 @@ class tx_action_catcher extends tx_hook_abstract {
 			exit;
 		}
 
-		update_option(tx_laterpay_config::REG_LATERPAY_PREVIEW_AS_VISITOR, $previewAsVisitor);
+		tx_laterpay_config::updateOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_AS_VISITOR, $previewAsVisitor);
 
 		return array(
 			'success' => TRUE,
@@ -98,7 +98,7 @@ class tx_action_catcher extends tx_hook_abstract {
 			exit;
 		}
 
-		update_option(tx_laterpay_config::REG_LATERPAY_STATISTICS_TAB_IS_HIDDEN, $statisticTabIsHidden);
+		tx_laterpay_config::updateOption(tx_laterpay_config::REG_LATERPAY_STATISTICS_TAB_IS_HIDDEN, $statisticTabIsHidden);
 
 		return array(
 			'success' => TRUE,

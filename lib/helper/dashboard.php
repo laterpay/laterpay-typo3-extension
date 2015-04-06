@@ -162,8 +162,7 @@ class tx_laterpay_helper_dashboard {
 			'2-weeks',
 			'month',
 		);
-
-		$interval = sanitize_text_field((string) $interval);
+		$interval = tx_laterpay_helper_string::sanitizeTextField((string) $interval);
 
 		if (! in_array($interval, $allowedIntervals)) {
 			$interval = 'week';

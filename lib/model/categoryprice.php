@@ -139,7 +139,7 @@ class tx_laterpay_model_categoryprice {
 			$this,
 			'filter_terms_clauses_for_categories_without_price'
 		));
-		$categories = get_categories($args);
+		//$categories = get_categories($args);
 		remove_filter('terms_clauses', array(
 			$this,
 			'filter_terms_clauses_for_categories_without_price'

@@ -56,10 +56,10 @@ class tx_laterpay_module1 extends t3lib_SCbase {
 	public function menuConfig() {
 		$this->MOD_MENU = array(
 			'function' => array(
-				'1' => $GLOBALS['LANG']->getLL('Dashboard'),
-				'2' => $GLOBALS['LANG']->getLL('Pricing'),
-				'3' => $GLOBALS['LANG']->getLL('Appearance'),
-				'4' => $GLOBALS['LANG']->getLL('Account'),
+				'1' => tx_laterpay_helper_string::tr('Dashboard'),
+				'2' => tx_laterpay_helper_string::tr('Pricing'),
+				'3' => tx_laterpay_helper_string::tr('Appearance'),
+				'4' => tx_laterpay_helper_string::tr('Account'),
 			)
 		);
 		parent::menuConfig();
@@ -119,8 +119,8 @@ class tx_laterpay_module1 extends t3lib_SCbase {
 				$GLOBALS['LANG']->sL('LLL:EXT:lang/locallang_core.xml:labels.path') .
 				': ' . t3lib_div::fixed_lgd_cs($this->pageinfo['_thePath'], -50);
 
-			$this->content .= $this->doc->startPage($GLOBALS['LANG']->getLL('title'));
-			$this->content .= $this->doc->header($GLOBALS['LANG']->getLL('title'));
+			$this->content .= $this->doc->startPage(tx_laterpay_helper_string::tr('title'));
+			$this->content .= $this->doc->header(tx_laterpay_helper_string::tr('title'));
 			$this->content .= $this->doc->spacer(5);
 			$this->content .= $this->doc->section(
 					'', $this->doc->funcMenu($headerSection, t3lib_BEfunc::getFuncMenu($this->id, 'SET[function]',
@@ -140,8 +140,8 @@ class tx_laterpay_module1 extends t3lib_SCbase {
 
 			$this->doc->backPath = $GLOBALS['BACK_PATH'];
 
-			$this->content .= $this->doc->startPage($GLOBALS['LANG']->getLL('title'));
-			$this->content .= $this->doc->header($GLOBALS['LANG']->getLL('title'));
+			$this->content .= $this->doc->startPage(tx_laterpay_helper_string::tr('title'));
+			$this->content .= $this->doc->header(tx_laterpay_helper_string::tr('title'));
 			$this->content .= $this->doc->spacer(5);
 			$this->content .= $this->doc->spacer(10);
 		}
@@ -168,19 +168,19 @@ class tx_laterpay_module1 extends t3lib_SCbase {
 		switch ((string)$this->MOD_SETTINGS['function']) {
 			case 1:
 				$tController = new tx_laterpay_controller_admin_dashboard( $this->doc);
-				$content = $this->doc->section($GLOBALS['LANG']->getLL('Dashboard') . ':', $tController->renderPage(), 0, 1);
+				$content = $this->doc->section(tx_laterpay_helper_string::tr('Dashboard') . ':', $tController->renderPage(), 0, 1);
 				break;
 			case 2:
 				$tController = new tx_laterpay_controller_admin_pricing( $this->doc );
-				$content = $this->doc->section($GLOBALS['LANG']->getLL('Pricing') . ':', $tController->renderPage(), 0, 1);
+				$content = $this->doc->section(tx_laterpay_helper_string::tr('Pricing') . ':', $tController->renderPage(), 0, 1);
 				break;
 			case 3:
 				$tController = new tx_laterpay_controller_admin_appearance( $this->doc);
-				$content = $this->doc->section($GLOBALS['LANG']->getLL('Appearance') . ':', $tController->renderPage(), 0, 1);
+				$content = $this->doc->section(tx_laterpay_helper_string::tr('Appearance') . ':', $tController->renderPage(), 0, 1);
 				break;
 			case 4:
 				$tController = new tx_laterpay_controller_admin_account( $this->doc );
-				$content = $this->doc->section($GLOBALS['LANG']->getLL('Account') . ':', $tController->renderPage(), 0, 1);
+				$content = $this->doc->section(tx_laterpay_helper_string::tr('Account') . ':', $tController->renderPage(), 0, 1);
 				break;
 			default:
 				throw new Exception('Bad input data');

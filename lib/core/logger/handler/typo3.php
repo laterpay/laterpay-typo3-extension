@@ -146,24 +146,24 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 		// @codingStandardsIgnoreStart
 		return array(
 				array(
-						'name'      => __( 'Requests', 'laterpay' ),
-						'content'   => array_merge(t3lib_div::_GET(), t3lib_div::_POST()),
+						'name'		=> tx_laterpay_helper_string::tr('Requests'),
+						'content'	=> array_merge(t3lib_div::_GET(), t3lib_div::_POST()),
 				),
 				array(
-						'name'      => __( 'Session', 'laterpay' ),
-						'content'   => isset( $_SESSION ) ? $_SESSION : array(),
+						'name'		=> tx_laterpay_helper_string::tr('Session'),
+						'content'	=> isset( $_SESSION ) ? $_SESSION : array(),
 				),
 				array(
-						'name'      => sprintf( __( 'Cookies<span class="lp_debugger-tabs__count">%s</span>', 'laterpay' ), count( $_COOKIE ) ),
-						'content'   => $_COOKIE,
+						'name'		=> sprintf( tx_laterpay_helper_string::tr('Cookies<span class="lp_debugger-tabs__count">%s</span>'), count( $_COOKIE ) ),
+						'content'	=> $_COOKIE,
 				),
 				array(
-						'name'      => __( 'System Config', 'laterpay' ),
-						'content'   => $this->getSystemInfo(),
+						'name'		=> tx_laterpay_helper_string::tr('System Config'),
+						'content'	=> $this->getSystemInfo(),
 				),
 				array(
-						'name'      => __( 'Plugin Config', 'laterpay' ),
-						'content'   => $this->config->getAll(),
+						'name'		=> tx_laterpay_helper_string::tr('Plugin Config'),
+						'content'	=> $this->config->getAll(),
 				),
 		);
 		// @codingStandardsIgnoreEnd
@@ -176,17 +176,17 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 	 */
 	protected function getSystemInfo() {
 		$systemInfo = array(
-				'Typo3 version'         => $TYPO_VERSION,
-// 				'Multisite'                 => is_multisite() ? __( 'yes', 'laterpay' ) : __( 'no', 'laterpay' ),
+				'Typo3 version'		=> $TYPO_VERSION,
+// 				'Multisite'                 => is_multisite() ? tx_laterpay_helper_string::tr('yes') : tx_laterpay_helper_string::tr('no'),
 // 				'WordPress memory limit'    => ( $this->let_to_num( WP_MEMORY_LIMIT ) / 1024 ) . ' MB',
 // 				'Active plugins'            => implode( ', ', $plugins ),
-// 				'Network active plugins'    => is_multisite() ? $network_plugins : __( 'none', 'laterpay' ),
+// 				'Network active plugins'    => is_multisite() ? $network_plugins : tx_laterpay_helper_string::tr('none'),
 // 				'Registered post types'     => implode( ', ', get_post_types( array( 'public' => true ) ) ),
 // 				'Active theme'              => $theme,
-				'PHP version'               => PHP_VERSION,
-				'PHP memory limit'          => ini_get( 'memory_limit' ),
-				'PHP modules'               => implode( ', ', get_loaded_extensions() ),
-				'Web server info'           => $_SERVER['SERVER_SOFTWARE'],
+				'PHP version'		=> PHP_VERSION,
+				'PHP memory limit'	=> ini_get( 'memory_limit' ),
+				'PHP modules'		=> implode( ', ', get_loaded_extensions() ),
+				'Web server info'	=> $_SERVER['SERVER_SOFTWARE'],
 		);
 		return $systemInfo;
 	}
@@ -224,7 +224,7 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 			if ( empty( $tab['content'] ) ) {
 				continue;
 			}
-			$tabs .= sprintf(self::DEBUG_TABS_TEMPLATE, __( $tab['name'], 'laterpay' ));
+			$tabs .= sprintf(self::DEBUG_TABS_TEMPLATE, tx_laterpay_helper_string::tr($tab['name']));
 
 			$tabsInternal = '';
 			foreach ( $tab['content'] as $key => $value  ) {
@@ -235,9 +235,9 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 		}
 		$out = sprintf(
 			self::DEBUG_TABLE_TEMPLATE,
-			sprintf( __( '%s Memory Usage', 'laterpay' ), number_format( memory_get_peak_usage() / pow( 1024, 2 ), 1 ) . ' MB' ),
-			__( 'Debugger', 'laterpay' ),
-			__( 'Messages', 'laterpay' ),
+			sprintf( tx_laterpay_helper_string::tr('%s Memory Usage'), number_format( memory_get_peak_usage() / pow( 1024, 2 ), 1 ) . ' MB' ),
+			tx_laterpay_helper_string::tr('Debugger'),
+			tx_laterpay_helper_string::tr('Messages'),
 			count( $this->records ),
 			$tabs,
 			$this->getFormatter()->formatBatch( $this->records ),

@@ -30,28 +30,28 @@ class tx_laterpay_helper_view {
 		return array(
 			'dashboard' => array(
 				'url' 		=> 'laterpay-dashboard-tab',
-				'title' 	=> __('Dashboard <sup class="lp_is-beta">beta</sup>', 'laterpay'),
+				'title'		=> tx_laterpay_helper_string::tr('Dashboard <sup class="lp_is-beta">beta</sup>'),
 				'submenu' 	=> array(
-					'url' 		=> '#',
-					'title' 	=> __('Time Passes', 'laterpay'),
-					'id' 		=> 'lp_js_switchDashboardView',
-					'data' 	=> array(
-						'view' 	=> 'time-passes',
-						'label' => __('Standard KPIs', 'laterpay'),
+					'url'	=> '#',
+					'title' => tx_laterpay_helper_string::tr('Time Passes'),
+					'id'	=> 'lp_js_switchDashboardView',
+					'data'	=> array(
+						'view'	=> 'time-passes',
+						'label'	=> tx_laterpay_helper_string::tr('Standard KPIs')
 					),
 				),
 			),
-			'pricing' 	=> array(
-				'url' 		=> 'laterpay-pricing-tab',
-				'title' 	=> __('Pricing', 'laterpay'),
+			'pricing' => array(
+				'url'	=> 'laterpay-pricing-tab',
+				'title' => tx_laterpay_helper_string::tr('Pricing')
 			),
 			'appearance' => array(
-				'url' 		=> 'laterpay-appearance-tab',
-				'title' 	=> __('Appearance', 'laterpay'),
+				'url' 	=> 'laterpay-appearance-tab',
+				'title' => tx_laterpay_helper_string::tr('Appearance')
 			),
-			'account' 	=> array(
-				'url' 		=> 'laterpay-account-tab',
-				'title' 	=> __('Account', 'laterpay'),
+			'account' => array(
+				'url' 	=> 'laterpay-account-tab',
+				'title'	=> tx_laterpay_helper_string::tr('Account')
 			),
 		);
 	}
@@ -126,10 +126,10 @@ class tx_laterpay_helper_view {
 	 * @return bool
 	 */
 	public static function pluginIsWorking() {
-		$isInLiveMode 			= get_option('laterpay_plugin_is_in_live_mode');
-		$sandboxApiKey 			= get_option('laterpay_sandbox_api_key');
-		$liveApiKey 			= get_option('laterpay_live_api_key');
-		$isInVisibleTestMode 	= get_option('laterpay_is_in_visible_test_mode');
+		$isInLiveMode = tx_laterpay_config::getOption('laterpay_plugin_is_in_live_mode');
+		$sandboxApiKey = tx_laterpay_config::getOption('laterpay_sandbox_api_key');
+		$liveApiKey = tx_laterpay_config::getOption('laterpay_live_api_key');
+		$isInVisibleTestMode = tx_laterpay_config::getOption('laterpay_is_in_visible_test_mode');
 
 		// check, if plugin operates in live mode and Live API key exists
 		if ($isInLiveMode && empty($liveApiKey)) {
@@ -192,7 +192,7 @@ class tx_laterpay_helper_view {
 				$formatted = number_format($number, 0);
 			} else {
 				// reduce values above 10,000 to thousands and format them with one digit
-				$formatted = number_format($number / 1000, 1) . __('k', 'laterpay');
+				$formatted = number_format($number / 1000, 1) . tx_laterpay_helper_string::tr('k');
 				// 'k' = short for kilo (thousands)
 			}
 		} else {
@@ -201,7 +201,7 @@ class tx_laterpay_helper_view {
 				$formatted = number_format($number);
 			} else {
 				// reduce values above 10,000 to thousands and format them with one digit
-				$formatted = number_format($number / 1000, 1) . __('k', 'laterpay');
+				$formatted = number_format($number / 1000, 1) . tx_laterpay_helper_string::tr('k');
 				// 'k' = short for kilo (thousands)
 			}
 		}
@@ -215,7 +215,7 @@ class tx_laterpay_helper_view {
 	 * @return bool
 	 */
 	public static function purchaseLinkIsHidden() {
-		$isHidden = get_option('laterpay_only_time_pass_purchases_allowed') && get_option('laterpay_teaser_content_only');
+		$isHidden = tx_laterpay_config::getOption('laterpay_only_time_pass_purchases_allowed') && tx_laterpay_config::getOption('laterpay_teaser_content_only');
 
 		return $isHidden;
 	}
@@ -226,7 +226,7 @@ class tx_laterpay_helper_view {
 	 * @return bool
 	 */
 	public static function purchaseButtonIsHidden() {
-		$isHidden = get_option('laterpay_only_time_pass_purchases_allowed');
+		$isHidden = tx_laterpay_config::getOption('laterpay_only_time_pass_purchases_allowed');
 
 		return $isHidden;
 	}
