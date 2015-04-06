@@ -710,7 +710,7 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 				'step' 		=> 4,
 			);
 		}
-
 		return $fResult;
 	}
+
 }

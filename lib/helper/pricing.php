@@ -54,26 +54,6 @@ class tx_laterpay_helper_pricing {
 	const META_KEY 			= 'laterpay_post_prices';
 
 	/**
-	 * Get array of price ranges by revenue model (Pay-per-Use or Single Sale).
-	 *
-	 * @return array
-	 */
-	public static function getPriceRangesByRevenueModel() {
-		return array(
-			'ppu_min' 			=> self::PPU_MIN,
-			'ppu_max' 			=> self::PPU_MAX,
-			'ppusis_max' 		=> self::PPUSIS_MAX,
-			'sis_min' 			=> self::SIS_MIN,
-			'sis_max' 			=> self::SIS_MAX,
-			'price_ppu_end' 	=> self::PRICE_PPU_END,
-			'price_ppusis_end' 	=> self::PRICE_PPUSIS_END,
-			'price_sis_end' 	=> self::PRICE_SIS_END,
-			'price_start_day' 	=> self::PRICE_START_DAY,
-			'price_end_day' 	=> self::PRICE_END_DAY,
-		);
-	}
-
-	/**
 	 * Return all posts that have a price applied.
 	 *
 	 * @return array
@@ -90,25 +70,6 @@ class tx_laterpay_helper_pricing {
 		);
 
 		return $result;
-	}
-
-	/**
-	 * Calculate transitional price between start price and end price based on linear equation.
-	 *
-	 * @param mixed $postPrice Array of Postmeta see 'laterpayPostPrices'
-	 * @param int $daysSincePublication Count of days after publication
-	 *
-	 * @return float
-	 */
-	private static function calculateTransitionalPrice($postPrice, $daysSincePublication) {
-		$endPrice 		= $postPrice['end_price'];
-		$startPrice 	= $postPrice['start_price'];
-		$daysUntilEnd 	= $postPrice['transitional_period_end_after_days'];
-		$daysUntilStart = $postPrice['change_start_price_after_days'];
-
-		$coefficient 	= ($endPrice - $startPrice) / ($daysUntilEnd - $daysUntilStart);
-
-		return $startPrice + ($daysSincePublication - $daysUntilStart) * $coefficient;
 	}
 
 	/**
@@ -163,71 +124,6 @@ class tx_laterpay_helper_pricing {
 		$price = isset($contentObject->data['laterpay_price']) ? $contentObject->data['laterpay_price'] : 0;
 
 		return (float) $price;
-	}
-
-	/**
-	 * Return adjusted prices.
-	 *
-	 * @param float $start Start time
-	 * @param float $end End time
-	 *
-	 * @return array
-	 */
-	public static function adjustDynamicPricePoints($start, $end) {
-		$priceRangeType = 'ppu';
-
-		if ($start >= self::PRICE_SIS_END || $end >= self::PRICE_SIS_END) {
-			$priceRangeType = 'sis';
-			if ($start != 0 && $start < self::PRICE_SIS_END) {
-				$start = self::PRICE_SIS_END;
-			}
-			if ($end != 0 && $end < self::PRICE_SIS_END) {
-				$end = self::PRICE_SIS_END;
-			}
-		} elseif (($start >= self::SIS_MIN && $start <= self::PPUSIS_MAX) || ($end >= self::SIS_MIN && $end <= self::PPUSIS_MAX)) {
-			$priceRangeType = 'ppusis';
-			if ($start != 0) {
-				if ($start < self::SIS_MIN) {
-					$start = self::SIS_MIN;
-				}
-				if ($start > self::PPUSIS_MAX) {
-					$start = self::PPUSIS_MAX;
-				}
-			}
-
-			if ($end != 0) {
-				if ($end < self::SIS_MIN) {
-					$end = self::SIS_MIN;
-				}
-				if ($end > self::PPUSIS_MAX) {
-					$end = self::PPUSIS_MAX;
-				}
-			}
-		} else {
-			if ($start != 0) {
-				if ($start < self::PPU_MIN) {
-					$start = self::PPU_MIN;
-				}
-				if ($start > self::PPU_MAX) {
-					$start = self::PPU_MAX;
-				}
-			}
-
-			if ($end != 0) {
-				if ($end < self::PPU_MIN) {
-					$end = self::PPU_MIN;
-				}
-				if ($end > self::PPU_MAX) {
-					$end = self::PPU_MAX;
-				}
-			}
-		}
-
-		return array(
-			$start,
-			$end,
-			$priceRangeType
-		);
 	}
 
 	/**
@@ -310,28 +206,28 @@ class tx_laterpay_helper_pricing {
 		return key($operations);
 	}
 
-	/**
-	 * Delete bulk operation by id.
-	 *
-	 * @param int $id Id
-	 *
-	 * @return bool
-	 */
-	public static function deleteBulkOperationById($id) {
-		$wasDeleted = FALSE;
-		$operations = self::getBulkOperations();
-
-		if ($operations) {
-			if (isset($operations[$id])) {
-				unset($operations[$id]);
-				$wasDeleted = TRUE;
-				$operations = $operations ? $operations : '';
-				tx_laterpay_config::updateOption('laterpay_bulk_operations', serialize($operations));
-			}
-		}
-
-		return $wasDeleted;
-	}
+//	/**
+//	 * Delete bulk operation by id.
+//	 *
+//	 * @param int $id Id
+//	 *
+//	 * @return bool
+//	 */
+//	public static function deleteBulkOperationById($id) {
+//		$wasDeleted = FALSE;
+//		$operations = self::getBulkOperations();
+//
+//		if ($operations) {
+//			if (isset($operations[$id])) {
+//				unset($operations[$id]);
+//				$wasDeleted = TRUE;
+//				$operations = $operations ? $operations : '';
+//				update_option('laterpay_bulk_operations', serialize($operations));
+//			}
+//		}
+//
+//		return $wasDeleted;
+//	}
 
 	/**
 	 * Return the URL hash for a given URL.
