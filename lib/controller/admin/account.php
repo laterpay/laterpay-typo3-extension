@@ -80,19 +80,6 @@ class tx_laterpay_controller_admin_account extends tx_laterpay_controller_abstra
 		$postForm = t3lib_div::_POST('form');
 		$post = t3lib_div::_POST();
 		if (! empty($postForm)) {
-			// check for required capabilities to perform action
-			/*
-			 * if (! current_user_can('activate_plugins')) {
-			 * wp_send_json(
-			 * array(
-			 * 'success' => false,
-			 * 'message' => tx_laterpay_helper_string::tr(
-			 * "You don't have sufficient user capabilities to do this.",
-			 * 'laterpay')
-			 * ));
-			 * }
-			 */
-
 			switch ($postForm) {
 				case 'laterpay_sandbox_merchant_id':
 					$ajaxObj->setContent(self::updateMerchantId());

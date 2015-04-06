@@ -390,12 +390,12 @@ class tx_laterpay_model_query_abstract {
 		$preparedStatement = t3lib_div::makeInstance('t3lib_db_PreparedStatement', $query, $this->table, array());
 		/* @var $preparedStatement t3lib_db_PreparedStatement */
 
-		// Bind values to parameters
+		// bind values to parameters
 		foreach ($this->whereParamValues as $key => $value) {
 			$preparedStatement->bindValue($key, $value, t3lib_db_PreparedStatement::PARAM_AUTOTYPE);
 		}
 
-		// Return prepared statement
+		// return prepared statement
 		return $preparedStatement;
 	}
 }

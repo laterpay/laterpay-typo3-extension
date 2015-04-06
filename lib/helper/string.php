@@ -205,8 +205,8 @@ class tx_laterpay_helper_string {
 	}
 
 	/**
-	 * Translate and log untranslated string
-	 * This is internal function only for debug
+	 * Translate and log untranslated string.
+	 * Internal function used for debugging only.
 	 *
 	 * @param string $text Input text
 	 *
@@ -217,14 +217,15 @@ class tx_laterpay_helper_string {
 		if (!isset($allProcessed)) {
 			$allProcessed = array();
 		}
-		// 	$GLOBALS['LANG']->debugKey = FALSE;
+
 		if ($GLOBALS['LANG']) {
 			$result = $GLOBALS['LANG']->getLL($text);
-			// 	$GLOBALS['LANG']->debugKey = FALSE;
+
 			if (empty($result)) {
 				if (!in_array($text, $allProcessed)) {
 					$allProcessed[] = $text;
-					$encResult = htmlentities ($text);
+					$encResult = htmlentities($text);
+
 					t3lib_div::syslog(
 						sprintf('No translation for: <label index="%s">%s</label>', $encResult, $encResult),
 						tx_laterpay_config::PLUGIN_NAME
@@ -235,11 +236,12 @@ class tx_laterpay_helper_string {
 		} else {
 			$result = $text;
 		}
+
 		return $result;
 	}
 
 	/**
-	 * Translate and echo string
+	 * Translate and echo string.
 	 *
 	 * @param string $text Input text
 	 *
@@ -250,7 +252,7 @@ class tx_laterpay_helper_string {
 	}
 
 	/**
-	 * Translate text and context
+	 * Translate text and context.
 	 *
 	 * @param string $text Input text
 	 * @param string $context Context text
@@ -258,14 +260,16 @@ class tx_laterpay_helper_string {
 	 * @return string
 	 */
 	public static function trX($text, $context) {
-		echo ($text);
-		$textTr = self::trAndLog($text);
-		$contextTr = self::trAndLog($context);
+		echo($text);
+
+		$textTr 	= self::trAndLog($text);
+		$contextTr 	= self::trAndLog($context);
+
 		return $textTr . '|' . $contextTr;
 	}
 
 	/**
-	 * Translate string
+	 * Translate string.
 	 *
 	 * @param string $text Input text
 	 *
@@ -276,7 +280,7 @@ class tx_laterpay_helper_string {
 	}
 
 	/**
-	 * Navigates through an array and encodes the values to be used in a URL.
+	 * Navigate through an array and encode the values to be used in a URL.
 	 *
 	 * @param array|string $value The array or string to be encoded.
 	 *
@@ -284,11 +288,12 @@ class tx_laterpay_helper_string {
 	 */
 	public static function urlencodeDeep($value) {
 		$value = is_array($value) ? array_map('tx_laterpay_helper_string::urlencodeDeep', $value) : urlencode($value);
+
 		return $value;
 	}
 
 	/**
-	 * Navigates through an array and removes slashes from the values.
+	 * Navigate through an array and remove slashes from the values.
 	 * If an array is passed, the array_map() function causes a callback to pass the
 	 * value back to the function. The slashes from this value will removed.
 	 *
@@ -327,7 +332,6 @@ class tx_laterpay_helper_string {
 			$array = self::stripslashesDeep( $array );
 		}
 	}
-
 
 	/**
 	 * From php.net (modified by Mark Jaquith to behave like the native PHP5 function).
@@ -450,25 +454,26 @@ class tx_laterpay_helper_string {
 		$ret = preg_replace( '#=(&|$)#', '$1', $ret );
 		$ret = $protocol . $base . $ret . $frag;
 		$ret = rtrim( $ret, '?' );
+
 		return $ret;
 	}
 
 	/**
-	 * Check string for invalid utf
+	 * Check string for invalid UTF8 encoding.
 	 *
 	 * @param string $string Input string
 	 * @param bool $strip Strip flag, use iconv function
 	 *
 	 * @return string
 	 */
-	public static function checkInvalidUtf8( $string, $strip = FALSE ) {
+	public static function checkInvalidUtf8($string, $strip = FALSE) {
 		$string = (string) $string;
 
-		if ( 0 === strlen( $string ) ) {
+		if (0 === strlen($string)) {
 			return '';
 		}
 
-		// Store the site charset as a static to avoid multiple calls to tx_laterpay_config::getOption()
+		// store the site charset as a static to avoid multiple calls to tx_laterpay_config::getOption()
 		static $isUtf8;
 		if ($GLOBALS['TYPO3_CONF_VARS']['BE']['forceCharset']) {
 			$isUtf8 = $GLOBALS['TYPO3_CONF_VARS']['BE']['forceCharset'] == 'utf-8';
@@ -483,60 +488,61 @@ class tx_laterpay_helper_string {
 			return $string;
 		}
 
-		// Check for support for utf8 in the installed PCRE library once and store the result in a static
+		// check for support for UTF8 in the installed PCRE library once and store the result in a static
 		static $utf8Pcre;
-		if ( !isset( $utf8Pcre ) ) {
+		if (!isset($utf8Pcre)) {
 			$utf8Pcre = @preg_match( '/^./u', 'a' );
 		}
-		// We can't demand utf8 in the PCRE installation, so just return the string in those cases
-		if ( !$utf8Pcre ) {
+		// we can't require UTF8 in the PCRE installation, so just return the string in those cases
+		if (!$utf8Pcre) {
 			return $string;
 		}
 
 		// preg_match fails when it encounters invalid UTF8 in $string
-		if ( 1 === @preg_match( '/^./us', $string ) ) {
+		if (1 === @preg_match('/^./us', $string)) {
 			return $string;
 		}
 
-		// Attempt to strip the bad chars if requested (not recommended)
-		if ( $strip && function_exists( 'iconv' ) ) {
-			return iconv( 'utf-8', 'utf-8', $string );
+		// attempt to strip the bad chars, if requested (not recommended)
+		if ($strip && function_exists('iconv')) {
+			return iconv('utf-8', 'utf-8', $string);
 		}
 
 		return '';
 	}
 
 	/**
-	 * Sanitize text field
+	 * Sanitize text field.
 	 *
 	 * @param string $str Input text
 	 *
 	 * @return Ambigous <mixed, string, unknown>
 	 */
 	public static function sanitizeTextField($str) {
-		$filtered = self::checkInvalidUtf8( $str );
+		$filtered = self::checkInvalidUtf8($str);
 
-		if ( strpos($filtered, '<') !== FALSE ) {
-			$filtered = strip_tags( $filtered );
+		if (strpos($filtered, '<') !== FALSE) {
+			$filtered = strip_tags($filtered);
 		} else {
-			$filtered = trim( preg_replace('/[\r\n\t ]+/', ' ', $filtered) );
+			$filtered = trim(preg_replace('/[\r\n\t ]+/', ' ', $filtered));
 		}
 
 		$found = FALSE;
-		while ( preg_match('/%[a-f0-9]{2}/i', $filtered, $match) ) {
+		while (preg_match('/%[a-f0-9]{2}/i', $filtered, $match)) {
 			$filtered = str_replace($match[0], '', $filtered);
 			$found = TRUE;
 		}
 
-		if ( $found ) {
-			// Strip out the whitespace that may now exist after removing the octets.
-			$filtered = trim( preg_replace('/ +/', ' ', $filtered) );
+		if ($found) {
+			// strip out the whitespace that may now exist after removing the octets
+			$filtered = trim(preg_replace('/ +/', ' ', $filtered));
 		}
+
 		return $filtered;
 	}
 
 	/**
-	 * Convert string to abs int
+	 * Convert string to abs int.
 	 *
 	 * @param mixed $value Input value
 	 *
@@ -547,25 +553,24 @@ class tx_laterpay_helper_string {
 	}
 
 	/**
-	 * Unslash input string
+	 * Unslash input string.
 	 *
 	 * @param string $value Inpit value
 	 *
 	 * @return multitype:
 	 */
 	public static function unslash($value) {
-		if ( is_array($value) ) {
+		if (is_array($value)) {
 			$value = array_map('unslash', $value);
-		} elseif ( is_object($value) ) {
-			$vars = get_object_vars( $value );
+		} elseif (is_object($value)) {
+			$vars = get_object_vars($value);
 			foreach ($vars as $key => $data) {
-				$value->{$key} = unslash( $data );
+				$value->{$key} = unslash($data);
 			}
-		} elseif ( is_string( $value ) ) {
+		} elseif (is_string($value)) {
 			$value = stripslashes($value);
 		}
 
 		return $value;
-
 	}
 }

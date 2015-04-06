@@ -30,7 +30,7 @@ class tx_laterpay_helper_timepass {
 	 * @return mixed option value | array of options
 	 */
 	public static function getDefaultOptions($key = NULL) {
-		// Default time range. Used during passes creation.
+		// Default time range. Used during time passes creation.
 		$defaults = array(
 			'pass_id' 			=> '0',
 			'duration' 			=> '1',

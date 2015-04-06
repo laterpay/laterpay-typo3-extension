@@ -243,10 +243,10 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 		tx_laterpay_config::updateOption('laterpay_global_price', $delocalizedGlobalPrice);
 		tx_laterpay_config::updateOption('laterpay_global_price_revenue_model', $globalPriceRevenueModel);
 
-		$globalPrice = (float) tx_laterpay_config::getOption('laterpay_global_price');
+		$globalPrice 			= (float) tx_laterpay_config::getOption('laterpay_global_price');
 		$localizedGlobalPrice 	= tx_laterpay_helper_view::formatNumber($globalPrice);
 		$currencyModel 			= new tx_laterpay_model_currency();
-		$currencyName = $currencyModel->getCurrencyNameByIso4217Code(tx_laterpay_config::getOption('laterpay_currency'));
+		$currencyName 			= $currencyModel->getCurrencyNameByIso4217Code(tx_laterpay_config::getOption('laterpay_currency'));
 
 		if ($globalPrice == 0) {
 			$message = tx_laterpay_helper_string::tr('All posts are free by default now.');
@@ -337,7 +337,7 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 					break;
 
 				case 'increase':
-					// Fall through
+					// fall through
 				case 'reduce':
 					$isReduction = ($action === 'reduce');
 
@@ -509,7 +509,7 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 		$this->assign('laterpay_pass', $args);
 		$this->assign('laterpay',
 			array(
-				'standard_currency' => tx_laterpay_config::getOption('laterpay_currency'),
+				'standard_currency' 		=> tx_laterpay_config::getOption('laterpay_currency'),
 				'preview_post_as_visitor' 	=> 1,
 			));
 

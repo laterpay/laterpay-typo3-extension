@@ -134,6 +134,7 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 		// @codingStandardsIgnoreStart
 		t3lib_utility_Debug::debug($record);
 		// @codingStandardsIgnoreEnd
+		//
 		return TRUE;
 	}
 
@@ -177,17 +178,12 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 	protected function getSystemInfo() {
 		$systemInfo = array(
 				'Typo3 version'		=> $TYPO_VERSION,
-// 				'Multisite'                 => is_multisite() ? tx_laterpay_helper_string::tr('yes') : tx_laterpay_helper_string::tr('no'),
-// 				'WordPress memory limit'    => ( $this->let_to_num( WP_MEMORY_LIMIT ) / 1024 ) . ' MB',
-// 				'Active plugins'            => implode( ', ', $plugins ),
-// 				'Network active plugins'    => is_multisite() ? $network_plugins : tx_laterpay_helper_string::tr('none'),
-// 				'Registered post types'     => implode( ', ', get_post_types( array( 'public' => true ) ) ),
-// 				'Active theme'              => $theme,
 				'PHP version'		=> PHP_VERSION,
 				'PHP memory limit'	=> ini_get( 'memory_limit' ),
 				'PHP modules'		=> implode( ', ', get_loaded_extensions() ),
 				'Web server info'	=> $_SERVER['SERVER_SOFTWARE'],
 		);
+
 		return $systemInfo;
 	}
 
@@ -207,6 +203,7 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 		} else {
 			$file = $GLOBALS['BACK_PATH'] . $href;
 		}
+
 		$renderer->addCssFile($file, 'stylesheet', 'screen', 'lpdebugger');
 		$renderer->addJsFile($GLOBALS['BACK_PATH'] . t3lib_extMgm::extRelPath('laterpay') . 'res/js/laterpay-debugger.js');
 	}
@@ -220,6 +217,7 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 		$tabsNamesAndContents = $this->getTabs();
 		$tabs = '';
 		$tabsContent = '';
+
 		foreach ($tabsNamesAndContents  as $key => $tab ) {
 			if ( empty( $tab['content'] ) ) {
 				continue;
@@ -233,6 +231,7 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 
 			$tabsContent .= sprintf(self::DEBUG_CONTENT_TABLE_TEMPLATE, $tabsInternal);
 		}
+
 		$out = sprintf(
 			self::DEBUG_TABLE_TEMPLATE,
 			sprintf( tx_laterpay_helper_string::tr('%s Memory Usage'), number_format( memory_get_peak_usage() / pow( 1024, 2 ), 1 ) . ' MB' ),

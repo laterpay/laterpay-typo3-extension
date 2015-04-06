@@ -140,7 +140,7 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 			'plugin_is_in_live_mode' 	=> $this->config->get('is_in_live_mode'),
 			'top_nav' 					=> $this->getMenu(),
 			'admin_menu' 				=> tx_laterpay_helper_view::getAdminMenu(),
-			'currency' => tx_laterpay_config::getOption('laterpay_currency'),
+			'currency' 					=> tx_laterpay_config::getOption('laterpay_currency'),
 			'end_timestamp' 			=> $endTimestamp,
 			'interval_start' 			=> strtotime('-1 days'),
 			'interval_end' 				=> strtotime('-8 days'),
@@ -174,7 +174,6 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 					$ajaxObj->setContent(
 						array(
 								'success' => FALSE,
-								//'message' => tx_laterpay_helper_string::tr('An error occurred when trying to save your settings. Please try again.')
 						)
 					);
 			}
@@ -182,7 +181,6 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 			$ajaxObj->setContent(
 				array(
 						'success' => FALSE,
-						//'message' => tx_laterpay_helper_string::tr('An error occurred when trying to save your settings. Please try again.')
 				));
 		}
 	}

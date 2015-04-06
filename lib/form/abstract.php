@@ -83,7 +83,7 @@ abstract class tx_laterpay_form_abstract {
 	 * @param mixed $data Initial data
 	 */
 	public final function __construct($data = array()) {
-		// Call init method from child class
+		// call init method from child class
 		$this->init();
 
 		// set data to form, if specified
