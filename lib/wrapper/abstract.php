@@ -21,7 +21,7 @@
  */
 abstract class tx_laterpay_wrapper_abstract implements tx_laterpay_wrapper_interface {
 	/**
-	 * Renderer instance
+	 * Renderer instance.
 	 *
 	 * @var tx_laterpay_controller_abstract
 	 */
@@ -35,7 +35,7 @@ abstract class tx_laterpay_wrapper_abstract implements tx_laterpay_wrapper_inter
 	protected $arguments = array();
 
 	/**
-	 * Instance constructor
+	 * Instance constructor.
 	 */
 	public function __construct() {
 		$render = new tx_laterpay_controller_abstract(NULL);
@@ -43,7 +43,7 @@ abstract class tx_laterpay_wrapper_abstract implements tx_laterpay_wrapper_inter
 	}
 
 	/**
-	 * Getter for render
+	 * Getter for render.
 	 *
 	 * @return tx_laterpay_controller_abstract or any other setted render
 	 */
@@ -52,7 +52,7 @@ abstract class tx_laterpay_wrapper_abstract implements tx_laterpay_wrapper_inter
 	}
 
 	/**
-	 * Getter for render
+	 * Setter for render.
 	 *
 	 * @param object $renderer Any render.
 	 *
@@ -63,7 +63,7 @@ abstract class tx_laterpay_wrapper_abstract implements tx_laterpay_wrapper_inter
 	}
 
 	/**
-	 * Set array of arguments into wrapper
+	 * Set array of arguments into wrapper.
 	 *
 	 * @param mixed $arguments Array of key -> value
 	 *
@@ -76,7 +76,7 @@ abstract class tx_laterpay_wrapper_abstract implements tx_laterpay_wrapper_inter
 	}
 
 	/**
-	 * Add single argument into wrapper
+	 * Add single argument into wrapper.
 	 *
 	 * @param string $key Key
 	 * @param string $value Value
@@ -88,7 +88,7 @@ abstract class tx_laterpay_wrapper_abstract implements tx_laterpay_wrapper_inter
 	}
 
 	/**
-	 * Remove single argument from wrapper
+	 * Remove single argument from wrapper.
 	 *
 	 * @param string $key Key
 	 *
@@ -101,7 +101,7 @@ abstract class tx_laterpay_wrapper_abstract implements tx_laterpay_wrapper_inter
 	}
 
 	/**
-	 * Wrap teaserContent into needed view
+	 * Wrap teaserContent into needed view.
 	 *
 	 * @param string $teaserContent Teaser content
 	 *
@@ -123,7 +123,7 @@ abstract class tx_laterpay_wrapper_abstract implements tx_laterpay_wrapper_inter
 	}
 
 	/**
-	 * Main wrap action - working with teaser data (any additonal changes for teaser text)
+	 * Main wrap action - working with teaser data (any additional changes for teaser text).
 	 *
 	 * @param string $teaserContent Teaser content
 	 *
@@ -134,7 +134,7 @@ abstract class tx_laterpay_wrapper_abstract implements tx_laterpay_wrapper_inter
 	}
 
 	/**
-	 * JavaScript files setter
+	 * JavaScript files setter.
 	 *
 	 * @return void
 	 */
@@ -145,7 +145,7 @@ abstract class tx_laterpay_wrapper_abstract implements tx_laterpay_wrapper_inter
 	}
 
 	/**
-	 * CSS files setter
+	 * CSS files setter.
 	 *
 	 * @return void
 	 */
@@ -156,7 +156,7 @@ abstract class tx_laterpay_wrapper_abstract implements tx_laterpay_wrapper_inter
 	}
 
 	/**
-	 * Pre render operation (example: setting wrapper arguments into render)
+	 * Pre render operation (example: setting wrapper arguments into render).
 	 *
 	 * @param string $teaserContent Teaser content
 	 *
@@ -167,7 +167,7 @@ abstract class tx_laterpay_wrapper_abstract implements tx_laterpay_wrapper_inter
 	}
 
 	/**
-	 * Post render operation
+	 * Post render operation.
 	 *
 	 * @param string $teaserContent Teaser content
 	 *

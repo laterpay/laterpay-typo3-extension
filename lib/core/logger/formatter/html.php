@@ -82,7 +82,7 @@ class tx_laterpay_core_logger_formatter_html extends tx_laterpay_core_logger_for
 	 * @return string
 	 */
 	private function addHeadRow($message = '', $level) {
-		$showDetailsLink = '<a href="#" class="lp_js_toggleLogDetails" data-icon="l">' . __('Details', 'laterpay') . '</a>';
+		$showDetailsLink = '<a href="#" class="lp_js_toggleLogDetails" data-icon="l">' . tx_laterpay_helper_string::tr('Details') . '</a>';
 
 		$html = '<thead class="lp_js_debuggerContentTableTitle lp_debugger-content__table-title">' . LF .
 			'<tr>' . LF .

@@ -30,7 +30,7 @@ class tx_laterpay_helper_timepass {
 	 * @return mixed option value | array of options
 	 */
 	public static function getDefaultOptions($key = NULL) {
-		// Default time range. Used during passes creation.
+		// Default time range. Used during time passes creation.
 		$defaults = array(
 			'pass_id' 			=> '0',
 			'duration' 			=> '1',
@@ -39,8 +39,8 @@ class tx_laterpay_helper_timepass {
 			'access_category' 	=> '',
 			'price' 			=> '0.99',
 			'revenue_model' 	=> 'ppu',
-			'title' 			=> __('24-Hour Pass', 'laterpay'),
-			'description' 		=> __('24 hours access to all content on this website', 'laterpay'),
+			'title'				=> tx_laterpay_helper_string::tr('24-Hour Pass'),
+			'description'		=> tx_laterpay_helper_string::tr('24 hours access to all content on this website')
 		);
 
 		if (isset($key)) {
@@ -107,20 +107,20 @@ class tx_laterpay_helper_timepass {
 	public static function getPeriodOptions($key = NULL, $pluralized = FALSE) {
 		// single periods
 		$periods = array(
-			__('Hour', 'laterpay'),
-			__('Day', 'laterpay'),
-			__('Week', 'laterpay'),
-			__('Month', 'laterpay'),
-			__('Year', 'laterpay'),
+			tx_laterpay_helper_string::tr('Hour'),
+			tx_laterpay_helper_string::tr('Day'),
+			tx_laterpay_helper_string::tr('Week'),
+			tx_laterpay_helper_string::tr('Month'),
+			tx_laterpay_helper_string::tr('Year')
 		);
 
 		// pluralized periods
 		$periodsPluralized = array(
-			__('Hours', 'laterpay'),
-			__('Days', 'laterpay'),
-			__('Weeks', 'laterpay'),
-			__('Months', 'laterpay'),
-			__('Years', 'laterpay'),
+			tx_laterpay_helper_string::tr('Hours'),
+			tx_laterpay_helper_string::tr('Days'),
+			tx_laterpay_helper_string::tr('Weeks'),
+			tx_laterpay_helper_string::tr('Months'),
+			tx_laterpay_helper_string::tr('Years')
 		);
 
 		$selectedArray = $pluralized ? $periodsPluralized : $periods;
@@ -143,8 +143,8 @@ class tx_laterpay_helper_timepass {
 	 */
 	public static function getRevenueModelOptions($key = NULL) {
 		$revenues = array(
-			'ppu' => __('later', 'laterpay'),
-			'sis' => __('immediately', 'laterpay'),
+			'ppu' => tx_laterpay_helper_string::tr('later'),
+			'sis' => tx_laterpay_helper_string::tr('immediately')
 		);
 
 		if (isset($key)) {
@@ -165,7 +165,7 @@ class tx_laterpay_helper_timepass {
 	 */
 	public static function getAccessOptions($key = NULL) {
 		$accessTo = array(
-			__('All content', 'laterpay')
+			tx_laterpay_helper_string::tr('All content')
 		);
 
 		if (isset($key)) {
@@ -194,11 +194,11 @@ class tx_laterpay_helper_timepass {
 			$timePass['access_to'] 	= self::getDefaultOptions('access_to');
 		}
 
-		$currency = get_option('laterpay_currency');
+		$currency					= tx_laterpay_config::getOption('laterpay_currency');
 
-		$details['duration'] = $timePass['duration'] . ' ' .
+		$details['duration']		= $timePass['duration'] . ' ' .
 			self::getPeriodOptions($timePass['period'], $timePass['duration'] > 1);
-		$details['access'] = __('access to', 'laterpay') . ' ' . self::getAccessOptions($timePass['access_to']);
+		$details['access']			= tx_laterpay_helper_string::tr('access to') . ' ' . self::getAccessOptions($timePass['access_to']);
 
 		// also display category, price, and revenue model, if fullInfo flag is used
 		if ($fullInfo) {
@@ -207,10 +207,10 @@ class tx_laterpay_helper_timepass {
 				$details['category'] 	= '"' . get_the_category_by_ID($categoryId) . '"';
 			}
 
-			$details['price'] = __('for', 'laterpay') . ' ' .
+			$details['price']			= tx_laterpay_helper_string::tr('for') . ' ' .
 				tx_laterpay_helper_view::formatNumber($timePass['price']) . ' ' .
 				strtoupper($currency);
-			$details['revenue'] = '(' . strtoupper($timePass['revenue_model']) . ')';
+			$details['revenue']			= '(' . strtoupper($timePass['revenue_model']) . ')';
 		}
 
 		return implode(' ', $details);
@@ -355,7 +355,7 @@ class tx_laterpay_helper_timepass {
 			$data = array();
 		}
 
-		$currency 		= get_option('laterpay_currency');
+		$currency = tx_laterpay_config::getOption('laterpay_currency');
 		$currencyModel 	= new tx_laterpay_model_currency();
 		$price 			= isset($data['price']) ? $data['price'] : $timePass['price'];
 		$revenueModel 	= tx_laterpay_helper_pricing::ensureValidRevenueModel($timePass['revenue_model'], $price);
@@ -377,7 +377,7 @@ class tx_laterpay_helper_timepass {
 			'link' 			=> $link,
 		);
 
-		$url 	= add_query_arg(array_merge($urlParams, $data), $link);
+		$url	= tx_laterpay_helper_string::addQueryArg(array_merge($urlParams, $data), $link);
 		$hash 	= tx_laterpay_helper_pricing::getHashByUrl($url);
 		$url 	= $url . '&hash=' . $hash;
 

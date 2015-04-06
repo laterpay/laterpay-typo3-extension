@@ -108,7 +108,7 @@ class tx_laterpay_helper_voucher {
 		}
 
 		// save new voucher data
-		update_option($optionName, $vouchers);
+		tx_laterpay_config::updateOption($optionName, $vouchers);
 
 		// actualize voucher statistic
 		self::actualizeVoucherStatistic($isGift);
@@ -140,9 +140,9 @@ class tx_laterpay_helper_voucher {
 	 */
 	public static function getAllVouchers($isGift = FALSE) {
 		$optionName = $isGift ? self::GIFT_CODES_OPTION : self::VOUCHER_CODES_OPTION;
-		$vouchers 	= get_option($optionName);
+		$vouchers = tx_laterpay_config::getOption($optionName);
 		if (! $vouchers || ! is_array($vouchers)) {
-			update_option($optionName, '');
+			tx_laterpay_config::updateOption($optionName, '');
 
 			return array();
 		}
@@ -251,7 +251,7 @@ class tx_laterpay_helper_voucher {
 		}
 
 		// update voucher statistics
-		update_option($optionName, $result);
+		tx_laterpay_config::updateOption($optionName, $result);
 	}
 
 	/**
@@ -284,7 +284,7 @@ class tx_laterpay_helper_voucher {
 			$statistic = self::getAllVouchersStatistic($isGift);
 			$statistic[$passId] = $voucherStatisticData;
 
-			update_option($optionName, $statistic);
+			tx_laterpay_config::updateOption($optionName, $statistic);
 			return TRUE;
 		}
 
@@ -318,9 +318,9 @@ class tx_laterpay_helper_voucher {
 	 */
 	public static function getAllVouchersStatistic($isGift = FALSE) {
 		$optionName = $isGift ? self::GIFT_STAT_OPTION : self::VOUCHER_STAT_OPTION;
-		$statistic 	= get_option($optionName);
+		$statistic = tx_laterpay_config::getOption($optionName);
 		if (! $statistic || ! is_array($statistic)) {
-			update_option($optionName, '');
+			tx_laterpay_config::updateOption($optionName, '');
 
 			return array();
 		}
@@ -336,7 +336,7 @@ class tx_laterpay_helper_voucher {
 	 * @return null
 	 */
 	public static function getGiftCodeUsagesCount($code) {
-		$usages = get_option('laterpay_gift_codes_usages');
+		$usages = tx_laterpay_config::getOption('laterpay_gift_codes_usages');
 
 		return $usages && isset($usages[$code]) ? $usages[$code] : 0;
 	}
@@ -349,14 +349,13 @@ class tx_laterpay_helper_voucher {
 	 * @return bool
 	 */
 	public static function updateGiftCodeUsages($code) {
-		$usages = get_option('laterpay_gift_codes_usages');
+		$usages = tx_laterpay_config::getOption('laterpay_gift_codes_usages');
 		if (! $usages) {
 			$usages = array();
 		}
 
 		isset($usages[$code]) ? $usages[$code] += 1 : $usages[$code] = 1;
-
-		update_option('laterpay_gift_codes_usages', $usages);
+		tx_laterpay_config::updateOption('laterpay_gift_codes_usages', $usages);
 
 		return TRUE;
 	}
@@ -369,7 +368,7 @@ class tx_laterpay_helper_voucher {
 	 * @return bool
 	 */
 	public static function checkGiftCodeUsagesLimit($code) {
-		$limit 	= get_option('laterpay_maximum_redemptions_per_gift_code');
+		$limit = tx_laterpay_config::getOption('laterpay_maximum_redemptions_per_gift_code');
 		$usages = self::getGiftCodeUsagesCount($code);
 		if (($usages + 1) <= $limit) {
 			return TRUE;

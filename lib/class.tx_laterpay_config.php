@@ -163,7 +163,6 @@ class tx_laterpay_config implements t3lib_Singleton {
 		$extRealPath = t3lib_extMgm::extRelPath('laterpay');
 
 		// plugin default settings for paths and directories
-
 		$config->set(self::PLUGIN_DIR_PATH, $extPath);
 		$config->set(self::PLUGIN_FILE_PATH, __FILE__);
 		$config->set(self::PLUGIN_BASE_NAME, 'laterpay');
@@ -346,7 +345,7 @@ class tx_laterpay_config implements t3lib_Singleton {
 		);
 
 		/**
-		* Browcap settings
+		* Browcap settings.
 		*
 		* @var array $browscap_settings
 		*
@@ -354,9 +353,7 @@ class tx_laterpay_config implements t3lib_Singleton {
 		*/
 		$config->import($browscapSettings);
 
-		/**
-		 * Admin preview settings
-		 */
+		// admin preview settings
 
 		if ($registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_IS_IN_VISIBLE_TEST_MODE) === NULL) {
 			$registry->set(
@@ -610,7 +607,7 @@ class tx_laterpay_config implements t3lib_Singleton {
 	}
 
 	/**
-	 * Wrapper for get()
+	 * Wrapper for get().
 	 *
 	 * @param string $name Name of parameter
 	 *
@@ -633,5 +630,33 @@ class tx_laterpay_config implements t3lib_Singleton {
 	 */
 	public function __isset($name) {
 		return $this->has($name);
+	}
+
+	/**
+	 * Get data from typo: registry.
+	 *
+	 * @param string $name NAme of parameter
+	 *
+	 * @return mixed
+	 */
+	public static function getOption($name) {
+		$registry = t3lib_div::makeInstance('t3lib_Registry');
+
+		return $registry->get(self::PLUGIN_NAME_SPACE, $name);
+	}
+
+	/**
+	 * Set option in typo: registry.
+	 *
+	 * @param string $name Name of parameter
+	 * @param mixed $value Stored data
+	 *
+	 * @return bool
+	 */
+	public static function updateOption($name, $value) {
+		$registry = t3lib_div::makeInstance('t3lib_Registry');
+		$registry->set(self::PLUGIN_NAME_SPACE, $name, $value);
+
+		return TRUE;
 	}
 }

@@ -60,7 +60,7 @@ class tx_laterpay_model_payment_history extends tx_laterpay_model_query_abstract
 	 * @return void
 	 */
 	public function setPaymentHistory($data) {
-		if (get_option('laterpay_plugin_is_in_live_mode')) {
+		if (tx_laterpay_config::getOption('laterpay_plugin_is_in_live_mode')) {
 			$mode = 'live';
 		} else {
 			$mode = 'test';
@@ -174,7 +174,7 @@ class tx_laterpay_model_payment_history extends tx_laterpay_model_query_abstract
 	 * @return array history
 	 */
 	public function getTotalHistoryByPostId($postId) {
-		if (get_option('laterpay_plugin_is_in_live_mode')) {
+		if (tx_laterpay_config::getOption('laterpay_plugin_is_in_live_mode')) {
 			$mode = 'live';
 		} else {
 			$mode = 'test';
@@ -204,7 +204,7 @@ class tx_laterpay_model_payment_history extends tx_laterpay_model_query_abstract
 	 * @return array history
 	 */
 	public function getTodaysHistoryByPostId($postId) {
-		if (get_option('laterpay_plugin_is_in_live_mode')) {
+		if (tx_laterpay_config::getOption('laterpay_plugin_is_in_live_mode')) {
 			$mode = 'live';
 		} else {
 			$mode = 'test';
@@ -338,7 +338,7 @@ class tx_laterpay_model_payment_history extends tx_laterpay_model_query_abstract
 				'COUNT(id)  AS quantity'
 			),
 			'where' => array(
-				'mode' => (get_option('laterpay_plugin_is_in_live_mode')) ? 'live' : 'test',
+				'mode' => (tx_laterpay_config::getOption('laterpay_plugin_is_in_live_mode')) ? 'live' : 'test',
 				'post_id' => (int) $postId,
 				'date' => array(
 					array(

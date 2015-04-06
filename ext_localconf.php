@@ -59,19 +59,19 @@ $TYPO3_CONF_VARS['SC_OPTIONS']['tslib/class.tslib_content.php']['cObjTypeAndClas
 
 $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess']['lplogger'] = 'EXT:laterpay/lib/core/logger.php:&tx_laterpay_core_logger->handlersLoadAssets';
 $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-postProcess']['lplogger'] = 'EXT:laterpay/lib/core/logger.php:&tx_laterpay_core_logger->handlersFlush';
-// Callback URL catcher
+// callback URL catcher
 $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][] = 'EXT:laterpay/lib/hook/class.tx_callback_catcher.php:&tx_callback_catcher->preRenderHook';
 
-// Plugin action catcher
+// plugin action catcher
 $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][] = 'EXT:laterpay/lib/hook/class.tx_action_catcher.php:&tx_action_catcher->catchLaterpayAction';
 
-// Preview selector
+// preview selector
 $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-postProcess'][] = 'EXT:laterpay/lib/hook/class.tx_content_replacer.php:&tx_content_replacer->addPreviewModeSelector';
 
-// Evaluations for price
+// evaluations for price
 $TYPO3_CONF_VARS['SC_OPTIONS']['tce']['formevals']['tx_evaluation_price'] = 'EXT:laterpay/lib/evaluation/price.php';
 
-// Pre database check of values
+// pre database check of values
 $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'EXT:laterpay/lib/hook/class.tx_field_checker.php:&tx_field_checker';
 
 // register Ajax scripts
@@ -81,5 +81,4 @@ $TYPO3_CONF_VARS['BE']['AJAX']['txttlaterpayM1::appearance'] = t3lib_extMgm::ext
 $TYPO3_CONF_VARS['BE']['AJAX']['txttlaterpayM1::dashboard'] = t3lib_extMgm::extPath('laterpay') . 'mod1/index.php:tx_laterpay_module1->dashboardProcessAjaxRequests';
 // @codingStandardsIgnoreStart
 require_once (t3lib_extMgm::extPath('laterpay').'lib/class.tx_laterpay_compatibility.php');
-require_once (t3lib_extMgm::extPath('laterpay').'lib/laterpay_function.php');
 // @codingStandardsIgnoreEnd

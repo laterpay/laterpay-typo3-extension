@@ -49,10 +49,10 @@ abstract class tx_laterpay_form_abstract {
 	 */
 	public static $filters = array(
 		// sanitize string value
-		'text' => 'sanitize_text_field',
+		'text' => 'tx_laterpay_helper_string::sanitizeTextField',
 
 		// convert to int, abs
-		'to_int' => 'toabsint',
+		'to_int' => 'tx_laterpay_helper_string::toAbsInt',
 
 		// convert to string
 		'to_string' => 'strval',
@@ -74,7 +74,7 @@ abstract class tx_laterpay_form_abstract {
 		'format_num' => 'number_format',
 
 		// strip slashes
-		'unslash' => 'unslash',
+		'unslash' => 'tx_laterpay_helper_string::unslash'
 	);
 
 	/**
@@ -83,7 +83,7 @@ abstract class tx_laterpay_form_abstract {
 	 * @param mixed $data Initial data
 	 */
 	public final function __construct($data = array()) {
-		// Call init method from child class
+		// call init method from child class
 		$this->init();
 
 		// set data to form, if specified

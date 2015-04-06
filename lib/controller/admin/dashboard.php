@@ -63,27 +63,27 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 
 		// pass localized strings and variables to script
 		$i18n = array(
-			'endingIn' 	=> _x('ending in', 'used in wp_localize_script for the flot graph in loadTimePassLifecycles()', 'laterpay'),
-			'month' 	=> _x('month', 'used in wp_localize_script for the flot graph in loadTimePassLifecycles()', 'laterpay'),
-			'months' 	=> _x('months', 'used in wp_localize_script for the flot graph in loadTimePassLifecycles()', 'laterpay'),
-			'weeksLeft' => _x('weeks left', 'used in wp_localize_script as x-axis label for loadTimePassLifecycles()', 'laterpay'),
-			'noData' 	=> __('No data available', 'laterpay'),
+			'endingIn'		=> tx_laterpay_helper_string::trX('ending in', 'used in wp_localize_script for the flot graph in loadTimePassLifecycles()'),
+			'month'			=> tx_laterpay_helper_string::trX('month', 'used in wp_localize_script for the flot graph in loadTimePassLifecycles()'),
+			'months'		=> tx_laterpay_helper_string::trX('months', 'used in wp_localize_script for the flot graph in loadTimePassLifecycles()'),
+			'weeksLeft'		=> tx_laterpay_helper_string::trX('weeks left', 'used in wp_localize_script as x-axis label for loadTimePassLifecycles()'),
+			'noData'		=> tx_laterpay_helper_string::tr('No data available'),
 			'tooltips' 	=> array(
 				'day' 		=> array(
-					'next' 		=> __('Show next day', 'laterpay'),
-					'prev' 		=> __('Show previous day', 'laterpay'),
+					'next' => tx_laterpay_helper_string::tr('Show next day'),
+					'prev' => tx_laterpay_helper_string::tr('Show previous day')
 				),
 				'week' 		=> array(
-					'next' 		=> __('Show next 8 days', 'laterpay'),
-					'prev' 		=> __('Show previous 8 days', 'laterpay'),
+					'next' => tx_laterpay_helper_string::tr('Show next 8 days'),
+					'prev' => tx_laterpay_helper_string::tr('Show previous 8 days')
 				),
 				'2-weeks' 	=> array(
-					'next' 		=> __('Show next 2 weeks', 'laterpay'),
-					'prev' 		=> __('Show previous 2 weeks', 'laterpay'),
+					'next' => tx_laterpay_helper_string::tr('Show next 2 weeks'),
+					'prev' => tx_laterpay_helper_string::tr('Show previous 2 weeks')
 				),
 				'month' 	=> array(
-					'next' 		=> __('Show next month', 'laterpay'),
-					'prev' 		=> __('Show previous month', 'laterpay'),
+					'next' => tx_laterpay_helper_string::tr('Show next month'),
+					'prev' => tx_laterpay_helper_string::tr('Show previous month')
 				)
 			)
 		);
@@ -140,7 +140,7 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 			'plugin_is_in_live_mode' 	=> $this->config->get('is_in_live_mode'),
 			'top_nav' 					=> $this->getMenu(),
 			'admin_menu' 				=> tx_laterpay_helper_view::getAdminMenu(),
-			'currency' 					=> get_option('laterpay_currency'),
+			'currency' 					=> tx_laterpay_config::getOption('laterpay_currency'),
 			'end_timestamp' 			=> $endTimestamp,
 			'interval_start' 			=> strtotime('-1 days'),
 			'interval_end' 				=> strtotime('-8 days'),
@@ -174,7 +174,6 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 					$ajaxObj->setContent(
 						array(
 								'success' => FALSE,
-								//'message' => __('An error occurred when trying to save your settings. Please try again.', 'laterpay')
 						)
 					);
 			}
@@ -182,7 +181,6 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 			$ajaxObj->setContent(
 				array(
 						'success' => FALSE,
-						//'message' => __('An error occurred when trying to save your settings. Please try again.', 'laterpay')
 				));
 		}
 	}
@@ -457,7 +455,7 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 		$data 	= array(
 			'most' 	=> tx_laterpay_helper_dashboard::formatAmountValueMostLeastData($most, 0),
 			'least' => tx_laterpay_helper_dashboard::formatAmountValueMostLeastData($least, 0),
-			'unit' 	=> get_option('laterpay_currency'),
+			'unit' => tx_laterpay_config::getOption('laterpay_currency')
 		);
 
 		$this->logger->info(__METHOD__,
@@ -630,7 +628,7 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 
 		$count = 10;
 		if (isset($postArgs['count'])) {
-			$count = toabsint($postArgs['count']);
+			$count = tx_laterpay_helper_string::toAbsInt($postArgs['count']);
 		}
 
 		$revenueModel = 'all';
@@ -698,17 +696,17 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 
 		if (! isset($post['section'])) {
 			$fResult = array(
-				'message' 	=> __('Error, missing section on request', 'laterpay'),
+				'message'	=> tx_laterpay_helper_string::tr('Error, missing section on request'),
 				'step' 		=> 3,
 			);
 		} elseif (! array_key_exists($post['section'], $this->ajaxSections)) {
 			$fResult = array(
-				'message' 	=> sprintf(__('Section is not allowed <code>%s</code>', 'laterpay'), $post['section']),
+				'message'	=> sprintf(tx_laterpay_helper_string::tr('Section is not allowed <code>%s</code>'), $post['section']),
 				'step' 		=> 4,
 			);
 		} elseif (! method_exists($this, $this->ajaxSections[$post['section']])) {
 			$fResult = array(
-				'message' 	=> sprintf(__('Invalid section <code>%s</code>', 'laterpay'), $post['section']),
+				'message'	=> sprintf(tx_laterpay_helper_string::tr('Invalid section <code>%s</code>'), $post['section']),
 				'step' 		=> 4,
 			);
 		}
