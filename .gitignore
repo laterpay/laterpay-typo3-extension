@@ -35,3 +35,4 @@
 !/res/img/.gitkeep
 res/fonts
 !/res/fonts/.gitkeep
+node_modules
