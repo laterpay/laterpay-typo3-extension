@@ -396,24 +396,6 @@
                                 </tr>
                             </table>
 
-                            <hr>
-
-                            <div class="lp_js_voucherEditor lp_voucherEditor">
-                                <?php tx_laterpay_helper_string::trEcho('Offer this time pass at a reduced price of'); ?>
-                                <input type="text"
-                                       name="voucher_price"
-                                       class="lp_js_voucherPriceInput lp_input lp_numberInput"
-                                       value="<?php echo tx_laterpay_helper_view::formatNumber( tx_laterpay_helper_timePass::getDefaultOptions( 'price' ) ) ?>">
-                                <span><?php echo $laterpay['standard_currency']; ?></span>
-                                <a href="#" class="lp_js_generateVoucherCode lp_editLink lp_addLink" data-icon="c">
-                                    <?php tx_laterpay_helper_string::trEcho('Generate voucher code'); ?>
-                                </a>
-
-                                <hr>
-
-                                <div class="lp_js_voucherPlaceholder"></div>
-                            </div>
-
                         </form>
                     </div>
 
