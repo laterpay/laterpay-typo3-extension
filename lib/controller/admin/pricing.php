@@ -63,13 +63,12 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 		$passesList 		= (array) $passesModel->getAllTimePasses();
 		$vouchersList 		= tx_laterpay_helper_voucher::getAllVouchers();
 		$vouchersStatistic 	= tx_laterpay_helper_voucher::getAllVouchersStatistic();
-
 		$this->localizeScript('lpVars',
 			array(
 				'locale' 				=> $GLOBALS['TYPO3_CONF_VARS']['SYS']['systemLocale'],
 				'i18n' 					=> $i18n,
 				'globalDefaultPrice'	=> tx_laterpay_helper_view::formatNumber(tx_laterpay_config::getOption('laterpay_global_price')),
-				'defaultCurrency'		=> tx_laterpay_config::getOption('laterpay_currency'),
+				'defaultCurrency'		=> $this->config->get(tx_laterpay_config::REG_LATERPAY_CURRENCY),
 				'inCategoryLabel'		=> tx_laterpay_helper_string::tr('All posts in category'),
 				'time_passes_list' 		=> $this->getPassesJson($passesList),
 				'vouchers_list' 		=> json_encode($vouchersList),

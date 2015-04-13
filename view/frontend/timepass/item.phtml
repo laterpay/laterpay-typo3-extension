@@ -1,0 +1,41 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+?>
+
+<div class="lp_js_timePass lp_timePass lp_timePass-<?php echo $timepass['pass_id']; ?>" data-pass-id="<?php echo $timepass['pass_id']; ?>">
+    <section class="lp_timePass__front">
+        <h4 class="lp_js_timePassPreviewTitle lp_timePass_title"><?php echo $timepass['title']; ?></h4>
+        <p class="lp_js_timePassPreviewDescription lp_timePass_description"><?php echo $timepass['description']; ?></p>
+        <div class="lp_timePass_actions">
+            <a href="#" class="lp_js_doPurchase lp_purchaseLink lp_button" title="<?php tx_laterpay_helper_string::trEcho( 'Buy now with LaterPay', 'laterpay' ); ?>" data-icon="b" data-laterpay="<?php echo $timepass['laterpayURL']; ?>" data-preview-as-visitor="<?php echo $previewAsVisitor; ?>" data-is-in-visible-test-mode = "<?php echo $isInVisibleTestMode; ?>"><?php echo $timepass['price']; ?><small>EUR</small></a><a href="#" class="lp_js_flipTimePass lp_timePass_termsLink"><?php tx_laterpay_helper_string::trEcho( 'Terms', 'laterpay' ); ?></a>
+        </div>
+    </section>
+    <section class="lp_timePass__back">
+        <a href="#" class="lp_js_flipTimePass lp_timePass_frontsideLink"><?php tx_laterpay_helper_string::trEcho( 'Back', 'laterpay' ); ?></a>
+        <table class="lp_timePass__conditions">
+            <tr>
+                <th><?php tx_laterpay_helper_string::trEcho( 'Validity', 'laterpay' ) ?></th>
+                <td>
+                    <span class="lp_js_timePassPreviewValidity"><?php echo $timepass['duration'] . ' ' . $period; ?></span>
+                </td>
+            </tr>
+            <tr>
+                <th><?php tx_laterpay_helper_string::trEcho( 'Renewal', 'laterpay' ); ?>&nbsp; </th>
+                <td>
+                    <?php tx_laterpay_helper_string::trEcho( 'No automatic renewal', 'laterpay' ); ?>
+                </td>
+            </tr>
+            <tr>
+                <th><?php tx_laterpay_helper_string::trEcho( 'Price', 'laterpay' ) ?></th>
+                <td>
+                    <span class="lp_js_timePassPreviewPrice"><?php echo $timepass['price']; ?> EUR</span>
+                </td>
+            </tr>
+        </table>
+    </section>
+</div>

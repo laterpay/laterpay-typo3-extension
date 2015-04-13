@@ -794,6 +794,7 @@
                     name = $(v, $timePass).attr('name');
                     if (name !== '' && passData[name] !== undefined && name !== 'revenue_model') {
                         $(v, $timePass).val(passData[name]);
+                        updateTimePassPreview($timePass, $(v, $timePass));
                     }
                 });
 

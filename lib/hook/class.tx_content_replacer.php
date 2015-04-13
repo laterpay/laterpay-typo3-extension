@@ -99,6 +99,10 @@ class tx_content_replacer extends tx_hook_abstract {
 	 * @return bool
 	 */
 	public function isPaymentNeeded($contentObject) {
+		if (tx_laterpay_helper_timepass::userHasActiveTimepass()) {
+			return FALSE;
+		}
+
 		$id = $this->getId($contentObject);
 		// additional checks must be added here
 		$price = tx_laterpay_helper_pricing::getContentPrice($contentObject);
@@ -154,6 +158,10 @@ class tx_content_replacer extends tx_hook_abstract {
 		$wrapper->setWrapperArgument('previewAsVisitor', tx_laterpay_helper_user::previewAsVisitor());
 
 		$contentObject->data['bodytext'] = $wrapper->render($laterpayTeaser);
+
+		if (! tx_laterpay_helper_timepass::userHasActiveTimepass()) {
+			$this->addTimePassesList($contentObject);
+		}
 
 		$wrapper->setJs();
 		$wrapper->setCss();
@@ -341,5 +349,36 @@ class tx_content_replacer extends tx_hook_abstract {
 		// set basic CSS
 		$css = t3lib_extMgm::siteRelPath('laterpay') . 'res/css/laterpay-post-view.css';
 		$GLOBALS['TSFE']->getPageRenderer()->addCssFile($css);
+	}
+
+	/**
+	 * Add timepasses list into bodytext
+	 *
+	 * @param tslib_cObj $contentObject Content object
+	 *
+	 * @return void
+	 */
+	public function addTimePassesList(tslib_cObj &$contentObject) {
+
+		$timepasses = tx_laterpay_helper_timepass::getTimePassesByContent($contentObject);
+		$link = $this->getPageUrl();
+		if (count($timepasses)) {
+			$renderer = new tx_laterpay_controller_abstract(NULL);
+
+			foreach ($timepasses as $key => $timepass) {
+				$timepasses[$key]['laterpayURL'] = tx_laterpay_helper_timepass::getLaterpayPurchaseLink($timepass['pass_id'], array('link' => $link));
+			}
+
+			$renderer->assign('renderer', $renderer);
+			$renderer->assign('time_passes', $timepasses);
+			$renderer->assign('isInVisibleTestMode', tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_IS_IN_VISIBLE_TEST_MODE) ? : NULL);
+			$renderer->assign('previewAsVisitor', tx_laterpay_helper_user::previewAsVisitor());
+
+			$renderedPasses = $renderer->getTextView('frontend/timepass/list');
+			$preparedPasses = preg_replace('/[\n\r]+/', '', $renderedPasses);
+			$preparedPasses = preg_replace('/>\s+</', '><', $preparedPasses);
+
+			$contentObject->data['bodytext'] .= $preparedPasses;
+		}
 	}
 }
