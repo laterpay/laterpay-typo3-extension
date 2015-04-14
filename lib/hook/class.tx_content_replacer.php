@@ -104,7 +104,7 @@ class tx_content_replacer extends tx_hook_abstract {
 		}
 
 		$id = $this->getId($contentObject);
-		// additional checks must be added here
+
 		$price = tx_laterpay_helper_pricing::getContentPrice($contentObject);
 
 		if (! $price) {

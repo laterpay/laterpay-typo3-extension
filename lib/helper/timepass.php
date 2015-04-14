@@ -618,7 +618,7 @@ class tx_laterpay_helper_timepass {
 	}
 
 	/**
-	 * Has user active timepass or not
+	 * Check does user have an active timepass or not
 	 *
 	 * @return bool
 	 */
@@ -650,14 +650,13 @@ class tx_laterpay_helper_timepass {
 	}
 
 	/**
-	 * Has user active timepass or not
+	 * Get all timepasses
 	 *
 	 * @param tslib_cObj $contentObject Content object
 	 *
 	 * @return type
 	 */
 	public static function getTimePassesByContent(tslib_cObj $contentObject) {
-		// Here you can add some conditions to get needed timepasses
 		$timepassModel = new tx_laterpay_model_timepass();
 		$timepasses = $timepassModel->getAllTimePasses();
 

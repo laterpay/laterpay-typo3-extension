@@ -197,13 +197,13 @@ class tx_callback_catcher extends tx_hook_abstract {
 
 		// data to create and hash-check the URL
 		$urlData = array(
-			'pass_id'       => t3lib_div::_GET('pass_id'),
-			'id_currency'   => t3lib_div::_GET('id_currency'),
-			'price'         => t3lib_div::_GET('price'),
-			'date'          => t3lib_div::_GET('date'),
-			'ip'            => t3lib_div::_GET('ip'),
-			'revenue_model' => t3lib_div::_GET('revenue_model'),
-			'link'          => t3lib_div::_GET('link'),
+			'pass_id'		=> t3lib_div::_GET('pass_id'),
+			'id_currency'	=> t3lib_div::_GET('id_currency'),
+			'price'			=> t3lib_div::_GET('price'),
+			'date'			=> t3lib_div::_GET('date'),
+			'ip'			=> t3lib_div::_GET('ip'),
+			'revenue_model'	=> t3lib_div::_GET('revenue_model'),
+			'link'			=> t3lib_div::_GET('link'),
 		);
 
 		$link    = $urlData['link'];
@@ -214,13 +214,13 @@ class tx_callback_catcher extends tx_hook_abstract {
 		if ($hash === t3lib_div::_GET('hash')) {
 			// save payment history
 			$data = array(
-				'id_currency'   => t3lib_div::_GET('id_currency'),
-				'price'         => t3lib_div::_GET('price'),
-				'date'          => t3lib_div::_GET('date'),
-				'ip'            => t3lib_div::_GET('ip'),
-				'hash'          => t3lib_div::_GET('hash'),
-				'revenue_model' => t3lib_div::_GET('revenue_model'),
-				'pass_id'       => $passId,
+				'id_currency'	=> t3lib_div::_GET('id_currency'),
+				'price'			=> t3lib_div::_GET('price'),
+				'date'			=> t3lib_div::_GET('date'),
+				'ip'			=> t3lib_div::_GET('ip'),
+				'hash'			=> t3lib_div::_GET('hash'),
+				'revenue_model'	=> t3lib_div::_GET('revenue_model'),
+				'pass_id'		=> $passId,
 			);
 
 			$this->logger->info(
