@@ -62,8 +62,8 @@ class tx_field_checker {
 				$fieldArray[$priceFieldName]   = $roundedPrice;
 			}
 		}
-
-		if (empty(trim(strip_tags($fieldArray[$teaserFieldName])))) {
+		$teaserStr = trim(strip_tags($fieldArray[$teaserFieldName]));
+		if (empty($teaserStr)) {
 			$fieldArray[$teaserFieldName] = tx_laterpay_helper_content::getTeaser($content['bodytext']);
 		}
 	}
