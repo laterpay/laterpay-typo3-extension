@@ -1,0 +1,6 @@
+<div class="timepasses">
+	<?php foreach ($time_passes as $timepass): ?>
+		<?php $renderer->assign('timepass',$timepass); ?>
+		<?php echo $renderer->getTextView('frontend/timepass/item'); ?>
+	<?php endforeach; ?>
+</div>

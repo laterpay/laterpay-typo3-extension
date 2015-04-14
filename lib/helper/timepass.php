@@ -346,7 +346,8 @@ class tx_laterpay_helper_timepass {
 	public static function getLaterpayPurchaseLink($timePassId, $data = NULL) {
 		$timePassModel = new tx_laterpay_model_timepass();
 
-		$timePass = (array) $timePassModel->getPassData($timePassId);
+		$timePass = $timePassModel->getPassData($timePassId);
+		$timePass = isset($timePass[0]) ? $timePass[0] : NULL;
 		if (empty($timePass)) {
 			return '';
 		}
@@ -355,17 +356,16 @@ class tx_laterpay_helper_timepass {
 			$data = array();
 		}
 
-		$currency = tx_laterpay_config::getOption('laterpay_currency');
+		$currency = tx_laterpay_config::getInstance()->get(tx_laterpay_config::REG_LATERPAY_CURRENCY);
 		$currencyModel 	= new tx_laterpay_model_currency();
 		$price 			= isset($data['price']) ? $data['price'] : $timePass['price'];
 		$revenueModel 	= tx_laterpay_helper_pricing::ensureValidRevenueModel($timePass['revenue_model'], $price);
 
 		$clientOptions 	= tx_laterpay_helper_config::getPhpClientOptions();
-		$client 		= new tx_laterpay_client($clientOptions['cp_key'], $clientOptions['api_key'], $clientOptions['api_root'],
+		$client 		= new LaterPay_Client($clientOptions['cp_key'], $clientOptions['api_key'], $clientOptions['api_root'],
 			$clientOptions['web_root'], $clientOptions['token_name']);
 
-		$link 			= isset($data['link']) ? $data['link'] : get_permalink();
-
+		$link 			= isset($data['link']) ? $data['link'] : 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		// prepare URL
 		$urlParams = array(
 			'pass_id' 		=> self::getTokenizedTimePassId($timePassId),
@@ -397,10 +397,10 @@ class tx_laterpay_helper_timepass {
 
 		if ($revenueModel == 'sis') {
 			// Single Sale purchase
-			return $client->getBuyUrl($params);
+			return $client->get_buy_url($params);
 		} else {
 			// Pay-per-Use purchase
-			return $client->getAddUrl($params);
+			return $client->get_add_url($params);
 		}
 	}
 
@@ -615,5 +615,51 @@ class tx_laterpay_helper_timepass {
 		$model = new tx_laterpay_model_timepass();
 
 		return $model->getTimePassesCount();
+	}
+
+	/**
+	 * Check does user have an active timepass or not
+	 *
+	 * @return bool
+	 */
+	public static function userHasActiveTimepass() {
+
+		$timepasses = self::getAllTimePasses();
+		if (!count($timepasses)) {
+			return FALSE;
+		}
+
+		$timepassesIds = array();
+		foreach ($timepasses as $timepass) {
+			$timepassesIds = self::getTokenizedTimePassId($timepass['pass_id']);
+		}
+
+		$clientOptions = tx_laterpay_helper_config::getPhpClientOptions();
+		$laterpayClient = new LaterPay_Client($clientOptions['cp_key'], $clientOptions['api_key'], $clientOptions['api_root'],
+			$clientOptions['web_root'], $clientOptions['token_name']);
+
+		$result = $laterpayClient->get_access($timepassesIds);
+
+		$articles = $result['articles'];
+		foreach ($articles as $article) {
+			if ($article['access']) {
+				return TRUE;
+			}
+		}
+		return FALSE;
+	}
+
+	/**
+	 * Get all timepasses
+	 *
+	 * @param tslib_cObj $contentObject Content object
+	 *
+	 * @return type
+	 */
+	public static function getTimePassesByContent(tslib_cObj $contentObject) {
+		$timepassModel = new tx_laterpay_model_timepass();
+		$timepasses = $timepassModel->getAllTimePasses();
+
+		return $timepasses;
 	}
 }

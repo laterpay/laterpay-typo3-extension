@@ -75,7 +75,13 @@ class tx_callback_catcher extends tx_hook_abstract {
 		// get / set token if needed
 		$this->createToken();
 
-		$this->buyPost();
+		if (t3lib_div::_GET('post_id')) {
+			$this->buyPost();
+		}
+
+		if (t3lib_div::_GET('pass_id')) {
+			$this->buyTimepass();
+		}
 	}
 
 	/**
@@ -177,5 +183,56 @@ class tx_callback_catcher extends tx_hook_abstract {
 		t3lib_utility_Http::redirect($redirectUrl);
 
 		exit();
+	}
+
+	/**
+	 * Buy timepass.
+	 *
+	 * @return void
+	 */
+	public function buyTimepass() {
+		if ( ! t3lib_div::_GET('pass_id') && ! t3lib_div::_GET('link') ) {
+			return;
+		}
+
+		// data to create and hash-check the URL
+		$urlData = array(
+			'pass_id'		=> t3lib_div::_GET('pass_id'),
+			'id_currency'	=> t3lib_div::_GET('id_currency'),
+			'price'			=> t3lib_div::_GET('price'),
+			'date'			=> t3lib_div::_GET('date'),
+			'ip'			=> t3lib_div::_GET('ip'),
+			'revenue_model'	=> t3lib_div::_GET('revenue_model'),
+			'link'			=> t3lib_div::_GET('link'),
+		);
+
+		$link    = $urlData['link'];
+		$url     = tx_laterpay_helper_string::addQueryArg($urlData, $link);
+		$hash    = tx_laterpay_helper_pricing::getHashByUrl( $url );
+
+		$passId = tx_laterpay_helper_timepass::getUntokenizedTimePassId( $urlData['pass_id'] );
+		if ($hash === t3lib_div::_GET('hash')) {
+			// save payment history
+			$data = array(
+				'id_currency'	=> t3lib_div::_GET('id_currency'),
+				'price'			=> t3lib_div::_GET('price'),
+				'date'			=> t3lib_div::_GET('date'),
+				'ip'			=> t3lib_div::_GET('ip'),
+				'hash'			=> t3lib_div::_GET('hash'),
+				'revenue_model'	=> t3lib_div::_GET('revenue_model'),
+				'pass_id'		=> $passId,
+			);
+
+			$this->logger->info(
+				__METHOD__ . ' - set payment history',
+				$data
+			);
+
+			$paymentHistoryModel = new tx_laterpay_model_payment_history();
+			$paymentHistoryModel->setPaymentHistory( $data );
+		}
+
+		t3lib_utility_Http::redirect( $link );
+		exit;
 	}
 }
