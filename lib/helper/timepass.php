@@ -648,18 +648,4 @@ class tx_laterpay_helper_timepass {
 		}
 		return FALSE;
 	}
-
-	/**
-	 * Get all timepasses
-	 *
-	 * @param tslib_cObj $contentObject Content object
-	 *
-	 * @return type
-	 */
-	public static function getTimePassesByContent(tslib_cObj $contentObject) {
-		$timepassModel = new tx_laterpay_model_timepass();
-		$timepasses = $timepassModel->getAllTimePasses();
-
-		return $timepasses;
-	}
 }

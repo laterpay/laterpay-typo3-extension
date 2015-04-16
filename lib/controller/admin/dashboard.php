@@ -215,41 +215,6 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 	}
 
 	/**
-	 * Callback for wp-cron to refresh today's dashboard data.
-	 * The cron job provides two parameters for {x} days back and {n} count of items to
-	 * register your own cron with custom parameters to cache data.
-	 *
-	 * @param int $startTimestamp Start time stamp
-	 * @param int $count Count of records
-	 * @param string $interval Interval string
-	 *
-	 * @return void
-	 */
-	public function refreshDasboardData($startTimestamp = NULL, $count = 10, $interval = 'week') {
-		set_time_limit(0);
-
-		if ($startTimestamp === NULL) {
-			$startTimestamp = strtotime('today GMT');
-		}
-
-		$args = array(
-			'start_timestamp' 	=> $startTimestamp,
-			'count' 			=> (int) $count,
-			'interval' 			=> $interval,
-		);
-
-		foreach ($this->ajaxSections as $section) {
-			$args['section'] 	= $section;
-			$options 			= $this->getAjaxRequestOptions($args);
-			$data 				= $this->$section($options);
-
-			$this->logger->info(__METHOD__ . ' - ' . $section, $options);
-
-			tx_laterpay_helper_dashboard::refreshCacheData($options, $data);
-		}
-	}
-
-	/**
 	 * Internal function to load the conversion data as diagram.
 	 *
 	 * @param mixed $options Array of options

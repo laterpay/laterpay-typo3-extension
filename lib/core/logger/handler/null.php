@@ -31,7 +31,7 @@ class tx_laterpay_core_logger_handler_null extends tx_laterpay_core_logger_handl
 	}
 
 	/**
-	 * To handle record or not
+	 * To handle record
 	 *
 	 * @param array $record Record data
 	 *
