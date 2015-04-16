@@ -87,7 +87,7 @@ class tx_laterpay_model_query_abstract {
 	}
 
 	/**
-	 * Add a INNER/LEFT/RIGHT JOIN clause to a query.
+	 * Build a INNER/LEFT/RIGHT JOIN clause to a query.
 	 *
 	 * @param mixed $joins Array of data:
 	 *        	array(
@@ -167,7 +167,7 @@ class tx_laterpay_model_query_abstract {
 	}
 
 	/**
-	 * Add a LIMIT clause to a query.
+	 * Build a LIMIT clause to a query.
 	 *
 	 * @param int $limit Limit for select
 	 *
@@ -182,7 +182,7 @@ class tx_laterpay_model_query_abstract {
 	}
 
 	/**
-	 * Add a ORDER BY clause to a query.
+	 * Build a ORDER BY clause to a query.
 	 *
 	 * @param string $orderBy Order by
 	 * @param string $order Order (Asc | Dec)
@@ -205,7 +205,7 @@ class tx_laterpay_model_query_abstract {
 	}
 
 	/**
-	 * Add a GROUP BY clause to a query.
+	 * Build a GROUP BY clause to a query.
 	 *
 	 * @param string $group Name of group
 	 *
@@ -220,7 +220,7 @@ class tx_laterpay_model_query_abstract {
 	}
 
 	/**
-	 * Add a SELECT clause to a query.
+	 * Build a SELECT clause to a query.
 	 *
 	 * @param mixed $fields Array of fields for select
 	 *
@@ -267,7 +267,7 @@ class tx_laterpay_model_query_abstract {
 	}
 
 	/**
-	 * Add a WHERE clause to a query.
+	 * Build a WHERE clause to a query.
 	 *
 	 * @param mixed $where Array of where data
 	 *
@@ -348,7 +348,7 @@ class tx_laterpay_model_query_abstract {
 	}
 
 	/**
-	 * Creating a query.
+	 * Create a query.
 	 *
 	 * @param mixed $args Array of arguments for build of select query
 	 *

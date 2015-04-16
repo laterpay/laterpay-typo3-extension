@@ -179,7 +179,7 @@ class tx_content_replacer extends tx_hook_abstract {
 	}
 
 	/**
-	 * Id getter.
+	 * Get content id
 	 *
 	 * @param tslib_cObj $contentObject Content object
 	 *
@@ -360,7 +360,7 @@ class tx_content_replacer extends tx_hook_abstract {
 	 */
 	public function addTimePassesList(tslib_cObj &$contentObject) {
 
-		$timepasses = tx_laterpay_helper_timepass::getTimePassesByContent($contentObject);
+		$timepasses = tx_laterpay_helper_timepass::getAllTimePasses();
 		$link = $this->getPageUrl();
 		if (count($timepasses)) {
 			$renderer = new tx_laterpay_controller_abstract(NULL);

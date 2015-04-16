@@ -151,7 +151,7 @@ class tx_laterpay_config implements t3lib_Singleton {
 
 
 	/**
-	 * Get the plugin settings.
+	 * Get the plugin init settings.
 	 *
 	 * @return LaterPay_Model_Config
 	 */
@@ -548,7 +548,7 @@ class tx_laterpay_config implements t3lib_Singleton {
 	}
 
 	/**
-	 * Lock write access to this object's instance.
+	 * Lock write access for this object.
 	 * Forever.
 	 *
 	 * @return LaterPay_Model_Config

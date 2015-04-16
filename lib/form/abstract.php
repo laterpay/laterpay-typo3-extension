@@ -216,7 +216,7 @@ abstract class tx_laterpay_form_abstract {
 	}
 
 	/**
-	 * Check, if field value is null and can be null.
+	 * Check, if field can be null.
 	 *
 	 * @param mixed $field Field name
 	 *

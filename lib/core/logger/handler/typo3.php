@@ -116,7 +116,7 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 	}
 
 	/**
-	 * To handle record or not
+	 * To handle record
 	 *
 	 * @param array $record Record data
 	 *
@@ -129,12 +129,6 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 
 		$this->records[] = $record;
 
-		return TRUE;
-
-		// @codingStandardsIgnoreStart
-		t3lib_utility_Debug::debug($record);
-		// @codingStandardsIgnoreEnd
-		//
 		return TRUE;
 	}
 
