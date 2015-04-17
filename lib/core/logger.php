@@ -256,28 +256,24 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 		);
 
 		// check, if any handler will handle this message
-		$handlerKey = NULL;
-		foreach ($this->handlers as $key => $handler) {
+		$isHandling = FALSE;
+		foreach ($this->handlers as $handler) {
 			if ($handler->isHandling($record)) {
-				$handlerKey = $key;
+				$isHandling = TRUE;
 				break;
 			}
 		}
 
-		if ($handlerKey === NULL) {
-			// none found
-			return FALSE;
+		if ($isHandling) {
+			// found at least one, process message and dispatch it
+			foreach ($this->processors as $processor) {
+				$record = $processor->process($record);
+			}
+			foreach ($this->handlers as $handler) {
+				$handler->handle($record);
+			}
 		}
-
-		// found at least one, process message and dispatch it
-		foreach ($this->processors as $processor) {
-			$record = $processor->process($record);
-		}
-		while (isset($this->handlers[$handlerKey]) && $this->handlers[$handlerKey]->handle($record) === FALSE) {
-			$handlerKey ++;
-		}
-
-		return TRUE;
+		return $isHandling;
 	}
 
 	/**
