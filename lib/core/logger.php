@@ -257,7 +257,7 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 
 		// check, if any handler will handle this message
 		$isHandling = FALSE;
-		foreach ($this->handlers as $key => $handler) {
+		foreach ($this->handlers as $handler) {
 			if ($handler->isHandling($record)) {
 				$isHandling = TRUE;
 				break;
