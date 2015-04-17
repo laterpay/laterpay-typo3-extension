@@ -31,17 +31,20 @@ class tx_laterpay_core_logger_handler_null extends tx_laterpay_core_logger_handl
 	}
 
 	/**
-	 * To handle record
+	 * Handles a record.
 	 *
-	 * @param array $record Record data
+	 * All records may be passed to this method, and the handler should discard
+	 * those that it does not want to handle.
+	 *
+	 * The return value of this function controls the bubbling process of the handler stack.
+	 * Unless the bubbling is interrupted (by returning true), the Logger class will keep on
+	 * calling further handlers in the stack with a given log record.
+	 *
+	 * @param array $record The record to handle
 	 *
 	 * @return bool
 	 */
 	public function handle(array $record) {
-		if ($record['level'] < $this->level) {
-			return FALSE;
-		}
-
 		return TRUE;
 	}
 }

@@ -161,9 +161,15 @@ abstract class tx_laterpay_core_logger_handler_abstract implements tx_laterpay_c
 	}
 
 	/**
-	 * Is needed to handle or not.
+	 * Checks whether the given record will be handled by this handler.
 	 *
-	 * @param array $record Record data
+	 * This is mostly done for performance reasons, to avoid calling processors for nothing.
+	 *
+	 * Handlers should still check the record levels within handle(), returning false in isHandling()
+	 * is no guarantee that handle() will not be called, and isHandling() might not be called
+	 * for a given record.
+	 *
+	 * @param array $record Log record
 	 *
 	 * @return bool
 	 */
