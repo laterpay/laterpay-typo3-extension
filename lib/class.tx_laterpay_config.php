@@ -146,16 +146,16 @@ class tx_laterpay_config implements t3lib_Singleton {
 	 * Creates this object.
 	 */
 	public function __construct () {
-		$this->laterpayInitConfig();
+		$this->initConfig();
 	}
 
 
 	/**
-	 * Get the plugin settings.
+	 * Create initial plugin's settings.
 	 *
 	 * @return LaterPay_Model_Config
 	 */
-	public function laterpayInitConfig() {
+	public function initConfig() {
 		$registry = t3lib_div::makeInstance('t3lib_Registry');
 		$config = $this;
 
@@ -548,7 +548,7 @@ class tx_laterpay_config implements t3lib_Singleton {
 	}
 
 	/**
-	 * Lock write access to this object's instance.
+	 * Lock write access for this object.
 	 * Forever.
 	 *
 	 * @return LaterPay_Model_Config

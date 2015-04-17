@@ -68,42 +68,6 @@ class tx_laterpay_helper_dashboard {
 	}
 
 	/**
-	 * Callback for wp-ajax and wp-cron to refresh today's dashboard data.
-	 * The cron job provides two params for {x} days back and {n} count of items to
-	 * register your own cron with custom params to cache data.
-	 *
-	 * @param mixed $options Array of options
-	 * @param mixed $data Array of data
-	 *
-	 * @wp-hook laterpayRefreshDashboardData
-	 *
-	 * @return void
-	 */
-	public static function refreshCacheData($options, $data) {
-		$timestamp = strtotime('now GMT');
-		$data['last_update'] = array(
-			'date' 		=> date('d.m.Y H.i:s', $timestamp),
-			'timestamp' => $timestamp,
-		);
-
-		$cacheDir 		= $options['cache_dir'];
-		$cacheFilename 	= $options['cache_filename'];
-
-		// create the cache dir, if it doesn't exist
-		if (!file_exists($cacheDir)) {
-			mkdir($cacheDir, 0770, TRUE);
-		}
-
-		$context 			= $options;
-		$context['data'] 	= $data;
-
-		tx_laterpay_core_logger::getInstance()->info(__METHOD__, $context);
-
-		// write the data to the cache dir
-		file_put_contents($cacheDir . $cacheFilename, serialize($data));
-	}
-
-	/**
 	 * Return the cache dir by a given strottime() timestamp.
 	 *
 	 * @param int|null $timestamp Default null will be set to strototime( 'today GMT' );
@@ -254,7 +218,7 @@ class tx_laterpay_helper_dashboard {
 	}
 
 	/**
-	 * Build the sparkline by given wpdb result with end and start timestamp.
+	 * Build the sparkline by given db result with end and start timestamp.
 	 *
 	 * @param mixed $items Array of items
 	 * @param int $startTimestamp Start timestamp
@@ -282,7 +246,7 @@ class tx_laterpay_helper_dashboard {
 	}
 
 	/**
-	 * Helper Function to convert a wpdb result to diagram data.
+	 * Helper Function to convert a db result to diagram data.
 	 *
 	 * @param mixed $items Array of:
 	 *        array(
@@ -353,7 +317,7 @@ class tx_laterpay_helper_dashboard {
 	}
 
 	/**
-	 * Sort all given items of a wpdb result by date.
+	 * Sort all given items of a db result by date.
 	 *
 	 * @param mixed $items Array of:
 	 *        array(
@@ -391,7 +355,7 @@ class tx_laterpay_helper_dashboard {
 	}
 
 	/**
-	 * Sort all given items of a wpdb result by hour.
+	 * Sort all given items of a db result by hour.
 	 *
 	 * @param mixed $items Array of:
 	 *        array(
@@ -471,7 +435,7 @@ class tx_laterpay_helper_dashboard {
 	}
 
 	/**
-	 * Helper function to fill a wpdb result sorted by day with quantity = 0, if the day is missing.
+	 * Helper function to fill a db result sorted by day with quantity = 0, if the day is missing.
 	 *
 	 * @param mixed $items Array of items
 	 * @param mixed $lastDays Array of last days
@@ -504,7 +468,7 @@ class tx_laterpay_helper_dashboard {
 	}
 
 	/**
-	 * Helper function to fill a wpdb result sorted by hour with quantity = 0, if the hour is missing.
+	 * Helper function to fill a db result sorted by hour with quantity = 0, if the hour is missing.
 	 *
 	 * @param mixed $items Array of items
 	 * @param int $startTimestamp Start time stamp
