@@ -50,6 +50,6 @@ class tx_laterpay_evaluate_price {
 	 * @return float
 	 */
 	public function evaluateFieldValue($value, $isIn, &$set) {
-		return round( tx_laterpay_helper_pricing::ensureValidPrice((float) $value), 2);
+		return sprintf('%.2f', round( tx_laterpay_helper_pricing::ensureValidPrice((float) $value), 2));
 	}
 }
