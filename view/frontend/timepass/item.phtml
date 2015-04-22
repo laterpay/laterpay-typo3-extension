@@ -5,6 +5,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+	if ( $timepass['duration'] > 1 ) {
+		$period = tx_laterpay_helper_timepass::getPeriodOptions( $timepass['period'], true );
+	} else {
+		$period = tx_laterpay_helper_timepass::getPeriodOptions( $timepass['period'] );
+	}
 ?>
 
 <div class="lp_js_timePass lp_timePass lp_timePass-<?php echo $timepass['pass_id']; ?>" data-pass-id="<?php echo $timepass['pass_id']; ?>">
