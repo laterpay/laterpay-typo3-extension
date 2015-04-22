@@ -17,7 +17,7 @@ before_script:
   - sed -i 's/<rule ref="..\/TYPO3SniffPool\/Sniffs\/Files\/FilenameSniff.php" \/>/<!--<rule ref="..\/TYPO3SniffPool\/Sniffs\/Files\/FilenameSniff.php" \/> -->/' $(pear config-get php_dir)/PHP/CodeSniffer/Standards/TYPO3CMS/ruleset.xml
 script:
   - find . \( -name '*.php' -o -name '*.inc' -o -name '*.phtml' \) -exec php -lf {} \;
-  - phpcs -s -n --standard=TYPO3CMS --extensions=php --ignore='lib/laterpay/*,lib/browscap/*' ./
+  - phpcs -s -n --standard=TYPO3CMS --extensions=php --ignore='lib/laterpay/*,lib/browscap/*,cache/*' ./
   - jshint ./asset_sources
 
 notifications:
