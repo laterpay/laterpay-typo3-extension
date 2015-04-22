@@ -147,6 +147,12 @@ class tx_content_replacer extends tx_hook_abstract {
 			tx_laterpay_model_content::updateContentData($this->getId($contentObject), array('laterpay_teaser' => $laterpayTeaser));
 		}
 
+		if (!tx_laterpay_config::getOption('laterpay_teaser_content_only')) {
+			$fullContent = $contentObject->data['bodytext'];
+		} else {
+			$fullContent = NULL;
+		}
+
 		$wrapper 		= $this->getWrapper($contentObject, $laterpayTeaser);
 		$purchaseUrl 	= $this->getPurchaseUrl($contentObject);
 
@@ -156,6 +162,7 @@ class tx_content_replacer extends tx_hook_abstract {
 		$wrapper->setWrapperArgument('revenueModel', tx_laterpay_helper_pricing::getContentRevenueModel($contentObject));
 		$wrapper->setWrapperArgument('isInVisibleTestMode', tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_IS_IN_VISIBLE_TEST_MODE) ? : NULL);
 		$wrapper->setWrapperArgument('previewAsVisitor', tx_laterpay_helper_user::previewAsVisitor());
+		$wrapper->setWrapperArgument('fullContent', $fullContent);
 
 		$contentObject->data['bodytext'] = $wrapper->render($laterpayTeaser);
 

@@ -1,16 +1,18 @@
 <?php if ( ! defined( 'TYPO3_MODE' ) ) { die('Access denied.'); } ?>
-
-<div class="lp_paidContent">
-    <div class="lp_fullContent">
-        <!-- <?php tx_laterpay_helper_string::trEcho('Preview a short excerpt from the paid post:'); ?> -->
-        <?php echo tx_laterpay_helper_string::truncate(
+<div class="lp_teaser-content">
+    <p><?php echo tx_laterpay_helper_string::truncate(
                 $content,
                 tx_laterpay_helper_string::determineNumberOfWords( $content ),
                 array(
                     'html'  => true,
                     'words' => true,
                 )
-            ); ?>
+            ); ?></p>
+</div>
+<div class="lp_paidContent">
+    <div class="lp_fullContent">
+        <!-- <?php tx_laterpay_helper_string::trEcho('Preview a short excerpt from the paid post:'); ?> -->
+        <?php echo $fullContent; ?>
         <br>
         <?php tx_laterpay_helper_string::trEcho('Thanks for reading this short excerpt from the paid post! Fancy buying it to read all of it?'); ?>
     </div>
