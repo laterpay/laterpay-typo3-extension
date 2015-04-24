@@ -241,15 +241,7 @@ class tx_laterpay_config implements t3lib_Singleton {
 			$registry->set(
 				self::PLUGIN_NAME_SPACE,
 				self::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT,
-				10
-			);
-		}
-
-		if ($registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX) == NULL) {
-			$registry->set(
-				self::PLUGIN_NAME_SPACE,
-				self::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX,
-				100
+				25
 			);
 		}
 
@@ -257,7 +249,15 @@ class tx_laterpay_config implements t3lib_Singleton {
 			$registry->set(
 				self::PLUGIN_NAME_SPACE,
 				self::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN,
-				25
+				26
+			);
+		}
+
+		if ($registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX) == NULL) {
+			$registry->set(
+				self::PLUGIN_NAME_SPACE,
+				self::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX,
+				200
 			);
 		}
 
@@ -304,17 +304,17 @@ class tx_laterpay_config implements t3lib_Singleton {
 
 		// content preview settings
 		$contentSettings = array(
-				'content_auto_generated_teaser_content_word_count' => $registry->get(self::PLUGIN_NAME_SPACE,
+				self::CONTENT_AUTO_GENERATED_TEASER_CONTENT_WORD_COUNT => $registry->get(self::PLUGIN_NAME_SPACE,
 					self::REG_LATERPAY_TEASER_CONTENT_WORD_COUNT),
-				'content_preview_percentage_of_content' => $registry->get(self::PLUGIN_NAME_SPACE,
+				self::CONTENT_PREVIEW_PERCENTAGE_OF_CONTENT => $registry->get(self::PLUGIN_NAME_SPACE,
 					self::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT),
-				'content_preview_word_count_min' => $registry->get(self::PLUGIN_NAME_SPACE,
+				self::CONTENT_PREVIEW_WORD_COUNT_MIN => $registry->get(self::PLUGIN_NAME_SPACE,
 					self::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN),
-				'content_preview_word_count_max' => $registry->get(self::PLUGIN_NAME_SPACE,
+				self::CONTENT_PREVIEW_WORD_COUNT_MAX => $registry->get(self::PLUGIN_NAME_SPACE,
 					self::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX),
-				'content_show_purchase_button' => $registry->get(self::PLUGIN_NAME_SPACE,
+				self::CONTENT_SHOW_PURCHASE_BUTTON => $registry->get(self::PLUGIN_NAME_SPACE,
 					self::REG_LATERPAY_SHOW_PURCHASE_BUTTON),
-				'content_enabled_post_types' => $enabledPostTypes ? $enabledPostTypes : array(),
+				self::CONTENT_ENABLED_POST_TYPES => $enabledPostTypes ? $enabledPostTypes : array(),
 		);
 
 		$config->import($contentSettings);
