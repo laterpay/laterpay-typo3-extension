@@ -148,7 +148,14 @@ class tx_content_replacer extends tx_hook_abstract {
 		}
 
 		if (!tx_laterpay_config::getOption('laterpay_teaser_content_only')) {
-			$fullContent = $contentObject->data['bodytext'];
+			$fullContent = tx_laterpay_helper_string::truncate(
+				$contentObject->data['bodytext'],
+				tx_laterpay_helper_string::determineNumberOfWords($contentObject->data['bodytext']),
+				array(
+						'html'	=> TRUE,
+						'words'	=> TRUE,
+				)
+			);
 		} else {
 			$fullContent = NULL;
 		}

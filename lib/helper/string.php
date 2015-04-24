@@ -48,10 +48,10 @@ class tx_laterpay_helper_string {
 
 		$config 		= tx_laterpay_config::getInstance();
 
-		$percent 		= (int) $config->get('content.preview_percentage_of_content');
+		$percent 		= (int) $config->get(tx_laterpay_config::CONTENT_PREVIEW_PERCENTAGE_OF_CONTENT);
 		$percent 		= max(min($percent, 100), 1);
-		$min 			= (int) $config->get('content.preview_word_count_min');
-		$max 			= (int) $config->get('content.preview_word_count_max');
+		$min 			= (int) $config->get(tx_laterpay_config::CONTENT_PREVIEW_WORD_COUNT_MIN);
+		$max 			= (int) $config->get(tx_laterpay_config::CONTENT_PREVIEW_WORD_COUNT_MAX);
 
 		$numberOfWords 	= $totalWords * ($percent / 100);
 		$numberOfWords 	= max(min($numberOfWords, $max), $min);
