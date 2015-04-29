@@ -58,4 +58,18 @@ class tx_laterpay_model_content {
 		return mysql_affected_rows($res);
 	}
 
+	/**
+	 * Get all Purchaseable content from page
+	 *
+	 * @param int $pageId id of page
+	 *
+	 * @return mixed list of purchasable content
+	 */
+	public static function getPurchasableContentForPage($pageId) {
+
+		$result = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', self::$contentTable, 'laterpay_price > 0 and pid = ' . $pageId);
+
+		return $result;
+	}
+
 }

@@ -444,7 +444,7 @@ class tx_laterpay_helper_dashboard {
 	 */
 	public static function fillEmptyDays($items, $lastDays) {
 		foreach ($lastDays as $dayItem) {
-			$date = $dayItem->date;
+			$date = $dayItem['date'];
 
 			if (! array_key_exists($date, $items)) {
 				$item = array(

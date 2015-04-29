@@ -631,21 +631,8 @@ class tx_laterpay_helper_timepass {
 
 		$timepassesIds = array();
 		foreach ($timepasses as $timepass) {
-			$timepassesIds = self::getTokenizedTimePassId($timepass['pass_id']);
+			$timepassesIds[] = self::getTokenizedTimePassId($timepass['pass_id']);
 		}
-
-		$clientOptions = tx_laterpay_helper_config::getPhpClientOptions();
-		$laterpayClient = new LaterPay_Client($clientOptions['cp_key'], $clientOptions['api_key'], $clientOptions['api_root'],
-			$clientOptions['web_root'], $clientOptions['token_name']);
-
-		$result = $laterpayClient->get_access($timepassesIds);
-
-		$articles = $result['articles'];
-		foreach ($articles as $article) {
-			if ($article['access']) {
-				return TRUE;
-			}
-		}
-		return FALSE;
+		return tx_laterpay_helper_access::checkIfHasActiveTimepasses($timepassesIds);
 	}
 }
