@@ -47,7 +47,7 @@ class tx_laterpay_model_post_view extends tx_laterpay_model_query_abstract {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->table = 'tt_laterpay_post_views';
+		$this->table = 'tt_laterpay_content_views';
 
 		$this->postJoin = array(
 			array(
@@ -58,7 +58,7 @@ class tx_laterpay_model_post_view extends tx_laterpay_model_query_abstract {
 				'table' => $this->joinTable,
 				'on' => array(
 					'field' => 'uid',
-					'join_field' => 'post_id',
+					'join_field' => 'content_id',
 					'compare' => '='
 				)
 			)
@@ -96,27 +96,32 @@ class tx_laterpay_model_post_view extends tx_laterpay_model_query_abstract {
 	}
 
 	/**
-	 * Save payment to payment history.
+	 * Add new view into history.
 	 *
-	 * @param array $data
-	 *        	payment data
+	 * @param mixed $data view data
 	 *
-	 * @return array post views
+	 * @return void
 	 */
-// 	public function updatePostViews($data) {
-// 		global $wpdb;
-// 		$sql = "
-//             INSERT INTO
-//                 {$this->table} (post_id, user_id, date, ip)
-//             VALUES
-//                 ('%d', '%s', '%s', '%s')
-//             ON DUPLICATE KEY UPDATE
-//                 count = count + 1
-//             ;
-//         ";
-// 		$sql = $wpdb->prepare($sql, (int) $data['post_id'], $data['user_id'], date('Y-m-d H:i:s', $data['date']), $data['ip']);
-// 		return $wpdb->getResults($sql);
-// 	}
+	public function updateContentViews($data) {
+
+		$queryParams = array(
+			'content_id' => $data['content_id'],
+			'ip' => $data['ip'],
+			'date' => date('Y-m-d H:i:s'),
+		);
+
+		$GLOBALS['TYPO3_DB']->exec_INSERTquery(
+			$this->table,
+			$queryParams
+		);
+		$this->logger->info(__METHOD__,
+			array(
+				'args' => $queryParams,
+				'query' => $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery,
+				'results' => ''
+			)
+		);
+	}
 
 	/**
 	 * Get the history.
@@ -126,10 +131,15 @@ class tx_laterpay_model_post_view extends tx_laterpay_model_query_abstract {
 	 * @return array $results
 	 */
 	public function getHistory($args = array()) {
+
+		if (!is_array($args)) {
+			$args = array();
+		}
+
 		$defaultArgs = array(
 			'order' => 'ASC',
 			'fields' => array(
-				'SUM(count)     AS quantity',
+				'count(*)     AS quantity',
 				'DATE(date)     AS date',
 				'DAY(date)      AS day',
 				'MONTH(date)    AS month',
@@ -185,7 +195,7 @@ class tx_laterpay_model_post_view extends tx_laterpay_model_query_abstract {
 	public function getTotalPostImpression($args = array()) {
 		$defaultArgs = array(
 			'fields' => array(
-				'SUM(count) AS quantity'
+				'COUNT(*) AS quantity'
 			)
 		);
 		$args = array_merge($defaultArgs, $args);
@@ -207,10 +217,10 @@ class tx_laterpay_model_post_view extends tx_laterpay_model_query_abstract {
 	public function getMostViewedPosts($args = array(), $startTimestamp = NULL, $interval = 'week') {
 		$defaultArgs = array(
 			'fields' => array(
-				'post_id',
-				'SUM(count) AS quantity'
+				'content_id',
+				'COUNT(*) AS quantity'
 			),
-			'group_by' => 'post_id',
+			'group_by' => 'content_id',
 			'order_by' => 'quantity',
 			'order' => 'DESC',
 			'limit' => 10,
@@ -236,7 +246,7 @@ class tx_laterpay_model_post_view extends tx_laterpay_model_query_abstract {
 
 		foreach ($results as $key => $data) {
 			// the sparkline for the last x days
-			$sparkline = $this->getSparkline($data['post_id'], $startTimestamp, $interval);
+			$sparkline = $this->getSparkline($data['content_id'], $startTimestamp, $interval);
 			$data['sparkline'] = implode(',', $sparkline);
 
 			// % amount
@@ -262,10 +272,10 @@ class tx_laterpay_model_post_view extends tx_laterpay_model_query_abstract {
 	public function getLeastViewedPosts($args = array(), $startTimestamp = NULL, $interval = 'week') {
 		$defaultArgs = array(
 			'fields' => array(
-				'post_id',
-				'SUM(count) AS quantity'
+				'content_id',
+				'COUNT(*) AS quantity'
 			),
-			'group_by' => 'post_id',
+			'group_by' => 'content_id',
 			'order_by' => 'quantity',
 			'order' => 'ASC',
 			'limit' => 10,
@@ -273,7 +283,6 @@ class tx_laterpay_model_post_view extends tx_laterpay_model_query_abstract {
 		);
 
 		$args = array_merge($defaultArgs, $args);
-
 		$results = $this->getResults($args);
 
 		if ($startTimestamp === NULL) {
@@ -283,7 +292,7 @@ class tx_laterpay_model_post_view extends tx_laterpay_model_query_abstract {
 		$totalQuantity = $this->getTotalPostImpression(array(
 			'where' => $args['where']
 		));
-		$totalQuantity = $totalQuantity->quantity;
+		$totalQuantity = $totalQuantity['quantity'];
 
 		$this->logger->info(__METHOD__, array(
 			'total_quantity' => $totalQuantity
@@ -291,7 +300,7 @@ class tx_laterpay_model_post_view extends tx_laterpay_model_query_abstract {
 
 		foreach ($results as $key => $data) {
 			// the sparkline for the last x days
-			$sparkline = $this->getSparkline($data['post_id'], $startTimestamp, $interval);
+			$sparkline = $this->getSparkline($data['content_id'], $startTimestamp, $interval);
 			$data['sparkline'] = implode(',', $sparkline);
 
 			// % amount
@@ -351,7 +360,7 @@ class tx_laterpay_model_post_view extends tx_laterpay_model_query_abstract {
 				'MONTH(date)    AS month',
 				'DATE(date)     AS date',
 				'HOUR(date)     AS hour',
-				'SUM(count)     AS quantity'
+				'COUNT(*)     AS quantity'
 			),
 			'where' => array(
 				'date' => array(

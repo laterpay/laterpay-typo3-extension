@@ -46,6 +46,8 @@ return array(
 	'tx_laterpay_helper_string' => $extensionPath . 'lib/helper/string.php',
 	'tx_laterpay_helper_content' => $extensionPath . 'lib/helper/content.php',
 	'tx_laterpay_helper_user' => $extensionPath . 'lib/helper/user.php',
+	'tx_laterpay_helper_statistic' => $extensionPath . 'lib/helper/statistic.php',
+	'tx_laterpay_helper_access' => $extensionPath . 'lib/helper/access.php',
 
 	'tx_laterpay_wrapper_interface' => $extensionPath . 'lib/interface/wrapper.php',
 	'tx_laterpay_wrapper_abstract' => $extensionPath . 'lib/wrapper/abstract.php',

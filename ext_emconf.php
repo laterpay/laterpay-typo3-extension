@@ -23,8 +23,7 @@ $EM_CONF[$_EXTKEY] = array (
 	'author_email' 		=> 'admin@laterpay.com',
 	'author_company' 	=> 'Laterpay AG',
 	'constraints' 		=> array (
-		'depends' 			=>
-		array (
+		'depends' 			=> array (
 			'typo3' 			=> '4.3.0-6.2.99',
 		),
 		'conflicts' 		=> array (),

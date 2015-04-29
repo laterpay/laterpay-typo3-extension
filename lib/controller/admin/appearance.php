@@ -250,7 +250,7 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 
 		$percentage 	= t3lib_div::_POST($percentageFieldName);
 		$minWords 		= t3lib_div::_POST($minWordsFieldName);
-		$maxWords 		=  t3lib_div::_POST($maxWordsFieldName);
+		$maxWords 		= t3lib_div::_POST($maxWordsFieldName);
 
 		if (!is_numeric($percentage) or $percentage % 1 > 0 or 1 > $percentage or $percentage > 100) {
 			$success = FALSE;
