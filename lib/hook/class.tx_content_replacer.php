@@ -32,6 +32,10 @@ class tx_content_replacer extends tx_hook_abstract {
 	 */
 	private $processedContent = array();
 
+	private $gettedAcceses = array();
+
+	private $addedViews = array();
+
 	private $cssAndJsSetted = FALSE;
 
 	/**
@@ -65,9 +69,19 @@ class tx_content_replacer extends tx_hook_abstract {
 			$needToWrap && ($tsKey == tx_laterpay_model_content::$contentTable) &&
 			(
 				! isset($this->processedContent[$pageId]) ||
-				! in_array($this->processedContent[$pageId], $id))
+				! in_array($id, $this->processedContent[$pageId]))
 		) {
+			if (tx_laterpay_helper_pricing::isPurchasable($contentObject)) {
+				if (!in_array($pageId, $this->gettedAcceses)) {
+					$this->loadPageAccesses($pageId);
+					$this->gettedAcceses[] = $pageId;
+				}
+			}
+
 			if ($this->isPaymentNeeded($contentObject)) {
+				//Add view into statistic.
+				$this->addStatisticView($contentObject);
+
 				$this->replaceContent($contentObject);
 
 				// added key pair into processed array
@@ -105,31 +119,16 @@ class tx_content_replacer extends tx_hook_abstract {
 
 		$id = $this->getId($contentObject);
 
-		$price = tx_laterpay_helper_pricing::getContentPrice($contentObject);
-
-		if (! $price) {
-			return FALSE;
-		} else {
+		if (tx_laterpay_helper_pricing::isPurchasable($contentObject)) {
 			$GLOBALS['TSFE']->set_no_cache();
 			$this->logger->info(__METHOD__ . ' - Cache disabled for page', array('id' => $id));
-		}
-
-		$clientOptions = tx_laterpay_helper_config::getPhpClientOptions();
-		$laterpayClient = new LaterPay_Client($clientOptions['cp_key'], $clientOptions['api_key'], $clientOptions['api_root'],
-			$clientOptions['web_root'], $clientOptions['token_name']);
-		$result = $laterpayClient->get_access(array(
-			$id
-		));
-
-		if (! empty($result) && isset($result['articles'][$id])) {
-			$access = $result['articles'][$id]['access'];
-		}
-
-		if ($access) {
+		} else {
 			return FALSE;
 		}
 
-		return TRUE;
+		$results = tx_laterpay_helper_access::checkIfHasAccessToContent(array($id));
+
+		return !$results[$id];
 	}
 
 	/**
@@ -393,6 +392,46 @@ class tx_content_replacer extends tx_hook_abstract {
 			$preparedPasses = preg_replace('/>\s+</', '><', $preparedPasses);
 
 			$contentObject->data['bodytext'] .= $preparedPasses;
+		}
+	}
+
+	/**
+	 * Add new view into statistic
+	 *
+	 * @param tslib_cObj $contentObject Content object
+	 *
+	 * @return void
+	 */
+	public function addStatisticView(tslib_cObj $contentObject) {
+		$id = $this->getId($contentObject);
+		$pageId = $this->getPageId($contentObject);
+
+		if (! isset($this->addedViews[$pageId]) || ! in_array($id, $this->addedViews[$pageId])) {
+			tx_laterpay_helper_statistic::addContentView($contentObject);
+			if (!isset($this->addedViews[$pageId])) {
+				$this->addedViews[$pageId] = array();
+			}
+
+			$this->addedViews[$pageId][] = $id;
+		}
+	}
+
+	/**
+	 * Ask if user has access to contents on page
+	 *
+	 * @param int $pageId id of page to check accesses for content
+	 *
+	 * @return void
+	 */
+	public function loadPageAccesses($pageId) {
+		$contents = tx_laterpay_model_content::getPurchasableContentForPage($pageId);
+		$ids = array();
+		foreach ($contents as $content) {
+			$ids[] = $content['uid'];
+		}
+
+		if (count($ids)) {
+			tx_laterpay_helper_access::checkIfHasAccessToContent($ids);
 		}
 	}
 }

@@ -239,4 +239,18 @@ class tx_laterpay_helper_pricing {
 	public static function getHashByUrl($url) {
 		return md5(md5($url));
 	}
+
+	/**
+	 * Is current content purchasable or not
+	 *
+	 * @param tslib_cObj $contentObject Content object
+	 *
+	 * @return bool
+	 */
+	public static function isPurchasable(tslib_cObj $contentObject) {
+
+		$price = self::getContentPrice($contentObject);
+
+		return (bool) $price;
+	}
 }

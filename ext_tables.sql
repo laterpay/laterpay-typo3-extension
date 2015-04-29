@@ -22,11 +22,9 @@ CREATE TABLE tt_laterpay_payment_history (
 	UNIQUE KEY  (mode, hash),
 ) ENGINE=InnoDB;
 
-CREATE TABLE tt_laterpay_post_views (
-	post_id           INT(11)         NOT NULL,
+CREATE TABLE tt_laterpay_content_views (
+	content_id           INT(11)         NOT NULL,
 	date              DATETIME        NOT NULL,
-	user_id           VARCHAR(32)     NOT NULL,
-	count             BIGINT UNSIGNED NOT NULL DEFAULT 1,
 	ip                VARBINARY(16)   NOT NULL,
 	UNIQUE KEY  (post_id, user_id),
 ) ENGINE=InnoDB;

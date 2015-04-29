@@ -312,7 +312,6 @@ class tx_laterpay_model_query_abstract {
 		$statement->execute();
 		$results = $statement->fetchAll(t3lib_db_PreparedStatement::FETCH_ASSOC);
 		$statement->free();
-
 		$this->logger->info(__METHOD__,
 			array(
 				'args' => $this->queryArgs,
@@ -341,10 +340,10 @@ class tx_laterpay_model_query_abstract {
 			array(
 				'args' => $this->queryArgs,
 				'query' => $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery,
-				'results' => $result
+				'results' => $results
 			));
 
-		return $result;
+		return $results;
 	}
 
 	/**

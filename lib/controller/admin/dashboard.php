@@ -201,7 +201,6 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 		$options 	= $this->getAjaxRequestOptions(t3lib_div::_POST());
 		$section 	= $this->ajaxSections[$options['section']];
 		$data 		= $this->$section($options);
-
 		$response = array(
 			'data' 		=> $data,
 			'success' 	=> TRUE,
@@ -224,7 +223,6 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 	private function convertingItems($options) {
 		$postViewsModel = new tx_laterpay_model_post_view();
 		$convertingItems = $postViewsModel->getHistory($options['query_args'], $options['interval']);
-
 		$historyModel = new tx_laterpay_model_payment_history();
 
 		if ($options['revenue_model'] !== 'all') {
@@ -253,12 +251,11 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 		foreach ($convertingItems as $date => $convertingItem) {
 			$sellingItem 	= $sellingItems[$date];
 			$data 			= $convertingItem;
-
-			if ($convertingItem->quantity == 0) {
-				$data->quantity = 0;
+			if ($convertingItem['quantity'] == 0) {
+				$data['quantity'] = 0;
 			} else {
 				// purchases on {date|hour} / views on {date|hour} * 100
-				$data->quantity = $sellingItem->quantity / $convertingItem->quantity * 100;
+				$data['quantity'] = $sellingItem['quantity'] / $convertingItem['quantity'] * 100;
 			}
 
 			$diagramData[$date] = $data;
@@ -266,7 +263,6 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 
 		$convertedDiagramData = tx_laterpay_helper_dashboard::convertHistoryResultToDiagramData($diagramData,
 			$options['start_timestamp'], $options['interval']);
-
 		$context = array(
 			'options' 					=> $options,
 			'converting_items' 			=> $convertingItems,
@@ -276,7 +272,6 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 		);
 
 		$this->logger->info(__METHOD__, $context);
-
 		return $convertedDiagramData;
 	}
 
@@ -360,7 +355,6 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 				'options' 	=> $options,
 				'data' 		=> $data,
 			));
-
 		return $data;
 	}
 
@@ -471,7 +465,7 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 		$newCustomers 	= 0;
 
 		foreach ($userStats as $stat) {
-			if ((int) $stat->quantity === 1) {
+			if ((int) $stat['quantity'] === 1) {
 				$newCustomers += 1;
 			}
 		}
@@ -481,13 +475,13 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 		}
 
 		$totalItemsSold = $historyModel->getTotalItemsSold($historyArgs);
-		$totalItemsSold = $totalItemsSold->quantity;
+		$totalItemsSold = $totalItemsSold['quantity'];
 
 		$impressions = $postViewsModel->getTotalPostImpression($postArgs);
-		$impressions = $impressions->quantity;
+		$impressions = $impressions['quantity'];
 
 		$totalRevenueItems = $historyModel->getTotalRevenueItems($historyArgs);
-		$totalRevenueItems = $totalRevenueItems->amount;
+		$totalRevenueItems = $totalRevenueItems['amount'];
 
 		$avgPurchase = 0;
 		if ($totalItemsSold > 0) {
