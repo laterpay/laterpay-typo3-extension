@@ -279,15 +279,15 @@ class tx_laterpay_model_query_abstract {
 		$this->whereParamValues = array();
 
 		foreach ($where as $key => $value) {
-// 			$type = (array_key_exists($key, $this->fieldTypes)) ? $this->fieldTypes[$key] : '%s';
+//		$type = (array_key_exists($key, $this->fieldTypes)) ? $this->fieldTypes[$key] : '%s';
 			if (is_array($value)) {
 				if (isset($value['after'])) {
 					$tmpSql = $this->getRowSuffix() . $key . ' > :' . $key;
-					$this->whereParamValues[':' . $key] =  $this->dateTimeToStr($value['after']);
+					$this->whereParamValues[':' . $key] = $this->dateTimeToStr($value['after']);
 				}
 				if (isset($value['before'])) {
 					$tmpSql = $this->getRowSuffix() . $key . ' < :' . $key;
-					$this->whereParamValues[':' . $key] =  $this->dateTimeToStr($value['before']);
+					$this->whereParamValues[':' . $key] = $this->dateTimeToStr($value['before']);
 				}
 			} else {
 				$tmpSql = $this->getRowSuffix() . $key . ' = :' . $key;
@@ -312,7 +312,6 @@ class tx_laterpay_model_query_abstract {
 		$statement->execute();
 		$results = $statement->fetchAll(t3lib_db_PreparedStatement::FETCH_ASSOC);
 		$statement->free();
-
 		$this->logger->info(__METHOD__,
 			array(
 				'args' => $this->queryArgs,
@@ -341,10 +340,10 @@ class tx_laterpay_model_query_abstract {
 			array(
 				'args' => $this->queryArgs,
 				'query' => $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery,
-				'results' => $result
+				'results' => $results
 			));
 
-		return $result;
+		return $results;
 	}
 
 	/**
