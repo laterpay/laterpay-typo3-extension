@@ -151,16 +151,16 @@ class tx_content_replacer extends tx_hook_abstract {
 				$contentObject->data['bodytext'],
 				tx_laterpay_helper_string::determineNumberOfWords($contentObject->data['bodytext']),
 				array(
-						'html'	=> TRUE,
-						'words'	=> TRUE,
+						'html'  => TRUE,
+						'words' => TRUE,
 				)
 			);
 		} else {
 			$fullContent = NULL;
 		}
 
-		$wrapper 		= $this->getWrapper($contentObject, $laterpayTeaser);
-		$purchaseUrl 	= $this->getPurchaseUrl($contentObject);
+		$wrapper     = $this->getWrapper($contentObject, $laterpayTeaser);
+		$purchaseUrl = $this->getPurchaseUrl($contentObject);
 
 		// set variables into wrapper
 		$wrapper->setWrapperArgument('price', tx_laterpay_helper_pricing::getContentPrice($contentObject));
@@ -244,37 +244,37 @@ class tx_content_replacer extends tx_hook_abstract {
 	 */
 	public function getPurchaseUrl(tslib_cObj $contentObject) {
 		$contentBlockId = $this->getId($contentObject);
-		$config 		= tx_laterpay_config::getInstance();
+		$config = tx_laterpay_config::getInstance();
 
-		$currency 		= $config->get(tx_laterpay_config::REG_LATERPAY_CURRENCY);
-		$price 			= tx_laterpay_helper_pricing::getContentPrice($contentObject);
-		$revenueModel 	= tx_laterpay_helper_pricing::getContentRevenueModel($contentObject);
-		$currencyModel 	= new tx_laterpay_model_currency();
+		$currency      = $config->get(tx_laterpay_config::REG_LATERPAY_CURRENCY);
+		$price         = tx_laterpay_helper_pricing::getContentPrice($contentObject);
+		$revenueModel  = tx_laterpay_helper_pricing::getContentRevenueModel($contentObject);
+		$currencyModel = new tx_laterpay_model_currency();
 
-		$clientOptions 	= tx_laterpay_helper_config::getPhpClientOptions();
-		$client 		= new LaterPay_Client($clientOptions['cp_key'], $clientOptions['api_key'], $clientOptions['api_root'],
+		$clientOptions = tx_laterpay_helper_config::getPhpClientOptions();
+		$client        = new LaterPay_Client($clientOptions['cp_key'], $clientOptions['api_key'], $clientOptions['api_root'],
 			$clientOptions['web_root'], $clientOptions['token_name']);
 
 		// data to register purchase after redirect from LaterPay
 		$urlParams = array(
-			'post_id' 		=> $contentBlockId,
-			'id_currency' 	=> $currencyModel->getCurrencyNameByIso4217Code($currency),
-			'price' 		=> $price,
-			'date' 			=> time(),
-			'buy' 			=> 'TRUE',
-			'ip' 			=> ip2long($_SERVER['REMOTE_ADDR']),
+			'post_id'       => $contentBlockId,
+			'id_currency'   => $currencyModel->getCurrencyNameByIso4217Code($currency),
+			'price'         => $price,
+			'date'          => time(),
+			'buy'           => 'TRUE',
+			'ip'            => ip2long($_SERVER['REMOTE_ADDR']),
 			'revenue_model' => $revenueModel,
 		);
 
-		$url 	= $this->getAfterPurchaseRedirectUrl($urlParams);
-		$hash 	= tx_laterpay_helper_pricing::getHashByUrl($url);
+		$url  = $this->getAfterPurchaseRedirectUrl($urlParams);
+		$hash = tx_laterpay_helper_pricing::getHashByUrl($url);
 
 		// parameters for LaterPay purchase form
 		$params = array(
-			'article_id' 	=> $contentBlockId,
-			'pricing' 		=> $currency . ($price * 100),
-			'url' 			=> $url . '&hash=' . $hash,
-			'title' 		=> $this->getHeader($contentObject)
+			'article_id' => $contentBlockId,
+			'pricing'    => $currency . ($price * 100),
+			'url'        => $url . '&hash=' . $hash,
+			'title'      => $this->getHeader($contentObject)
 		);
 
 		$this->logger->info(

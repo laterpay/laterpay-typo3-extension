@@ -39,23 +39,23 @@ class tx_field_checker {
 			return;
 		}
 		// $fieldArray not empty only if something changed
-		$searchArray 		= array_keys($fieldArray);
+		$searchArray = array_keys($fieldArray);
 
-		$priceFieldName 	= 'laterpay_price';
-		$revenueFieldName 	= 'laterpay_revenue_model';
-		$teaserFieldName 	= 'laterpay_teaser';
+		$priceFieldName   = 'laterpay_price';
+		$revenueFieldName = 'laterpay_revenue_model';
+		$teaserFieldName  = 'laterpay_teaser';
 
-		$content 			= tx_laterpay_model_content::getContentData($contentId);
+		$content = tx_laterpay_model_content::getContentData($contentId);
 
 		if (!$content) {
 			$content = $fieldArray;
 		}
 
 		if (in_array($priceFieldName, $searchArray) or in_array($revenueFieldName, $searchArray)) {
-			$revenueModel 		= isset($fieldArray[$revenueFieldName]) ? $fieldArray[$revenueFieldName] : $content[$revenueFieldName];
-			$price        		= isset($fieldArray[$priceFieldName]) ? $fieldArray[$priceFieldName] : $content[$priceFieldName];
-			$roundedPrice 		= round($price, 2);
-			$validRevenueModel 	= tx_laterpay_helper_pricing::ensureValidRevenueModel($revenueModel, $price);
+			$revenueModel      = isset($fieldArray[$revenueFieldName]) ? $fieldArray[$revenueFieldName] : $content[$revenueFieldName];
+			$price             = isset($fieldArray[$priceFieldName]) ? $fieldArray[$priceFieldName] : $content[$priceFieldName];
+			$roundedPrice      = round($price, 2);
+			$validRevenueModel = tx_laterpay_helper_pricing::ensureValidRevenueModel($revenueModel, $price);
 
 			if ($validRevenueModel != $revenueModel or $price != $roundedPrice) {
 				$fieldArray[$revenueFieldName] = $validRevenueModel;

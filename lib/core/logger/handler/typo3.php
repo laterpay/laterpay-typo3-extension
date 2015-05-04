@@ -144,24 +144,24 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 		// @codingStandardsIgnoreStart
 		return array(
 				array(
-						'name'		=> tx_laterpay_helper_string::tr('Requests'),
-						'content'	=> array_merge(t3lib_div::_GET(), t3lib_div::_POST()),
+						'name'    => tx_laterpay_helper_string::tr('Requests'),
+						'content' => array_merge(t3lib_div::_GET(), t3lib_div::_POST()),
 				),
 				array(
-						'name'		=> tx_laterpay_helper_string::tr('Session'),
-						'content'	=> isset( $_SESSION ) ? $_SESSION : array(),
+						'name'    => tx_laterpay_helper_string::tr('Session'),
+						'content' => isset( $_SESSION ) ? $_SESSION : array(),
 				),
 				array(
-						'name'		=> sprintf( tx_laterpay_helper_string::tr('Cookies<span class="lp_debugger-tabs__count">%s</span>'), count( $_COOKIE ) ),
-						'content'	=> $_COOKIE,
+						'name'    => sprintf( tx_laterpay_helper_string::tr('Cookies<span class="lp_debugger-tabs__count">%s</span>'), count( $_COOKIE ) ),
+						'content' => $_COOKIE,
 				),
 				array(
-						'name'		=> tx_laterpay_helper_string::tr('System Config'),
-						'content'	=> $this->getSystemInfo(),
+						'name'    => tx_laterpay_helper_string::tr('System Config'),
+						'content' => $this->getSystemInfo(),
 				),
 				array(
-						'name'		=> tx_laterpay_helper_string::tr('Plugin Config'),
-						'content'	=> $this->config->getAll(),
+						'name'    => tx_laterpay_helper_string::tr('Plugin Config'),
+						'content' => $this->config->getAll(),
 				),
 		);
 		// @codingStandardsIgnoreEnd
@@ -174,11 +174,11 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 	 */
 	protected function getSystemInfo() {
 		$systemInfo = array(
-				'Typo3 version'		=> $TYPO_VERSION,
-				'PHP version'		=> PHP_VERSION,
-				'PHP memory limit'	=> ini_get( 'memory_limit' ),
-				'PHP modules'		=> implode( ', ', get_loaded_extensions() ),
-				'Web server info'	=> $_SERVER['SERVER_SOFTWARE'],
+				'Typo3 version'    => $TYPO_VERSION,
+				'PHP version'      => PHP_VERSION,
+				'PHP memory limit' => ini_get( 'memory_limit' ),
+				'PHP modules'      => implode( ', ', get_loaded_extensions() ),
+				'Web server info'  => $_SERVER['SERVER_SOFTWARE'],
 		);
 
 		return $systemInfo;

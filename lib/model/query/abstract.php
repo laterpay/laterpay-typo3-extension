@@ -90,19 +90,17 @@ class tx_laterpay_model_query_abstract {
 	 * Build a INNER/LEFT/RIGHT JOIN clause to a query.
 	 *
 	 * @param mixed $joins Array of data:
-	 *        	array(
-	 *        	array(
-	 *        	'type' => 'INNER',
-	 *        	'fields'=> array(),
-	 *        	'table' => '',
-	 *        	'on' => array(
-	 *        	'field' => '',
-	 *        	'join_field'=> '',
-	 *        	'compare' => '='
-	 *        	)
-	 *        	)
-	 *        	...
-	 *        	)
+	 *    array(
+	 *        array(
+	 *            'type' => 'INNER',
+	 *            'fields'=> array(),
+	 *            'table' => '',
+	 *            'on' => array(
+	 *            'field' => '',
+	 *            'join_field'=> '',
+	 *            'compare' => '='
+	 *        )
+	 *    )
 	 *
 	 * @return string $sql
 	 */
@@ -279,7 +277,6 @@ class tx_laterpay_model_query_abstract {
 		$this->whereParamValues = array();
 
 		foreach ($where as $key => $value) {
-//		$type = (array_key_exists($key, $this->fieldTypes)) ? $this->fieldTypes[$key] : '%s';
 			if (is_array($value)) {
 				if (isset($value['after'])) {
 					$tmpSql = $this->getRowSuffix() . $key . ' > :' . $key;
@@ -370,12 +367,12 @@ class tx_laterpay_model_query_abstract {
 
 		$join = $this->buildJoin($this->queryArgs['join']);
 
-		$where = $this->buildWhere($this->queryArgs['where']);
-		$from = $this->buildFrom();
+		$where  = $this->buildWhere($this->queryArgs['where']);
+		$from   = $this->buildFrom();
 		$select = $this->buildSelect($this->queryArgs['fields']);
-		$group = $this->buildGroupBy($this->queryArgs['group_by']);
-		$order = $this->buildOrderBy($this->queryArgs['order_by'], $this->queryArgs['order']);
-		$limit = $this->buildLimit($this->queryArgs['limit']);
+		$group  = $this->buildGroupBy($this->queryArgs['group_by']);
+		$order  = $this->buildOrderBy($this->queryArgs['order_by'], $this->queryArgs['order']);
+		$limit  = $this->buildLimit($this->queryArgs['limit']);
 
 		$query = '';
 		$query .= $select;

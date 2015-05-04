@@ -29,29 +29,29 @@ class tx_laterpay_helper_view {
 	public static function getAdminMenu() {
 		return array(
 			'dashboard' => array(
-				'url' 		=> 'laterpay-dashboard-tab',
-				'title'		=> tx_laterpay_helper_string::tr('Dashboard <sup class="lp_is-beta">beta</sup>'),
-				'submenu' 	=> array(
-					'url'	=> '#',
+				'url'     => 'laterpay-dashboard-tab',
+				'title'   => tx_laterpay_helper_string::tr('Dashboard <sup class="lp_is-beta">beta</sup>'),
+				'submenu' => array(
+					'url'     => '#',
 					'title' => tx_laterpay_helper_string::tr('Time Passes'),
-					'id'	=> 'lp_js_switchDashboardView',
-					'data'	=> array(
-						'view'	=> 'time-passes',
-						'label'	=> tx_laterpay_helper_string::tr('Standard KPIs')
+					'id'    => 'lp_js_switchDashboardView',
+					'data'  => array(
+						'view'  => 'time-passes',
+						'label' => tx_laterpay_helper_string::tr('Standard KPIs')
 					),
 				),
 			),
 			'pricing' => array(
-				'url'	=> 'laterpay-pricing-tab',
+				'url' => 'laterpay-pricing-tab',
 				'title' => tx_laterpay_helper_string::tr('Pricing')
 			),
 			'appearance' => array(
-				'url' 	=> 'laterpay-appearance-tab',
+				'url' => 'laterpay-appearance-tab',
 				'title' => tx_laterpay_helper_string::tr('Appearance')
 			),
 			'account' => array(
-				'url' 	=> 'laterpay-account-tab',
-				'title'	=> tx_laterpay_helper_string::tr('Account')
+				'url'   => 'laterpay-account-tab',
+				'title' => tx_laterpay_helper_string::tr('Account')
 			),
 		);
 	}

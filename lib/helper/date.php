@@ -30,12 +30,12 @@ class tx_laterpay_helper_date {
 	 */
 	public static function getDateQueryBeforeEndOfDay($timestamp) {
 		return array(
-			'day' 		=> date('d', $timestamp),
-			'month' 	=> date('m', $timestamp),
-			'year' 		=> date('Y', $timestamp),
-			'hour' 		=> 23,
-			'minute' 	=> 59,
-			'second' 	=> 59,
+			'day'    => date('d', $timestamp),
+			'month'  => date('m', $timestamp),
+			'year'   => date('Y', $timestamp),
+			'hour'   => 23,
+			'minute' => 59,
+			'second' => 59,
 		);
 	}
 
@@ -48,12 +48,12 @@ class tx_laterpay_helper_date {
 	 */
 	public static function getDateQueryAfterStartOfDay($timestamp) {
 		return array(
-			'day' 		=> date('d', $timestamp),
-			'month' 	=> date('m', $timestamp),
-			'year' 		=> date('Y', $timestamp),
-			'hour' 		=> 0,
-			'minute' 	=> 0,
-			'second' 	=> 0,
+			'day'    => date('d', $timestamp),
+			'month'  => date('m', $timestamp),
+			'year'   => date('Y', $timestamp),
+			'hour'   => 0,
+			'minute' => 0,
+			'second' => 0,
 		);
 	}
 }

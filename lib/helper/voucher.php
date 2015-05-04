@@ -59,8 +59,8 @@ class tx_laterpay_helper_voucher {
 	 * @return string voucher code
 	 */
 	public static function generateVoucherCode($length = self::VOUCHER_CODE_LENGTH) {
-		$voucherCode 	= '';
-		$possibleChars 	= self::VOUCHER_CHARS;
+		$voucherCode   = '';
+		$possibleChars = self::VOUCHER_CHARS;
 
 		for ($i = 0; $i < $length; $i ++) {
 			mt_srand();
@@ -82,9 +82,9 @@ class tx_laterpay_helper_voucher {
 	 * @return void
 	 */
 	public static function savePassVouchers($passId, $vouchersData, $noExplode = FALSE, $isGift = FALSE) {
-		$vouchers 		= self::getAllVouchers($isGift);
-		$newVouchers 	= array();
-		$optionName 	= $isGift ? self::GIFT_CODES_OPTION : self::VOUCHER_CODES_OPTION;
+		$vouchers    = self::getAllVouchers($isGift);
+		$newVouchers = array();
+		$optionName  = $isGift ? self::GIFT_CODES_OPTION : self::VOUCHER_CODES_OPTION;
 
 		if ($vouchersData && is_array($vouchersData)) {
 			foreach ($vouchersData as $voucher) {
@@ -96,7 +96,7 @@ class tx_laterpay_helper_voucher {
 				list($code, $price) = explode('|', $voucher);
 
 				// format and save price
-				$price 				= number_format((float) str_replace(',', '.', $price), 2);
+				$price = number_format((float) str_replace(',', '.', $price), 2);
 				$newVouchers[$code] = $price;
 			}
 		}
@@ -188,9 +188,9 @@ class tx_laterpay_helper_voucher {
 			foreach ($passVouchers as $voucherCode => $voucherPrice) {
 				if ($code === $voucherCode) {
 					$voucherData = array(
-						'pass_id' 	=> $passId,
-						'code' 		=> $voucherCode,
-						'price' 	=> $voucherPrice,
+						'pass_id' => $passId,
+						'code'    => $voucherCode,
+						'price'   => $voucherPrice,
 					);
 
 					return $voucherData;

@@ -29,16 +29,16 @@ class tx_laterpay_helper_content {
 	 * @return string
 	 */
 	public static function getTeaser($text) {
-		$textWithoutTags		= strip_tags($text);
-		$preparedText			= preg_replace('/\s{2,}/', ' ', $textWithoutTags);
+		$textWithoutTags = strip_tags($text);
+		$preparedText    = preg_replace('/\s{2,}/', ' ', $textWithoutTags);
 
-		$totalCountOfWords		= tx_laterpay_helper_string::determineNumberOfWords($preparedText);
+		$totalCountOfWords = tx_laterpay_helper_string::determineNumberOfWords($preparedText);
 
-		$percentage				= tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT);
-		$min					= tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN);
-		$max					= tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX);
+		$percentage = tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT);
+		$min        = tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN);
+		$max        = tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX);
 
-		$neededWordsCount		= floor($totalCountOfWords * $percentage / 100);
+		$neededWordsCount = floor($totalCountOfWords * $percentage / 100);
 
 		if ($neededWordsCount < $min) {
 			$neededWordsCount = $min;

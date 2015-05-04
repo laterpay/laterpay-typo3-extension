@@ -104,7 +104,6 @@ class tx_laterpay_model_timepass {
 	 * @return array $timePasses list of time passes
 	 */
 	public function getAllTimePasses() {
-// 		$db = new t3lib_db();
 		$timePasses = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('pass_id, duration, period, access_to, ' .
 			'access_category, price, revenue_model, title, description',
 			$this->passesTable, '', '', 'title'

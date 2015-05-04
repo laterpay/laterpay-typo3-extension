@@ -91,11 +91,11 @@ class tx_callback_catcher extends tx_hook_abstract {
 	 */
 	public function createToken() {
 		$browserSupportsCookies = tx_laterpay_helper_browser::browserSupportsCookies();
-		$browserIsCrawler 		= tx_laterpay_helper_browser::isCrawler();
+		$browserIsCrawler = tx_laterpay_helper_browser::isCrawler();
 
 		$context = array(
-			'support_cookies' 	=> $browserSupportsCookies,
-			'is_crawler' 		=> $browserIsCrawler,
+			'support_cookies' => $browserSupportsCookies,
+			'is_crawler'      => $browserIsCrawler,
 		);
 
 		$this->logger->info(
@@ -134,23 +134,23 @@ class tx_callback_catcher extends tx_hook_abstract {
 
 		// data to create and hash-check the URL
 		$urlData = array(
-			'post_id' 		=> t3lib_div::_GET('post_id'),
-			'id_currency' 	=> t3lib_div::_GET('id_currency'),
-			'price' 		=> t3lib_div::_GET('price'),
-			'date' 			=> t3lib_div::_GET('date'),
-			'buy' 			=> t3lib_div::_GET('buy'),
-			'ip' 			=> t3lib_div::_GET('ip'),
+			'post_id'     => t3lib_div::_GET('post_id'),
+			'id_currency' => t3lib_div::_GET('id_currency'),
+			'price'       => t3lib_div::_GET('price'),
+			'date'        => t3lib_div::_GET('date'),
+			'buy'         => t3lib_div::_GET('buy'),
+			'ip'          => t3lib_div::_GET('ip'),
 			'revenue_model' => t3lib_div::_GET('revenue_model'),
 		);
 
-		$url 	= $this->getAfterPurchaseRedirectUrl($urlData);
-		$hash 	= tx_laterpay_helper_pricing::getHashByUrl($url);
+		$url  = $this->getAfterPurchaseRedirectUrl($urlData);
+		$hash = tx_laterpay_helper_pricing::getHashByUrl($url);
 
 		// update lptoken, if we got it
 		$lpToken = t3lib_div::_GET('lptoken');
 		if (isset($lpToken)) {
-			$clientOptions 	= tx_laterpay_helper_config::getPhpClientOptions();
-			$client 		= new LaterPay_Client($clientOptions['cp_key'], $clientOptions['api_key'], $clientOptions['api_root'],
+			$clientOptions = tx_laterpay_helper_config::getPhpClientOptions();
+			$client        = new LaterPay_Client($clientOptions['cp_key'], $clientOptions['api_key'], $clientOptions['api_root'],
 				$clientOptions['web_root'], $clientOptions['token_name']);
 
 			$client->set_token($lpToken);
@@ -161,13 +161,13 @@ class tx_callback_catcher extends tx_hook_abstract {
 		// check, if the parameters of $_GET are valid and not manipulated
 		if ($hash === t3lib_div::_GET('hash')) {
 			$data = array(
-				'post_id' 		=> $postId,
-				'id_currency' 	=> t3lib_div::_GET('id_currency'),
-				'price' 		=> t3lib_div::_GET('price'),
-				'date' 			=> t3lib_div::_GET('date'),
-				'ip' 			=> t3lib_div::_GET('ip'),
+				'post_id'     => $postId,
+				'id_currency' => t3lib_div::_GET('id_currency'),
+				'price'       => t3lib_div::_GET('price'),
+				'date'        => t3lib_div::_GET('date'),
+				'ip'          => t3lib_div::_GET('ip'),
 				'revenue_model' => t3lib_div::_GET('revenue_model'),
-				'hash' 			=> t3lib_div::_GET('hash'),
+				'hash' => t3lib_div::_GET('hash'),
 			);
 
 			$this->logger->info(
@@ -197,13 +197,13 @@ class tx_callback_catcher extends tx_hook_abstract {
 
 		// data to create and hash-check the URL
 		$urlData = array(
-			'pass_id'		=> t3lib_div::_GET('pass_id'),
-			'id_currency'	=> t3lib_div::_GET('id_currency'),
-			'price'			=> t3lib_div::_GET('price'),
-			'date'			=> t3lib_div::_GET('date'),
-			'ip'			=> t3lib_div::_GET('ip'),
-			'revenue_model'	=> t3lib_div::_GET('revenue_model'),
-			'link'			=> t3lib_div::_GET('link'),
+			'pass_id'       => t3lib_div::_GET('pass_id'),
+			'id_currency'   => t3lib_div::_GET('id_currency'),
+			'price'         => t3lib_div::_GET('price'),
+			'date'          => t3lib_div::_GET('date'),
+			'ip'            => t3lib_div::_GET('ip'),
+			'revenue_model' => t3lib_div::_GET('revenue_model'),
+			'link'          => t3lib_div::_GET('link'),
 		);
 
 		$link    = $urlData['link'];
@@ -214,13 +214,13 @@ class tx_callback_catcher extends tx_hook_abstract {
 		if ($hash === t3lib_div::_GET('hash')) {
 			// save payment history
 			$data = array(
-				'id_currency'	=> t3lib_div::_GET('id_currency'),
-				'price'			=> t3lib_div::_GET('price'),
-				'date'			=> t3lib_div::_GET('date'),
-				'ip'			=> t3lib_div::_GET('ip'),
-				'hash'			=> t3lib_div::_GET('hash'),
-				'revenue_model'	=> t3lib_div::_GET('revenue_model'),
-				'pass_id'		=> $passId,
+				'id_currency'   => t3lib_div::_GET('id_currency'),
+				'price'         => t3lib_div::_GET('price'),
+				'date'          => t3lib_div::_GET('date'),
+				'ip'            => t3lib_div::_GET('ip'),
+				'hash'          => t3lib_div::_GET('hash'),
+				'revenue_model' => t3lib_div::_GET('revenue_model'),
+				'pass_id'       => $passId,
 			);
 
 			$this->logger->info(
