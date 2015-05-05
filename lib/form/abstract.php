@@ -285,10 +285,10 @@ abstract class tx_laterpay_form_abstract {
 					if (! $isValid) {
 						// data not valid
 						$this->errors[] = array(
-							'name' 		=> $name,
-							'value' 	=> $field['value'],
+							'name'      => $name,
+							'value'     => $field['value'],
 							'validator' => $validatorOption,
-							'options' 	=> $validatorParams,
+							'options'   => $validatorParams,
 						);
 					}
 				}
@@ -304,8 +304,8 @@ abstract class tx_laterpay_form_abstract {
 	 * @return multitype:
 	 */
 	public function getErrors() {
-		$aux 			= $this->errors;
-		$this->errors 	= array();
+		$aux          = $this->errors;
+		$this->errors = array();
 
 		return $aux;
 	}
@@ -481,7 +481,7 @@ abstract class tx_laterpay_form_abstract {
 							// loop for dependencies conditions and check, if all of them are valid
 							foreach ($dependency['conditions'] as $vkey => $vparams) {
 								$extraValidator = is_int($vkey) ? $vparams : $vkey;
-								$validatorData 	= is_int($vkey) ? NULL : $vparams;
+								$validatorData = is_int($vkey) ? NULL : $vparams;
 
 								// recursively call extra validator
 								$isValid = $this->validateValue($this->getFieldValue($dependency['field']), $extraValidator,

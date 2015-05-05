@@ -40,12 +40,6 @@ class tx_laterpay_module1 extends t3lib_SCbase {
 	public function init() {
 		parent::init();
 		$this->doc = t3lib_div::makeInstance('bigDoc');
-
-		/*
-		if (t3lib_div::_GP('clear_all_cache'))	{
-			$this->include_once[] = PATH_t3lib . 'class.t3lib_tcemain.php';
-		}
-		*/
 	}
 
 	/**
@@ -72,19 +66,11 @@ class tx_laterpay_module1 extends t3lib_SCbase {
 	 * @return void
 	 */
 	public function main() {
-			// Access check!
-			// The page will show only if there is a valid page and if this page may be viewed by the user
+		// Access check!
+		// The page will show only if there is a valid page and if this page may be viewed by the user
 		$this->pageinfo = t3lib_BEfunc::readPageAccess($this->id, $this->perms_clause);
 		$access = is_array($this->pageinfo) ? 1 : 0;
 
-// 		$this->doc->addStyleSheetDirectory(t3lib_extMgm::extRelPath('laterpay') . 'res/css');
-
-// 		$files = t3lib_div::getFilesInDir(t3lib_extMgm::extPath('laterpay') . 'res/css', 'css', 0, 1);
-// 		$fileIndex = 0;
-// 		foreach ($files as $fileName) {
-// 			$this->doc->addStyleSheet('laterpaycss' . $fileIndex, t3lib_extMgm::extRelPath('laterpay') . 'res/css/' . $fileName);
-// 			$fileIndex++;
-// 		}
 		if (($this->id && $access) || ($GLOBALS['BE_USER']->user['admin'] && !$this->id)) {
 			$this->doc->backPath = $GLOBALS['BACK_PATH'];
 
@@ -96,7 +82,6 @@ class tx_laterpay_module1 extends t3lib_SCbase {
 			$this->doc->loadJavascriptLib(t3lib_extMgm::extRelPath('laterpay') . 'res/js/laterpay-backend.js');
 
 			$pageContent = $this->getModuleContent();
-// 			$this->doc->form = '<form action="" method="post" enctype="multipart/form-data">';
 
 			// Draw the header.
 			// JavaScript

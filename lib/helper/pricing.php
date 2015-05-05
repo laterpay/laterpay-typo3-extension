@@ -24,9 +24,9 @@ class tx_laterpay_helper_pricing {
 	/**
 	 * Types of prices.
 	 */
-	const TYPE_GLOBAL_DEFAULT_PRICE 	= 'global default price';
-	const TYPE_CATEGORY_DEFAULT_PRICE 	= 'category default price';
-	const TYPE_INDIVIDUAL_PRICE 		= 'individual price';
+	const TYPE_GLOBAL_DEFAULT_PRICE   = 'global default price';
+	const TYPE_CATEGORY_DEFAULT_PRICE = 'category default price';
+	const TYPE_INDIVIDUAL_PRICE       = 'individual price';
 	const TYPE_INDIVIDUAL_DYNAMIC_PRICE = 'individual price, dynamic';
 
 	/**
@@ -38,20 +38,20 @@ class tx_laterpay_helper_pricing {
 	/**
 	 * Price ranges.
 	 */
-	const PPU_MIN 			= 0.05;
-	const PPU_MAX 			= 1.48;
-	const PPUSIS_MAX 		= 5.00;
-	const SIS_MIN 			= 1.49;
-	const SIS_MAX 			= 149.99;
+	const PPU_MIN    = 0.05;
+	const PPU_MAX    = 1.48;
+	const PPUSIS_MAX = 5.00;
+	const SIS_MIN    = 1.49;
+	const SIS_MAX    = 149.99;
 
-	const PRICE_PPU_END 	= 0.05;
-	const PRICE_PPUSIS_END 	= 1.49;
-	const PRICE_SIS_END 	= 5.01;
+	const PRICE_PPU_END    = 0.05;
+	const PRICE_PPUSIS_END = 1.49;
+	const PRICE_SIS_END    = 5.01;
 
-	const PRICE_START_DAY 	= 13;
-	const PRICE_END_DAY 	= 18;
+	const PRICE_START_DAY = 13;
+	const PRICE_END_DAY   = 18;
 
-	const META_KEY 			= 'laterpay_post_prices';
+	const META_KEY = 'laterpay_post_prices';
 
 	/**
 	 * Return all posts that have a price applied.
@@ -63,9 +63,9 @@ class tx_laterpay_helper_pricing {
 
 		$this->logger->info(__METHOD__,
 			array(
-				'args' 		=> NULL,
-				'query' 	=> $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery,
-				'results' 	=> $result,
+				'args'    => NULL,
+				'query'   => $GLOBALS['TYPO3_DB']->debug_lastBuiltQuery,
+				'results' => $result,
 			)
 		);
 
@@ -80,8 +80,8 @@ class tx_laterpay_helper_pricing {
 	 * @return string $revenueModel
 	 */
 	public static function getContentRevenueModel(tslib_cObj $contentObject) {
-		$price 				= self::getContentPrice($contentObject);
-		$revenueModel 		= isset($contentObject->data['laterpay_revenue_model']) ? $contentObject->data['laterpay_revenue_model'] : 'p2p';
+		$price        = self::getContentPrice($contentObject);
+		$revenueModel = isset($contentObject->data['laterpay_revenue_model']) ? $contentObject->data['laterpay_revenue_model'] : 'p2p';
 
 		$ensuredRevenueModel = self::ensureValidRevenueModel($revenueModel, $price);
 
@@ -196,8 +196,8 @@ class tx_laterpay_helper_pricing {
 
 		// save bulk operation
 		$operations[] = array(
-			'data' 		=> $data,
-			'message' 	=> $message,
+			'data'    => $data,
+			'message' => $message,
 		);
 		tx_laterpay_config::updateOption('laterpay_bulk_operations', serialize($operations));
 
@@ -205,29 +205,6 @@ class tx_laterpay_helper_pricing {
 
 		return key($operations);
 	}
-
-//	/**
-//	 * Delete bulk operation by id.
-//	 *
-//	 * @param int $id Id
-//	 *
-//	 * @return bool
-//	 */
-//	public static function deleteBulkOperationById($id) {
-//		$wasDeleted = FALSE;
-//		$operations = self::getBulkOperations();
-//
-//		if ($operations) {
-//			if (isset($operations[$id])) {
-//				unset($operations[$id]);
-//				$wasDeleted = TRUE;
-//				$operations = $operations ? $operations : '';
-//				update_option('laterpay_bulk_operations', serialize($operations));
-//			}
-//		}
-//
-//		return $wasDeleted;
-//	}
 
 	/**
 	 * Return the URL hash for a given URL.

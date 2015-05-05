@@ -63,7 +63,6 @@ class tx_laterpay_model_post_view extends tx_laterpay_model_query_abstract {
 				)
 			)
 		);
-		// add_filter( 'date_query_valid_columns', array( $this, 'add_date_query_column' ) );
 	}
 
 	/**

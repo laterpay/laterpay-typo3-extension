@@ -28,14 +28,14 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 	 * @var array
 	 */
 	private $ajaxSections = array(
-		'converting_items' 				=> 'convertingItems',
-		'selling_items' 				=> 'sellingItems',
-		'revenue_items' 				=> 'revenueItems',
-		'most_least_converting_items' 	=> 'mostLeastConvertingItems',
-		'most_least_selling_items' 		=> 'mostLeastSellingItems',
-		'most_least_revenue_items' 		=> 'mostLeastRevenueItems',
-		'metrics' 						=> 'metrics',
-		'time_passes_expiry' 			=> 'timePassesExpiry',
+		'converting_items'            => 'convertingItems',
+		'selling_items'               => 'sellingItems',
+		'revenue_items'               => 'revenueItems',
+		'most_least_converting_items' => 'mostLeastConvertingItems',
+		'most_least_selling_items'    => 'mostLeastSellingItems',
+		'most_least_revenue_items'    => 'mostLeastRevenueItems',
+		'metrics'                     => 'metrics',
+		'time_passes_expiry'          => 'timePassesExpiry',
 	);
 
 	private $cacheFileExists;
@@ -63,25 +63,25 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 
 		// pass localized strings and variables to script
 		$i18n = array(
-			'endingIn'		=> tx_laterpay_helper_string::trX('ending in', 'used in wp_localize_script for the flot graph in loadTimePassLifecycles()'),
-			'month'			=> tx_laterpay_helper_string::trX('month', 'used in wp_localize_script for the flot graph in loadTimePassLifecycles()'),
-			'months'		=> tx_laterpay_helper_string::trX('months', 'used in wp_localize_script for the flot graph in loadTimePassLifecycles()'),
-			'weeksLeft'		=> tx_laterpay_helper_string::trX('weeks left', 'used in wp_localize_script as x-axis label for loadTimePassLifecycles()'),
-			'noData'		=> tx_laterpay_helper_string::tr('No data available'),
-			'tooltips' 	=> array(
-				'day' 		=> array(
+			'endingIn'  => tx_laterpay_helper_string::trX('ending in', 'used in wp_localize_script for the flot graph in loadTimePassLifecycles()'),
+			'month'     => tx_laterpay_helper_string::trX('month', 'used in wp_localize_script for the flot graph in loadTimePassLifecycles()'),
+			'months'    => tx_laterpay_helper_string::trX('months', 'used in wp_localize_script for the flot graph in loadTimePassLifecycles()'),
+			'weeksLeft' => tx_laterpay_helper_string::trX('weeks left', 'used in wp_localize_script as x-axis label for loadTimePassLifecycles()'),
+			'noData'    => tx_laterpay_helper_string::tr('No data available'),
+			'tooltips'  => array(
+				'day'       => array(
 					'next' => tx_laterpay_helper_string::tr('Show next day'),
 					'prev' => tx_laterpay_helper_string::tr('Show previous day')
 				),
-				'week' 		=> array(
+				'week' => array(
 					'next' => tx_laterpay_helper_string::tr('Show next 8 days'),
 					'prev' => tx_laterpay_helper_string::tr('Show previous 8 days')
 				),
-				'2-weeks' 	=> array(
+				'2-weeks' => array(
 					'next' => tx_laterpay_helper_string::tr('Show next 2 weeks'),
 					'prev' => tx_laterpay_helper_string::tr('Show previous 2 weeks')
 				),
-				'month' 	=> array(
+				'month' => array(
 					'next' => tx_laterpay_helper_string::tr('Show next month'),
 					'prev' => tx_laterpay_helper_string::tr('Show previous month')
 				)
@@ -98,18 +98,18 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 
 		$this->localizeScript('lpVars',
 			array(
-				'ajaxUrl' 	=> 'ajax.php?ajaxID=txttlaterpayM1::dashboard',
-				'nonces' 	=> array(
+				'ajaxUrl' => 'ajax.php?ajaxID=txttlaterpayM1::dashboard',
+				'nonces'  => array(
 					'dashboard' => '',
 				),
-				'submenu' 	=> array(
-					'view' 		=> array(
-						'standard' 	=> 'standard-kpis',
-						'passes' 	=> 'time-passes',
+				'submenu'  => array(
+					'view'     => array(
+						'standard' => 'standard-kpis',
+						'passes'   => 'time-passes',
 					)
 				),
-				'locale' 	=> 'en_US',
-				'i18n' 		=> $i18n,
+				'locale' => 'en_US',
+				'i18n'   => $i18n,
 				'maxYValue' => $maxYvalue,
 			)
 		);
@@ -137,16 +137,16 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 		$endTimestamp = strtotime($endTimestamp[0]->endTimestamp);
 
 		$viewArgs = array(
-			'plugin_is_in_live_mode' 	=> $this->config->get('is_in_live_mode'),
-			'top_nav' 					=> $this->getMenu(),
-			'admin_menu' 				=> tx_laterpay_helper_view::getAdminMenu(),
-			'currency' 					=> tx_laterpay_config::getOption('laterpay_currency'),
-			'end_timestamp' 			=> $endTimestamp,
-			'interval_start' 			=> strtotime('-1 days'),
-			'interval_end' 				=> strtotime('-8 days'),
-			'cache_file_exists' 		=> $this->cacheFileExists,
-			'cache_file_is_broken' 		=> $this->cacheFileIsBroken,
-			'passes' 					=> tx_laterpay_helper_timepass::getTimePassesStatistic(),
+			'plugin_is_in_live_mode' => $this->config->get('is_in_live_mode'),
+			'top_nav'                => $this->getMenu(),
+			'admin_menu'             => tx_laterpay_helper_view::getAdminMenu(),
+			'currency'               => tx_laterpay_config::getOption('laterpay_currency'),
+			'end_timestamp'          => $endTimestamp,
+			'interval_start'         => strtotime('-1 days'),
+			'interval_end'           => strtotime('-8 days'),
+			'cache_file_exists'      => $this->cacheFileExists,
+			'cache_file_is_broken'   => $this->cacheFileIsBroken,
+			'passes'                 => tx_laterpay_helper_timepass::getTimePassesStatistic(),
 		);
 
 		$this->assign('laterpay', $viewArgs);
@@ -198,12 +198,12 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 			return $validationResult;
 		}
 
-		$options 	= $this->getAjaxRequestOptions(t3lib_div::_POST());
-		$section 	= $this->ajaxSections[$options['section']];
-		$data 		= $this->$section($options);
+		$options = $this->getAjaxRequestOptions(t3lib_div::_POST());
+		$section = $this->ajaxSections[$options['section']];
+		$data    = $this->$section($options);
 		$response = array(
-			'data' 		=> $data,
-			'success' 	=> TRUE,
+			'data'    => $data,
+			'success' => TRUE,
 		);
 
 		if ($this->config->get('debug_mode')) {
@@ -232,25 +232,25 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 		$sellingItems = $historyModel->getHistory($options['query_args'], $options['interval']);
 
 		if ($options['interval'] === 'day') {
-			$convertingItems 	= tx_laterpay_helper_dashboard::sortItemsByHour($convertingItems);
-			$convertingItems 	= tx_laterpay_helper_dashboard::fillEmptyHours($convertingItems, $options['start_timestamp']);
+			$convertingItems = tx_laterpay_helper_dashboard::sortItemsByHour($convertingItems);
+			$convertingItems = tx_laterpay_helper_dashboard::fillEmptyHours($convertingItems, $options['start_timestamp']);
 
-			$sellingItems 		= tx_laterpay_helper_dashboard::sortItemsByHour($sellingItems);
-			$sellingItems 		= tx_laterpay_helper_dashboard::fillEmptyHours($sellingItems, $options['start_timestamp']);
+			$sellingItems = tx_laterpay_helper_dashboard::sortItemsByHour($sellingItems);
+			$sellingItems = tx_laterpay_helper_dashboard::fillEmptyHours($sellingItems, $options['start_timestamp']);
 		} else {
-			$days 				= tx_laterpay_helper_dashboard::getDaysAsArray($options['start_timestamp'], $options['interval']);
+			$days = tx_laterpay_helper_dashboard::getDaysAsArray($options['start_timestamp'], $options['interval']);
 
-			$convertingItems 	= tx_laterpay_helper_dashboard::sortItemsByDate($convertingItems);
-			$convertingItems 	= tx_laterpay_helper_dashboard::fillEmptyDays($convertingItems, $days);
+			$convertingItems = tx_laterpay_helper_dashboard::sortItemsByDate($convertingItems);
+			$convertingItems = tx_laterpay_helper_dashboard::fillEmptyDays($convertingItems, $days);
 
-			$sellingItems 		= tx_laterpay_helper_dashboard::sortItemsByDate($sellingItems);
-			$sellingItems 		= tx_laterpay_helper_dashboard::fillEmptyDays($sellingItems, $days);
+			$sellingItems = tx_laterpay_helper_dashboard::sortItemsByDate($sellingItems);
+			$sellingItems = tx_laterpay_helper_dashboard::fillEmptyDays($sellingItems, $days);
 		}
 
 		$diagramData = array();
 		foreach ($convertingItems as $date => $convertingItem) {
-			$sellingItem 	= $sellingItems[$date];
-			$data 			= $convertingItem;
+			$sellingItem = $sellingItems[$date];
+			$data        = $convertingItem;
 			if ($convertingItem['quantity'] == 0) {
 				$data['quantity'] = 0;
 			} else {
@@ -264,11 +264,11 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 		$convertedDiagramData = tx_laterpay_helper_dashboard::convertHistoryResultToDiagramData($diagramData,
 			$options['start_timestamp'], $options['interval']);
 		$context = array(
-			'options' 					=> $options,
-			'converting_items' 			=> $convertingItems,
-			'selling' 					=> $sellingItems,
-			'diagram_data' 				=> $diagramData,
-			'converted_diagram_data' 	=> $convertedDiagramData,
+			'options'                => $options,
+			'converting_items'       => $convertingItems,
+			'selling'                => $sellingItems,
+			'diagram_data'           => $diagramData,
+			'converted_diagram_data' => $convertedDiagramData,
 		);
 
 		$this->logger->info(__METHOD__, $context);
@@ -322,8 +322,8 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 
 		$this->logger->info(__METHOD__,
 			array(
-				'options' 	=> $options,
-				'data' 		=> $data,
+				'options' => $options,
+				'data'    => $data,
 			));
 
 		return $data;
@@ -339,21 +339,21 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 	private function mostLeastConvertingItems($options) {
 		$postViewsModel = new tx_laterpay_model_post_view();
 
-		$most 			= $postViewsModel->getMostViewedPosts($options['most_least_query'], $options['start_timestamp'],
+		$most = $postViewsModel->getMostViewedPosts($options['most_least_query'], $options['start_timestamp'],
 							$options['interval']);
-		$least 			= $postViewsModel->getLeastViewedPosts($options['most_least_query'], $options['start_timestamp'],
+		$least = $postViewsModel->getLeastViewedPosts($options['most_least_query'], $options['start_timestamp'],
 							$options['interval']);
 
-		$data 			= array(
-							'most' 	=> tx_laterpay_helper_dashboard::formatAmountValueMostLeastData($most, 1),
+		$data  = array(
+							'most' => tx_laterpay_helper_dashboard::formatAmountValueMostLeastData($most, 1),
 							'least' => tx_laterpay_helper_dashboard::formatAmountValueMostLeastData($least, 1),
-							'unit' 	=> '%',
+							'unit' => '%',
 						);
 
 		$this->logger->info(__METHOD__,
 			array(
-				'options' 	=> $options,
-				'data' 		=> $data,
+				'options' => $options,
+				'data'    => $data,
 			));
 		return $data;
 	}
@@ -372,21 +372,21 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 			$options['query_args']['where']['revenue_model'] = $options['revenue_model'];
 		}
 
-		$most 	= $historyModel->getBestSellingPosts($options['most_least_query'], $options['start_timestamp'],
+		$most = $historyModel->getBestSellingPosts($options['most_least_query'], $options['start_timestamp'],
 					$options['interval']);
-		$least 	= $historyModel->getLeastSellingPosts($options['most_least_query'], $options['start_timestamp'],
+		$least = $historyModel->getLeastSellingPosts($options['most_least_query'], $options['start_timestamp'],
 					$options['interval']);
 
-		$data 	= array(
-					'most' 	=> tx_laterpay_helper_dashboard::formatAmountValueMostLeastData($most, 0),
+		$data  = array(
+					'most'  => tx_laterpay_helper_dashboard::formatAmountValueMostLeastData($most, 0),
 					'least' => tx_laterpay_helper_dashboard::formatAmountValueMostLeastData($least, 0),
-					'unit' 	=> '',
+					'unit'  => '',
 				);
 
 		$this->logger->info(__METHOD__,
 			array(
-				'options' 	=> $options,
-				'data' 		=> $data,
+				'options' => $options,
+				'data'    => $data,
 			));
 
 		return $data;
@@ -406,21 +406,21 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 			$options['query_args']['where']['revenue_model'] = $options['revenue_model'];
 		}
 
-		$most 	= $historyModel->getMostRevenueGeneratingPosts($options['most_least_query'], $options['start_timestamp'],
+		$most = $historyModel->getMostRevenueGeneratingPosts($options['most_least_query'], $options['start_timestamp'],
 					$options['interval']);
-		$least 	= $historyModel->getLeastRevenueGeneratingPosts($options['most_least_query'], $options['start_timestamp'],
+		$least = $historyModel->getLeastRevenueGeneratingPosts($options['most_least_query'], $options['start_timestamp'],
 					$options['interval']);
 
-		$data 	= array(
-			'most' 	=> tx_laterpay_helper_dashboard::formatAmountValueMostLeastData($most, 0),
+		$data  = array(
+			'most'  => tx_laterpay_helper_dashboard::formatAmountValueMostLeastData($most, 0),
 			'least' => tx_laterpay_helper_dashboard::formatAmountValueMostLeastData($least, 0),
-			'unit' => tx_laterpay_config::getOption('laterpay_currency')
+			'unit'  => tx_laterpay_config::getOption('laterpay_currency')
 		);
 
 		$this->logger->info(__METHOD__,
 			array(
-				'options' 	=> $options,
-				'data' 		=> $data,
+				'options' => $options,
+				'data'    => $data,
 			));
 
 		return $data;
@@ -456,13 +456,13 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 			$historyArgs['where']['revenue_model'] = $options['revenue_model'];
 		}
 
-		$historyModel 	= new tx_laterpay_model_payment_history();
+		$historyModel = new tx_laterpay_model_payment_history();
 		$postViewsModel = new tx_laterpay_model_post_view();
 
 		// get the user stats for the given parameters
-		$userStats 		= $historyModel->getUserStats($historyArgs);
+		$userStats = $historyModel->getUserStats($historyArgs);
 		$totalCustomers = count($userStats);
-		$newCustomers 	= 0;
+		$newCustomers = 0;
 
 		foreach ($userStats as $stat) {
 			if ((int) $stat['quantity'] === 1) {
@@ -515,23 +515,23 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 
 		$data = array(
 			// column 1 - conversion metrics
-			'impressions' 		=> tx_laterpay_helper_view::formatNumber($impressions, FALSE),
-			'conversion' 		=> number_format($conversion, 1),
-			'new_customers' 	=> number_format($newCustomers, 0),
+			'impressions'   => tx_laterpay_helper_view::formatNumber($impressions, FALSE),
+			'conversion'    => number_format($conversion, 1),
+			'new_customers' => number_format($newCustomers, 0),
 
 			// column 2 - sales metrics
-			'avg_items_sold' 	=> number_format($avgItemsSold, 1),
-			'total_items_sold' 	=> tx_laterpay_helper_view::formatNumber($totalItemsSold, FALSE),
+			'avg_items_sold'   => number_format($avgItemsSold, 1),
+			'total_items_sold' => tx_laterpay_helper_view::formatNumber($totalItemsSold, FALSE),
 
 			// column 3 - revenue metrics
-			'avg_purchase' 		=> number_format($avgPurchase, 2),
-			'total_revenue' 	=> tx_laterpay_helper_view::formatNumber($totalRevenueItems),
+			'avg_purchase'  => number_format($avgPurchase, 2),
+			'total_revenue' => tx_laterpay_helper_view::formatNumber($totalRevenueItems),
 		);
 
 		$this->logger->info(__METHOD__,
 			array(
-				'options' 	=> $options,
-				'data' 		=> $data,
+				'options' => $options,
+				'data'    => $data,
 			));
 
 		return $data;
@@ -549,17 +549,17 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 		$where = array(
 			'date' => array(
 				array(
-					'before' 	=> tx_laterpay_helper_date::getDateQueryBeforeEndOfDay($options['start_timestamp']),
-					'after' 	=> tx_laterpay_helper_date::getDateQueryAfterStartOfDay($endTimestamp),
+					'before' => tx_laterpay_helper_date::getDateQueryBeforeEndOfDay($options['start_timestamp']),
+					'after'  => tx_laterpay_helper_date::getDateQueryAfterStartOfDay($endTimestamp),
 				)
 			)
 		);
 
 		// add the query options to the options array
 		$options['query_args'] = array(
-			'order_by' 	=> tx_laterpay_helper_dashboard::getOrderBy($options['interval']),
-			'group_by' 	=> tx_laterpay_helper_dashboard::getGroupBy($options['interval']),
-			'where' 	=> $where,
+			'order_by' => tx_laterpay_helper_dashboard::getOrderBy($options['interval']),
+			'group_by' => tx_laterpay_helper_dashboard::getGroupBy($options['interval']),
+			'where'    => $where,
 		);
 
 		$options['most_least_query'] = array(
@@ -618,25 +618,25 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 		// initial options
 		$options = array(
 			// request data
-			'start_timestamp' 	=> $startTimestamp,
-			'interval' 			=> $interval,
-			'count' 			=> $count,
-			'section' 			=> $section,
-			'revenue_model' 	=> $revenueModel,
-			'pass_id' 			=> $passId,
+			'start_timestamp' => $startTimestamp,
+			'interval'        => $interval,
+			'count'           => $count,
+			'section'         => $section,
+			'revenue_model'   => $revenueModel,
+			'pass_id'         => $passId,
 		);
 
-		$cacheDir 		= tx_laterpay_helper_dashboard::getCacheDir($startTimestamp);
-		$cacheFilename 	= tx_laterpay_helper_dashboard::getCacheFilename($options);
+		$cacheDir      = tx_laterpay_helper_dashboard::getCacheDir($startTimestamp);
+		$cacheFilename = tx_laterpay_helper_dashboard::getCacheFilename($options);
 		if ($refresh || ! file_exists($cacheDir . $cacheFilename)) {
 			// refresh the cache, if refresh == false and the file doesn't exist
 			$refresh = TRUE;
 		}
 
 		// cache data
-		$options['refresh'] 		= $refresh;
-		$options['cache_filename'] 	= $cacheFilename;
-		$options['cache_dir'] 		= $cacheDir;
+		$options['refresh']         = $refresh;
+		$options['cache_filename']  = $cacheFilename;
+		$options['cache_dir']       = $cacheDir;
 		$options['cache_file_path'] = $cacheDir . $cacheFilename;
 
 		$options = $this->getQueryOptions($options);
@@ -650,23 +650,23 @@ class tx_laterpay_controller_admin_dashboard extends tx_laterpay_controller_abst
 	 * @return array | bool
 	 */
 	private function validateAjaxSectionCallback() {
-		$fResult 	= TRUE;
-		$post 		= t3lib_div::_POST();
+		$fResult = TRUE;
+		$post    = t3lib_div::_POST();
 
 		if (! isset($post['section'])) {
 			$fResult = array(
-				'message'	=> tx_laterpay_helper_string::tr('Error, missing section on request'),
-				'step' 		=> 3,
+				'message' => tx_laterpay_helper_string::tr('Error, missing section on request'),
+				'step'    => 3,
 			);
 		} elseif (! array_key_exists($post['section'], $this->ajaxSections)) {
 			$fResult = array(
-				'message'	=> sprintf(tx_laterpay_helper_string::tr('Section is not allowed <code>%s</code>'), $post['section']),
-				'step' 		=> 4,
+				'message' => sprintf(tx_laterpay_helper_string::tr('Section is not allowed <code>%s</code>'), $post['section']),
+				'step'    => 4,
 			);
 		} elseif (! method_exists($this, $this->ajaxSections[$post['section']])) {
 			$fResult = array(
-				'message'	=> sprintf(tx_laterpay_helper_string::tr('Invalid section <code>%s</code>'), $post['section']),
-				'step' 		=> 4,
+				'message' => sprintf(tx_laterpay_helper_string::tr('Invalid section <code>%s</code>'), $post['section']),
+				'step'    => 4,
 			);
 		}
 		return $fResult;
