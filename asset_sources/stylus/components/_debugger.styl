@@ -43,9 +43,10 @@
     background: hsl(0, 0%, 76%);
     cursor: pointer;
     height: $fs-1*2.5;
-        
+
     .lp_debugger-header__title {
         display: inline-block;
+        font-size: 18px;
         font-weight: normal;
 
         line-height:                1;
@@ -63,11 +64,11 @@
     }
 
     .lp_debugger-header__text {
-            line-height: 1;
-            padding: $fs-075 $fs-05;
-        }
+        line-height: 1;
+        padding: $fs-075 $fs-05;
+    }
 
-    lp_debugger__close-link {
+    .lp_debugger__close-link {
         color:                      $clickable;
         font-weight:                bold;
         height:                     $fs-2;
@@ -100,7 +101,7 @@
     margin:                         $fs-075 $fs-075 0;
     position:                       relative;
     z-index:                        $zindex-base;
- 
+
     .lp_debugger-tabs__link {
         color:                      $clickable;
         display:                    block;
