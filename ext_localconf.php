@@ -79,6 +79,14 @@ $TYPO3_CONF_VARS['BE']['AJAX']['txttlaterpayM1::account'] = t3lib_extMgm::extPat
 $TYPO3_CONF_VARS['BE']['AJAX']['txttlaterpayM1::pricing'] = t3lib_extMgm::extPath('laterpay') . 'mod1/index.php:tx_laterpay_module1->pricingProcessAjaxRequests';
 $TYPO3_CONF_VARS['BE']['AJAX']['txttlaterpayM1::appearance'] = t3lib_extMgm::extPath('laterpay') . 'mod1/index.php:tx_laterpay_module1->appearanceProcessAjaxRequests';
 $TYPO3_CONF_VARS['BE']['AJAX']['txttlaterpayM1::dashboard'] = t3lib_extMgm::extPath('laterpay') . 'mod1/index.php:tx_laterpay_module1->dashboardProcessAjaxRequests';
+
+//register task
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['tx_laterpay_scheduler_clearviewdata'] = array(
+		'extension'        => $_EXTKEY,
+		'title'            => 'LLL:EXT:' . $_EXTKEY . '/locallang.xml:laterpay_task.name',
+		'description'      => 'LLL:EXT:' . $_EXTKEY . '/locallang.xml:laterpay_task.name',
+	);
+
 // @codingStandardsIgnoreStart
 require_once (t3lib_extMgm::extPath('laterpay').'lib/class.tx_laterpay_compatibility.php');
 // @codingStandardsIgnoreEnd

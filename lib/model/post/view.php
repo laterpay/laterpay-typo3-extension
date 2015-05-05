@@ -387,4 +387,15 @@ class tx_laterpay_model_post_view extends tx_laterpay_model_query_abstract {
 
 		return tx_laterpay_helper_dashboard::buildSparkline($results, $startTimestamp, $interval);
 	}
+
+	/**
+	 * Removal of old data
+	 *
+	 * @param DateTime $removeBefore - dateTime from whch need to delete logs
+	 *
+	 * @return void
+	 */
+	public function removeOldRecords(DateTime $removeBefore) {
+		$GLOBALS['TYPO3_DB']->exec_DELETEquery($this->table, '`date` <= "' . $removeBefore->format('Y-m-d H:i:s') . '"');
+	}
 }
