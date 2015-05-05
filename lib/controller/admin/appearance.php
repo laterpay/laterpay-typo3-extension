@@ -49,16 +49,16 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 		$this->loadAssets();
 
 		$viewArgs = array(
-			'plugin_is_in_live_mode' 				=> $this->config->get('is_in_live_mode'),
-			'show_teaser_content_only' 				=> tx_laterpay_config::getOption('laterpay_teaser_content_only') == 1,
-			'top_nav' 								=> $this->getMenu(),
-			'admin_menu' 							=> tx_laterpay_helper_view::getAdminMenu(),
-			'is_rating_enabled' 					=> $this->config->get('ratings_enabled'),
-			'purchase_button_positioned_manually' 	=> tx_laterpay_config::getOption('laterpay_purchase_button_positioned_manually'),
-			'time_passes_positioned_manually' 		=> tx_laterpay_config::getOption('laterpay_time_passes_positioned_manually'),
-			'teaser_percentage_of_content' 			=> tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT),
-			'teaser_min_words_count' 				=> tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN),
-			'teaser_max_words_count' 				=> tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX),
+			'plugin_is_in_live_mode'              => $this->config->get('is_in_live_mode'),
+			'show_teaser_content_only'            => tx_laterpay_config::getOption('laterpay_teaser_content_only') == 1,
+			'top_nav'                             => $this->getMenu(),
+			'admin_menu'                          => tx_laterpay_helper_view::getAdminMenu(),
+			'is_rating_enabled'                   => $this->config->get('ratings_enabled'),
+			'purchase_button_positioned_manually' => tx_laterpay_config::getOption('laterpay_purchase_button_positioned_manually'),
+			'time_passes_positioned_manually'     => tx_laterpay_config::getOption('laterpay_time_passes_positioned_manually'),
+			'teaser_percentage_of_content'        => tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT),
+			'teaser_min_words_count'              => tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN),
+			'teaser_max_words_count'              => tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX),
 		);
 
 		$this->assign('laterpay', $viewArgs);
@@ -240,17 +240,17 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 	 * @return type
 	 */
 	protected function updateAutoTeaserConfiguration() {
-		$percentageFieldName 	= 'teaser_percentage_of_content';
-		$minWordsFieldName 		= 'teaser_min_words_count';
-		$maxWordsFieldName 		= 'teaser_max_words_count';
+		$percentageFieldName = 'teaser_percentage_of_content';
+		$minWordsFieldName   = 'teaser_min_words_count';
+		$maxWordsFieldName   = 'teaser_max_words_count';
 
-		$success 		= TRUE;
-		$errorMessages 	= array();
-		$errors 		= array();
+		$success       = TRUE;
+		$errorMessages = array();
+		$errors        = array();
 
-		$percentage 	= t3lib_div::_POST($percentageFieldName);
-		$minWords 		= t3lib_div::_POST($minWordsFieldName);
-		$maxWords 		= t3lib_div::_POST($maxWordsFieldName);
+		$percentage = t3lib_div::_POST($percentageFieldName);
+		$minWords   = t3lib_div::_POST($minWordsFieldName);
+		$maxWords   = t3lib_div::_POST($maxWordsFieldName);
 
 		if (!is_numeric($percentage) or $percentage % 1 > 0 or 1 > $percentage or $percentage > 100) {
 			$success = FALSE;
@@ -284,10 +284,10 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 		}
 
 		return array(
-			'success' 		=> $success,
-			'message' 		=> $message,
+			'success'       => $success,
+			'message'       => $message,
 			'error_message' => $errorMessages,
-			'errors' 		=> $errors,
+			'errors'        => $errors,
 		);
 	}
 }

@@ -42,38 +42,38 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 		// translations
 		$i18n = array(
 			// bulk price editor
-			'make'						=> tx_laterpay_helper_string::tr('Make'),
-			'free'						=> tx_laterpay_helper_string::tr('free'),
-			'to'						=> tx_laterpay_helper_string::tr('to'),
-			'by'						=> tx_laterpay_helper_string::tr('by'),
-			'toGlobalDefaultPrice'		=> tx_laterpay_helper_string::tr('to global default price of'),
-			'toCategoryDefaultPrice'	=> tx_laterpay_helper_string::tr('to category default price of'),
-			'updatePrices'				=> tx_laterpay_helper_string::tr('Update Prices'),
-			'delete'					=> tx_laterpay_helper_string::tr('Delete'),
+			'make'                   => tx_laterpay_helper_string::tr('Make'),
+			'free'                   => tx_laterpay_helper_string::tr('free'),
+			'to'                     => tx_laterpay_helper_string::tr('to'),
+			'by'                     => tx_laterpay_helper_string::tr('by'),
+			'toGlobalDefaultPrice'   => tx_laterpay_helper_string::tr('to global default price of'),
+			'toCategoryDefaultPrice' => tx_laterpay_helper_string::tr('to category default price of'),
+			'updatePrices'           => tx_laterpay_helper_string::tr('Update Prices'),
+			'delete'                 => tx_laterpay_helper_string::tr('Delete'),
 
 			// time pass editor
-			'confirmDeleteTimePass'		=> tx_laterpay_helper_string::tr('Every user, who owns this pass, will lose his access.'),
-			'voucherText'				=> tx_laterpay_helper_string::tr('allows purchasing this pass for'),
-			'timesRedeemed'				=> tx_laterpay_helper_string::tr('times redeemed.')
+			'confirmDeleteTimePass' => tx_laterpay_helper_string::tr('Every user, who owns this pass, will lose his access.'),
+			'voucherText'           => tx_laterpay_helper_string::tr('allows purchasing this pass for'),
+			'timesRedeemed'         => tx_laterpay_helper_string::tr('times redeemed.')
 		);
 
 		// pass localized strings and variables to script
 		$passesModel = new tx_laterpay_model_timepass();
 
-		$passesList 		= (array) $passesModel->getAllTimePasses();
-		$vouchersList 		= tx_laterpay_helper_voucher::getAllVouchers();
-		$vouchersStatistic 	= tx_laterpay_helper_voucher::getAllVouchersStatistic();
+		$passesList        = (array) $passesModel->getAllTimePasses();
+		$vouchersList      = tx_laterpay_helper_voucher::getAllVouchers();
+		$vouchersStatistic = tx_laterpay_helper_voucher::getAllVouchersStatistic();
 		$this->localizeScript('lpVars',
 			array(
-				'locale' 				=> $GLOBALS['TYPO3_CONF_VARS']['SYS']['systemLocale'],
-				'i18n' 					=> $i18n,
-				'globalDefaultPrice'	=> tx_laterpay_helper_view::formatNumber(tx_laterpay_config::getOption('laterpay_global_price')),
-				'defaultCurrency'		=> $this->config->get(tx_laterpay_config::REG_LATERPAY_CURRENCY),
-				'inCategoryLabel'		=> tx_laterpay_helper_string::tr('All posts in category'),
-				'time_passes_list' 		=> $this->getPassesJson($passesList),
-				'vouchers_list' 		=> json_encode($vouchersList),
-				'vouchers_statistic' 	=> json_encode($vouchersStatistic),
-				'l10n_print_after' 		=> 'lpVars.time_passes_list = JSON.parse(lpVars.time_passes_list);
+				'locale'             => $GLOBALS['TYPO3_CONF_VARS']['SYS']['systemLocale'],
+				'i18n'               => $i18n,
+				'globalDefaultPrice' => tx_laterpay_helper_view::formatNumber(tx_laterpay_config::getOption('laterpay_global_price')),
+				'defaultCurrency'    => $this->config->get(tx_laterpay_config::REG_LATERPAY_CURRENCY),
+				'inCategoryLabel'    => tx_laterpay_helper_string::tr('All posts in category'),
+				'time_passes_list'   => $this->getPassesJson($passesList),
+				'vouchers_list'      => json_encode($vouchersList),
+				'vouchers_statistic' => json_encode($vouchersStatistic),
+				'l10n_print_after'   => 'lpVars.time_passes_list = JSON.parse(lpVars.time_passes_list);
                                             lpVars.vouchers_list = JSON.parse(lpVars.vouchers_list);
                                             lpVars.vouchers_statistic = JSON.parse(lpVars.vouchers_statistic);',
 			));
@@ -92,18 +92,18 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 		$this->loadAssets();
 
 		// time passes and vouchers data
-		$passesModel 		= new tx_laterpay_model_timepass();
-		$passesList 		= (array) $passesModel->getAllTimePasses();
-		$vouchersList 		= tx_laterpay_helper_voucher::getAllVouchers();
-		$vouchersStatistic 	= tx_laterpay_helper_voucher::getAllVouchersStatistic();
+		$passesModel       = new tx_laterpay_model_timepass();
+		$passesList        = (array) $passesModel->getAllTimePasses();
+		$vouchersList      = tx_laterpay_helper_voucher::getAllVouchers();
+		$vouchersStatistic = tx_laterpay_helper_voucher::getAllVouchersStatistic();
 
 		// bulk price editor data
 		$bulkActions = array(
-			'set'		=> tx_laterpay_helper_string::tr('Set price of'),
-			'increase'	=> tx_laterpay_helper_string::tr('Increase price of'),
-			'reduce'	=> tx_laterpay_helper_string::tr('Reduce price of'),
-			'free'		=> tx_laterpay_helper_string::tr('Make free'),
-			'reset'		=> tx_laterpay_helper_string::tr('Reset')
+			'set'      => tx_laterpay_helper_string::tr('Set price of'),
+			'increase' => tx_laterpay_helper_string::tr('Increase price of'),
+			'reduce'   => tx_laterpay_helper_string::tr('Reduce price of'),
+			'free'     => tx_laterpay_helper_string::tr('Make free'),
+			'reset'    => tx_laterpay_helper_string::tr('Reset')
 		);
 
 		$bulkSelectors = array(
@@ -113,23 +113,23 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 		$bulkSavedOperations = tx_laterpay_helper_pricing::getBulkOperations();
 
 		$viewArgs = array(
-			'top_nav' 								=> $this->getMenu(),
-			'admin_menu' 							=> tx_laterpay_helper_view::getAdminMenu(),
-			'categories_with_defined_price' 		=> array(),
-			'standard_currency'						=> tx_laterpay_config::getOption('laterpay_currency'),
-			'plugin_is_in_live_mode' 				=> $this->config->get('is_in_live_mode'),
-			'global_default_price'					=> tx_laterpay_helper_view::formatNumber(tx_laterpay_config::getOption('laterpay_global_price')),
-			'global_default_price_revenue_model'	=> tx_laterpay_config::getOption('laterpay_global_price_revenue_model'),
-			'passes_list' 							=> $passesList,
-			'vouchers_list' 						=> $vouchersList,
-			'vouchers_statistic' 					=> $vouchersStatistic,
-			'bulk_actions' 							=> $bulkActions,
-			'bulk_selectors' 						=> $bulkSelectors,
-			'bulk_categories' 						=> $bulkCategories,
-			'bulk_categories_with_price' 			=> array(),
-			'bulk_saved_operations' 				=> $bulkSavedOperations,
-			'landing_page'							=> tx_laterpay_config::getOption('laterpay_landing_page'),
-			'only_time_pass_purchases_allowed'		=> tx_laterpay_config::getOption('laterpay_only_time_pass_purchases_allowed')
+			'top_nav'                            => $this->getMenu(),
+			'admin_menu'                         => tx_laterpay_helper_view::getAdminMenu(),
+			'categories_with_defined_price'      => array(),
+			'standard_currency'                  => tx_laterpay_config::getOption('laterpay_currency'),
+			'plugin_is_in_live_mode'             => $this->config->get('is_in_live_mode'),
+			'global_default_price'               => tx_laterpay_helper_view::formatNumber(tx_laterpay_config::getOption('laterpay_global_price')),
+			'global_default_price_revenue_model' => tx_laterpay_config::getOption('laterpay_global_price_revenue_model'),
+			'passes_list'                        => $passesList,
+			'vouchers_list'                      => $vouchersList,
+			'vouchers_statistic'                 => $vouchersStatistic,
+			'bulk_actions'                       => $bulkActions,
+			'bulk_selectors'                     => $bulkSelectors,
+			'bulk_categories'                    => $bulkCategories,
+			'bulk_categories_with_price'         => array(),
+			'bulk_saved_operations'              => $bulkSavedOperations,
+			'landing_page'                       => tx_laterpay_config::getOption('laterpay_landing_page'),
+			'only_time_pass_purchases_allowed'   => tx_laterpay_config::getOption('laterpay_only_time_pass_purchases_allowed')
 		);
 
 		$this->assign('laterpay', $viewArgs);
@@ -146,8 +146,8 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 	 * @return void
 	 */
 	public function processAjaxRequests($params, &$ajaxObj) {
-		$postForm 	= t3lib_div::_POST('form');
-		$post 		= t3lib_div::_POST();
+		$postForm = t3lib_div::_POST('form');
+		$post     = t3lib_div::_POST();
 
 		// save changes in submitted form
 		if (! empty($postForm)) {
@@ -229,23 +229,23 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 
 		if (! $globalPriceForm->isValid($post)) {
 			return array(
-				'success' 						=> FALSE,
-				'laterpay_global_price'			=> tx_laterpay_config::getOption('laterpay_global_price'),
-				'laterpay_price_revenue_model'	=> tx_laterpay_config::getOption('laterpay_global_price_revenue_model'),
-				'message'						=> tx_laterpay_helper_string::tr('The price you tried to set is outside the allowed range of 0 or 0.05-149.99.')
+				'success'                      => FALSE,
+				'laterpay_global_price'        => tx_laterpay_config::getOption('laterpay_global_price'),
+				'laterpay_price_revenue_model' => tx_laterpay_config::getOption('laterpay_global_price_revenue_model'),
+				'message'                      => tx_laterpay_helper_string::tr('The price you tried to set is outside the allowed range of 0 or 0.05-149.99.')
 			);
 		}
 
-		$delocalizedGlobalPrice 	= $globalPriceForm->getFieldValue('laterpay_global_price');
-		$globalPriceRevenueModel 	= $globalPriceForm->getFieldValue('laterpay_global_price_revenue_model');
+		$delocalizedGlobalPrice  = $globalPriceForm->getFieldValue('laterpay_global_price');
+		$globalPriceRevenueModel = $globalPriceForm->getFieldValue('laterpay_global_price_revenue_model');
 
 		tx_laterpay_config::updateOption('laterpay_global_price', $delocalizedGlobalPrice);
 		tx_laterpay_config::updateOption('laterpay_global_price_revenue_model', $globalPriceRevenueModel);
 
-		$globalPrice 			= (float) tx_laterpay_config::getOption('laterpay_global_price');
-		$localizedGlobalPrice 	= tx_laterpay_helper_view::formatNumber($globalPrice);
-		$currencyModel 			= new tx_laterpay_model_currency();
-		$currencyName 			= $currencyModel->getCurrencyNameByIso4217Code(tx_laterpay_config::getOption('laterpay_currency'));
+		$globalPrice          = (float) tx_laterpay_config::getOption('laterpay_global_price');
+		$localizedGlobalPrice = tx_laterpay_helper_view::formatNumber($globalPrice);
+		$currencyModel        = new tx_laterpay_model_currency();
+		$currencyName         = $currencyModel->getCurrencyNameByIso4217Code(tx_laterpay_config::getOption('laterpay_currency'));
 
 		if ($globalPrice == 0) {
 			$message = tx_laterpay_helper_string::tr('All posts are free by default now.');
@@ -255,10 +255,10 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 		}
 
 		return array(
-			'success' 						=> TRUE,
-			'laterpay_global_price' 		=> $localizedGlobalPrice,
-			'laterpay_price_revenue_model' 	=> $globalPriceRevenueModel,
-			'message' 						=> $message,
+			'success'                      => TRUE,
+			'laterpay_global_price'        => $localizedGlobalPrice,
+			'laterpay_price_revenue_model' => $globalPriceRevenueModel,
+			'message'                      => $message,
 		);
 	}
 
@@ -293,31 +293,31 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 			}
 
 			// get scope of posts to be processed from selector
-			$posts 				= NULL;
-			$selector 			= $bulkPriceForm->getFieldValue('bulk_selector');
-			$action 			= $bulkPriceForm->getFieldValue('bulk_action');
-			$changeUnit 		= $bulkPriceForm->getFieldValue('bulk_change_unit');
-			$price 				= $bulkPriceForm->getFieldValue('bulk_price');
-			$isPercent 			= ($changeUnit == 'percent');
+			$posts      = NULL;
+			$selector   = $bulkPriceForm->getFieldValue('bulk_selector');
+			$action     = $bulkPriceForm->getFieldValue('bulk_action');
+			$changeUnit = $bulkPriceForm->getFieldValue('bulk_change_unit');
+			$price      = $bulkPriceForm->getFieldValue('bulk_price');
+			$isPercent  = ($changeUnit == 'percent');
 			$defaultCurrency = tx_laterpay_config::getOption('laterpay_currency');
-			$updateAll 			= ($selector === 'all');
-			$categoryId 		= NULL;
+			$updateAll  = ($selector === 'all');
+			$categoryId = NULL;
 
 			// flash message parts
-			$messageParts 		= array(
-				'all'			=> tx_laterpay_helper_string::tr('The prices of all posts'),
-				'category' 		=> '',
-				'have_been'		=> tx_laterpay_helper_string::tr('have been'),
-				'action'		=> tx_laterpay_helper_string::tr('set'),
-				'preposition'	=> tx_laterpay_helper_string::tr('to'),
-				'amount' 		=> '',
-				'unit' 			=> '',
+			$messageParts = array(
+				'all'         => tx_laterpay_helper_string::tr('The prices of all posts'),
+				'category'    => '',
+				'have_been'   => tx_laterpay_helper_string::tr('have been'),
+				'action'      => tx_laterpay_helper_string::tr('set'),
+				'preposition' => tx_laterpay_helper_string::tr('to'),
+				'amount'      => '',
+				'unit'        => '',
 			);
 
-			$posts 				= tx_laterpay_helper_pricing::getAllPostsWithPrice();
+			$posts = tx_laterpay_helper_pricing::getAllPostsWithPrice();
 
-			$price 				= ($price === NULL) ? 0 : $price;
-			$newPrice 			= tx_laterpay_helper_pricing::ensureValidPrice($price);
+			$price    = ($price === NULL) ? 0 : $price;
+			$newPrice = tx_laterpay_helper_pricing::ensureValidPrice($price);
 
 			// pre-post-processing actions - correct global and categories
 			// default prices, set flash message parts;
@@ -327,12 +327,12 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 					$this->updateGlobalAndCategoriesPricesWithNewPrice($newPrice);
 
 					// set flash message parts
-					$messageParts['action']			= tx_laterpay_helper_string::tr('set');
-					$messageParts['preposition']	= tx_laterpay_helper_string::tr('to');
-					$messageParts['amount'] 		= tx_laterpay_helper_view::formatNumber(
+					$messageParts['action']      = tx_laterpay_helper_string::tr('set');
+					$messageParts['preposition'] = tx_laterpay_helper_string::tr('to');
+					$messageParts['amount']      = tx_laterpay_helper_view::formatNumber(
 						tx_laterpay_helper_pricing::ensureValidPrice($newPrice)
 					);
-					$messageParts['unit'] 			= $defaultCurrency;
+					$messageParts['unit'] = $defaultCurrency;
 					break;
 
 				case 'increase':
@@ -341,10 +341,10 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 					$isReduction = ($action === 'reduce');
 
 					// process global price
-					$globalPrice		= tx_laterpay_config::getOption('laterpay_global_price');
-					$changeAmount 		= $isPercent ? $globalPrice * $price / 100 : $price;
-					$newPrice 			= $isReduction ? $globalPrice - $changeAmount : $globalPrice + $changeAmount;
-					$globalPriceRevenue	= tx_laterpay_helper_pricing::ensureValidRevenueModel(
+					$globalPrice        = tx_laterpay_config::getOption('laterpay_global_price');
+					$changeAmount       = $isPercent ? $globalPrice * $price / 100 : $price;
+					$newPrice           = $isReduction ? $globalPrice - $changeAmount : $globalPrice + $changeAmount;
+					$globalPriceRevenue = tx_laterpay_helper_pricing::ensureValidRevenueModel(
 						tx_laterpay_config::getOption('laterpay_global_price_revenue_model'),
 						$newPrice
 					);
@@ -352,19 +352,19 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 					tx_laterpay_config::updateOption('laterpay_global_price_revenue_model', $globalPriceRevenue);
 
 					// set flash message parts
-					$messageParts['action']			= $isReduction ? tx_laterpay_helper_string::tr('decreased') : tx_laterpay_helper_string::tr('increased');
-					$messageParts['preposition']	= tx_laterpay_helper_string::tr('by');
-					$messageParts['amount'] 		= $isPercent ? $price : LaterPay_Helper_View::formatNumber($price);
-					$messageParts['unit'] 			= $isPercent ? '%' : $changeUnit;
+					$messageParts['action']      = $isReduction ? tx_laterpay_helper_string::tr('decreased') : tx_laterpay_helper_string::tr('increased');
+					$messageParts['preposition'] = tx_laterpay_helper_string::tr('by');
+					$messageParts['amount']      = $isPercent ? $price : LaterPay_Helper_View::formatNumber($price);
+					$messageParts['unit']        = $isPercent ? '%' : $changeUnit;
 					break;
 
 				case 'free':
 					if ($updateAll) {
 						$this->updateGlobalAndCategoriesPricesWithNewPrice($newPrice);
 					}
-					$messageParts['all']			= tx_laterpay_helper_string::tr('All posts');
-					$messageParts['action']			= tx_laterpay_helper_string::tr('made free');
-					$messageParts['preposition'] 	= '';
+					$messageParts['all']         = tx_laterpay_helper_string::tr('All posts');
+					$messageParts['action']      = tx_laterpay_helper_string::tr('made free');
+					$messageParts['preposition'] = '';
 					break;
 
 				case 'reset':
@@ -373,9 +373,9 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 						$newPrice = tx_laterpay_config::getOption('laterpay_global_price');
 
 						// set flash message parts
-						$messageParts['preposition']		= tx_laterpay_helper_string::tr('to global default price of');
-						$messageParts['amount'] 		= LaterPay_Helper_View::formatNumber($newPrice);
-						$messageParts['unit'] 			= $defaultCurrency;
+						$messageParts['preposition'] = tx_laterpay_helper_string::tr('to global default price of');
+						$messageParts['amount']      = LaterPay_Helper_View::formatNumber($newPrice);
+						$messageParts['unit']        = $defaultCurrency;
 					}
 					break;
 
@@ -390,16 +390,16 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 			// update post prices
 			if ($posts) {
 				foreach ($posts as $post) {
-					$postId 	= is_int($post) ? $post : $post->ID;
-					$postMeta 	= get_post_meta($postId, 'laterpay_post_prices', TRUE);
+					$postId   = is_int($post) ? $post : $post->ID;
+					$postMeta = get_post_meta($postId, 'laterpay_post_prices', TRUE);
 					$metaValues = $postMeta ? $postMeta : array();
 
-					$currentRevenueModel 	= isset($metaValues['revenue_model']) ? $metaValues['revenue_model'] : 'ppu';
-					$currentPostPrice 		= tx_laterpay_helper_pricing::getPostPrice($postId);
-					$currentPostType 		= tx_laterpay_helper_pricing::getPostPriceType($postId);
-					$postTypeIsGlobal 		= ($currentPostType == tx_laterpay_helper_pricing::TYPE_GLOBAL_DEFAULT_PRICE);
-					$postTypeIsCategory 	= ($currentPostType == tx_laterpay_helper_pricing::TYPE_CATEGORY_DEFAULT_PRICE);
-					$isIndividual 			= (! $postTypeIsGlobal && ! $postTypeIsCategory);
+					$currentRevenueModel = isset($metaValues['revenue_model']) ? $metaValues['revenue_model'] : 'ppu';
+					$currentPostPrice    = tx_laterpay_helper_pricing::getPostPrice($postId);
+					$currentPostType     = tx_laterpay_helper_pricing::getPostPriceType($postId);
+					$postTypeIsGlobal    = ($currentPostType == tx_laterpay_helper_pricing::TYPE_GLOBAL_DEFAULT_PRICE);
+					$postTypeIsCategory  = ($currentPostType == tx_laterpay_helper_pricing::TYPE_CATEGORY_DEFAULT_PRICE);
+					$isIndividual        = (! $postTypeIsGlobal && ! $postTypeIsCategory);
 
 					$newPrice = tx_laterpay_helper_pricing::ensureValidPrice($price);
 
@@ -408,9 +408,9 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 							// Fall through
 						case 'reduce':
 							if ($isIndividual) {
-								$isReduction 	= ($action === 'reduce');
-								$changeAmount 	= $isPercent ? $currentPostPrice * $price / 100 : $price;
-								$newPrice 		= $isReduction ? $currentPostPrice - $changeAmount : $currentPostPrice + $changeAmount;
+								$isReduction  = ($action === 'reduce');
+								$changeAmount = $isPercent ? $currentPostPrice * $price / 100 : $price;
+								$newPrice     = $isReduction ? $currentPostPrice - $changeAmount : $currentPostPrice + $changeAmount;
 							}
 							break;
 
@@ -444,9 +444,9 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 		}
 
 		return array(
-			'success' 	=> FALSE,
+			'success' => FALSE,
 			'message' => tx_laterpay_helper_string::tr('An error occurred when trying to save your settings. Please try again.'),
-			'errors' 	=> $bulkPriceForm->getErrors(),
+			'errors' => $bulkPriceForm->getErrors(),
 		);
 	}
 
@@ -481,19 +481,19 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 			$bulkMessage = $saveBulkOperationForm->getFieldValue('bulk_message');
 
 			return array(
-				'success' 	=> TRUE,
-				'data' 		=> array(
-					'id' 		=> tx_laterpay_helper_pricing::saveBulkOperation($data, $bulkMessage),
-					'message' 	=> $saveBulkOperationForm->getFieldValue('bulk_message')
+				'success' => TRUE,
+				'data'    => array(
+					'id'      => tx_laterpay_helper_pricing::saveBulkOperation($data, $bulkMessage),
+					'message' => $saveBulkOperationForm->getFieldValue('bulk_message')
 				),
 				'message' => tx_laterpay_helper_string::tr('Bulk operation saved.')
 			);
 		}
 
 		return array(
-			'success' 	=> FALSE,
-			'message'	=> tx_laterpay_helper_string::tr('An error occurred when trying to save your settings. Please try again.'),
-			'errors' 	=> $saveBulkOperationForm->getErrors(),
+			'success' => FALSE,
+			'message' => tx_laterpay_helper_string::tr('An error occurred when trying to save your settings. Please try again.'),
+			'errors'  => $saveBulkOperationForm->getErrors(),
 		);
 	}
 
@@ -508,8 +508,8 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 		$this->assign('laterpay_pass', $args);
 		$this->assign('laterpay',
 			array(
-				'standard_currency' 		=> tx_laterpay_config::getOption('laterpay_currency'),
-				'preview_post_as_visitor' 	=> 1,
+				'standard_currency'       => tx_laterpay_config::getOption('laterpay_currency'),
+				'preview_post_as_visitor' => 1,
 			));
 
 		$string = $this->getTextView('backend/partials/time_pass');
@@ -528,8 +528,8 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 		// result of function
 		$fResult = NULL;
 
-		$savePassForm 	= new tx_laterpay_form_pass($post);
-		$passModel 		= new tx_laterpay_model_timepass();
+		$savePassForm = new tx_laterpay_form_pass($post);
+		$passModel    = new tx_laterpay_model_timepass();
 
 		if ($savePassForm->isValid()) {
 			$voucher = $savePassForm->getFieldValue('voucher');
@@ -554,17 +554,17 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 			$data['price'] = tx_laterpay_helper_view::formatNumber($data['price']);
 
 			$fResult = array(
-				'success' 	=> TRUE,
-				'data' 		=> $data,
-				'vouchers' 	=> tx_laterpay_helper_voucher::getTimePassVouchers($data['pass_id']),
-				'html' 		=> $this->renderTimePass($data),
-				'message'	=> tx_laterpay_helper_string::tr('Pass saved.')
+				'success'  => TRUE,
+				'data'     => $data,
+				'vouchers' => tx_laterpay_helper_voucher::getTimePassVouchers($data['pass_id']),
+				'html'     => $this->renderTimePass($data),
+				'message'  => tx_laterpay_helper_string::tr('Pass saved.')
 			);
 		} else {
 			$fResult = array(
-				'success' 	=> FALSE,
-				'errors' 	=> $savePassForm->getErrors(),
-				'message'	=> tx_laterpay_helper_string::tr('An error occurred when trying to save the pass. Please try again.')
+				'success' => FALSE,
+				'errors'  => $savePassForm->getErrors(),
+				'message' => tx_laterpay_helper_string::tr('An error occurred when trying to save the pass. Please try again.')
 			);
 		}
 
@@ -641,8 +641,8 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 		// generate voucher code
 		wp_send_json(
 			array(
-				'success' 	=> TRUE,
-				'code' 		=> LaterPay_Helper_Voucher::generateVoucherCode(),
+				'success' => TRUE,
+				'code'    => LaterPay_Helper_Voucher::generateVoucherCode(),
 			));
 	}
 
@@ -667,9 +667,9 @@ class tx_laterpay_controller_admin_pricing extends tx_laterpay_controller_abstra
 		} else {
 			// show an error message, if the provided URL is not valid
 			return array(
-				'success' 	=> FALSE,
-				'message'	=> tx_laterpay_helper_string::tr('The landing page you entered is not a valid URL.'),
-				'errors' 	=> $landingPageForm->getErrors(),
+				'success' => FALSE,
+				'message' => tx_laterpay_helper_string::tr('The landing page you entered is not a valid URL.'),
+				'errors'  => $landingPageForm->getErrors(),
 			);
 		}
 	}

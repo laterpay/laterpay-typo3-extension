@@ -35,10 +35,10 @@ class tx_laterpay_controller_admin_account extends tx_laterpay_controller_abstra
 
 		$this->localizeScript('lpVars',
 			array(
-				'ajaxUtl' 				=> 'ajax.php',
-				'i18nApiKeyInvalid'		=> tx_laterpay_helper_string::tr('The API key you entered is not a valid LaterPay API key!'),
-				'i18nMerchantIdInvalid'	=> tx_laterpay_helper_string::tr('The Merchant ID you entered is not a valid LaterPay Merchant ID!'),
-				'i18nPreventUnload'		=> tx_laterpay_helper_string::tr('LaterPay does not work properly with invalid API credentials.')
+				'ajaxUtl'               => 'ajax.php',
+				'i18nApiKeyInvalid'     => tx_laterpay_helper_string::tr('The API key you entered is not a valid LaterPay API key!'),
+				'i18nMerchantIdInvalid' => tx_laterpay_helper_string::tr('The Merchant ID you entered is not a valid LaterPay Merchant ID!'),
+				'i18nPreventUnload'     => tx_laterpay_helper_string::tr('LaterPay does not work properly with invalid API credentials.')
 			));
 
 		$this->doc->JScodeArray['ajaxurl'] = 'var ajaxurl = "ajax.php?ajaxID=txttlaterpayM1::account";' . LF;
@@ -54,14 +54,14 @@ class tx_laterpay_controller_admin_account extends tx_laterpay_controller_abstra
 	public function renderPage() {
 		$this->loadAssets();
 		$viewArgs = array(
-			'sandbox_merchant_id'				=> tx_laterpay_config::getOption('laterpay_sandbox_merchant_id'),
-			'sandbox_api_key' 					=> tx_laterpay_config::getOption('laterpay_sandbox_api_key'),
-			'live_merchant_id' 					=> tx_laterpay_config::getOption('laterpay_live_merchant_id'),
-			'live_api_key' 						=> tx_laterpay_config::getOption('laterpay_live_api_key'),
-			'plugin_is_in_live_mode' 			=> $this->config->get('is_in_live_mode'),
-			'plugin_is_in_visible_test_mode'	=> tx_laterpay_config::getOption('laterpay_is_in_visible_test_mode'),
-			'top_nav' 							=> $this->getMenu(),
-			'admin_menu' 						=> tx_laterpay_helper_view::getAdminMenu()
+			'sandbox_merchant_id'            => tx_laterpay_config::getOption('laterpay_sandbox_merchant_id'),
+			'sandbox_api_key'                => tx_laterpay_config::getOption('laterpay_sandbox_api_key'),
+			'live_merchant_id'               => tx_laterpay_config::getOption('laterpay_live_merchant_id'),
+			'live_api_key'                   => tx_laterpay_config::getOption('laterpay_live_api_key'),
+			'plugin_is_in_live_mode'         => $this->config->get('is_in_live_mode'),
+			'plugin_is_in_visible_test_mode' => tx_laterpay_config::getOption('laterpay_is_in_visible_test_mode'),
+			'top_nav'                        => $this->getMenu(),
+			'admin_menu'                     => tx_laterpay_helper_view::getAdminMenu()
 		);
 
 		$this->assign('laterpay', $viewArgs);
@@ -132,7 +132,7 @@ class tx_laterpay_controller_admin_account extends tx_laterpay_controller_abstra
 	protected static function updateMerchantId($isLive = NULL) {
 		$merchantIdForm = new tx_laterpay_form_merchantid(t3lib_div::_POST());
 
-		$merchantId 	= $merchantIdForm->getFieldValue('merchant_id');
+		$merchantId = $merchantIdForm->getFieldValue('merchant_id');
 		$merchantIdType = $isLive ? 'live' : 'sandbox';
 
 		// result of function
@@ -174,9 +174,9 @@ class tx_laterpay_controller_admin_account extends tx_laterpay_controller_abstra
 	protected static function updateApiKey($isLive = NULL) {
 		$apiKeyForm = new tx_laterpay_form_apikey(t3lib_div::_POST());
 
-		$apiKey 			= $apiKeyForm->getFieldValue('api_key');
-		$apiKeyType 		= $isLive ? 'live' : 'sandbox';
-		$transactionType 	= $isLive ? 'REAL' : 'TEST';
+		$apiKey          = $apiKeyForm->getFieldValue('api_key');
+		$apiKeyType      = $isLive ? 'live' : 'sandbox';
+		$transactionType = $isLive ? 'REAL' : 'TEST';
 
 		// result of function
 		$fResult = NULL;
@@ -229,8 +229,8 @@ class tx_laterpay_controller_admin_account extends tx_laterpay_controller_abstra
 		if ($result) {
 			if (tx_laterpay_config::getOption('laterpay_plugin_is_in_live_mode')) {
 				$fResult = array(
-					'success' 	=> TRUE,
-					'mode' 		=> 'live',
+					'success' => TRUE,
+					'mode'    => 'live',
 					'message' => tx_laterpay_helper_string::tr(
 						'The LaterPay plugin is in LIVE mode now. All payments are actually booked and credited to your account.'
 					)
@@ -238,16 +238,16 @@ class tx_laterpay_controller_admin_account extends tx_laterpay_controller_abstra
 			} else {
 				if (tx_laterpay_config::getOption('plugin_is_in_visible_test_mode')) {
 					$fResult = array(
-						'success' 	=> TRUE,
-						'mode' 		=> 'test',
+						'success' => TRUE,
+						'mode'    => 'test',
 						'message' => tx_laterpay_helper_string::tr(
 							'The LaterPay plugin is in visible TEST mode now. Payments are only simulated and not actually booked.'
 						)
 					);
 				} else {
 					$fResult = array(
-						'success' 	=> TRUE,
-						'mode' 		=> 'test',
+						'success' => TRUE,
+						'mode'    => 'test',
 						'message' => tx_laterpay_helper_string::tr(
 							'The LaterPay plugin is in invisible TEST mode now. Payments are only simulated and not actually booked.'
 						)
@@ -256,9 +256,9 @@ class tx_laterpay_controller_admin_account extends tx_laterpay_controller_abstra
 			}
 		} else {
 			$fResult = array(
-				'success' 	=> FALSE,
-				'mode' 		=> 'test',
-				'message'	=> tx_laterpay_helper_string::tr('The LaterPay plugin needs valid API credentials to work.')
+				'success' => FALSE,
+				'mode'    => 'test',
+				'message' => tx_laterpay_helper_string::tr('The LaterPay plugin needs valid API credentials to work.')
 			);
 		}
 
@@ -277,9 +277,9 @@ class tx_laterpay_controller_admin_account extends tx_laterpay_controller_abstra
 
 		if (! $pluginTestModeForm->isValid(t3lib_div::_POST())) {
 			$fResult = array(
-				'success' 	=> FALSE,
-				'mode' 		=> 'test',
-				'message'	=> tx_laterpay_helper_string::tr('An error occurred. Incorrect data provided.')
+				'success' => FALSE,
+				'mode'    => 'test',
+				'message' => tx_laterpay_helper_string::tr('An error occurred. Incorrect data provided.')
 			);
 		}
 
@@ -290,9 +290,9 @@ class tx_laterpay_controller_admin_account extends tx_laterpay_controller_abstra
 			tx_laterpay_config::updateOption('laterpay_is_in_visible_test_mode', 0);
 
 			$fResult = array(
-				'success' 	=> FALSE,
-				'mode' 		=> 'test',
-				'message'	=> tx_laterpay_helper_string::tr('The LaterPay plugin needs valid API credentials to work.')
+				'success' => FALSE,
+				'mode'    => 'test',
+				'message' => tx_laterpay_helper_string::tr('The LaterPay plugin needs valid API credentials to work.')
 			);
 		} else {
 			tx_laterpay_config::updateOption('laterpay_is_in_visible_test_mode', $isInVisibleTestMode);
@@ -304,9 +304,9 @@ class tx_laterpay_controller_admin_account extends tx_laterpay_controller_abstra
 			}
 
 			$fResult = array(
-				'success' 	=> TRUE,
-				'mode' 		=> 'test',
-				'message' 	=> $message
+				'success' => TRUE,
+				'mode'    => 'test',
+				'message' => $message
 			);
 		}
 

@@ -24,13 +24,13 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	/**
 	 * Logger levels
 	 */
-	const DEBUG 	= 100;
-	const INFO 		= 200;
-	const NOTICE 	= 250;
-	const WARNING 	= 300;
-	const ERROR 	= 400;
-	const CRITICAL 	= 500;
-	const ALERT 	= 550;
+	const DEBUG     = 100;
+	const INFO      = 200;
+	const NOTICE    = 250;
+	const WARNING   = 300;
+	const ERROR     = 400;
+	const CRITICAL  = 500;
+	const ALERT     = 550;
 	const EMERGENCY = 600;
 
 	/**
@@ -85,10 +85,10 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 	 * @param array $processors Optional array of processors
 	 */
 	public function __construct($name = 'default', array $handlers = array(), array $processors = array()) {
-		$this->name 		= $name;
-		$this->handlers 	= $handlers;
-		$this->processors 	= $processors;
-		$this->timezone 	= new DateTimeZone(date_default_timezone_get() ? date_default_timezone_get() : 'UTC');
+		$this->name       = $name;
+		$this->handlers   = $handlers;
+		$this->processors = $processors;
+		$this->timezone   = new DateTimeZone(date_default_timezone_get() ? date_default_timezone_get() : 'UTC');
 
 		$this->initLogger();
 	}
@@ -119,9 +119,9 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 
 		$GLOBALS['TYPO3_DB']->store_lastBuiltQuery = TRUE;
 
-		$this->name 		= $name;
-		$this->handlers 	= $handlers;
-		$this->processors 	= $processors;
+		$this->name       = $name;
+		$this->handlers   = $handlers;
+		$this->processors = $processors;
 	}
 
 	/**
@@ -246,13 +246,13 @@ class tx_laterpay_core_logger implements t3lib_Singleton{
 		$dateTime = new DateTime('now', $this->timezone);
 
 		$record = array(
-			'message' 		=> (string) $message,
-			'context' 		=> $context,
-			'level' 		=> $level,
-			'level_name' 	=> self::getLevelName($level),
-			'channel' 		=> $this->name,
-			'datetime' 		=> $dateTime,
-			'extra' 		=> array(),
+			'message'    => (string) $message,
+			'context'    => $context,
+			'level'      => $level,
+			'level_name' => self::getLevelName($level),
+			'channel'    => $this->name,
+			'datetime'   => $dateTime,
+			'extra'      => array(),
 		);
 
 		// check, if any handler will handle this message

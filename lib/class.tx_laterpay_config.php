@@ -16,81 +16,81 @@
  * Laterpay config storage
  */
 class tx_laterpay_config implements t3lib_Singleton {
-	const PLUGIN_NAME 							= 'laterpay';
-	const PLUGIN_NAME_SPACE 					= 'tx_laterpay';
-	const PLUGIN_DIR_PATH 						= 'plugin_dir_path';
-	const PLUGIN_FILE_PATH 						= 'plugin_file_path';
-	const PLUGIN_BASE_NAME 						= 'plugin_base_name';
-	const PLUGIN_URL 							= 'plugin_url';
-	const VIEW_DIR 								= 'view_dir';
-	const CACHE_DIR 							= 'cache_dir';
-	const CSS_URL 								= 'css_url';
-	const JS_URL 								= 'js_url';
-	const IMAGE_URL 							= 'image_url';
-	const IS_IN_LIVE_MODE 						= 'is_in_live_mode';
-	const RATINGS_ENABLED 						= 'ratings_enabled';
-	const DEBUG_MODE 							= 'debug_mode';
-	const SCRIPT_DEBUG_MODE 					= 'script_debug_mode';
-	const LATERPAY_YUI_JS 						= 'laterpay_yui_js';
+	const PLUGIN_NAME       = 'laterpay';
+	const PLUGIN_NAME_SPACE = 'tx_laterpay';
+	const PLUGIN_DIR_PATH   = 'plugin_dir_path';
+	const PLUGIN_FILE_PATH  = 'plugin_file_path';
+	const PLUGIN_BASE_NAME  = 'plugin_base_name';
+	const PLUGIN_URL        = 'plugin_url';
+	const VIEW_DIR          = 'view_dir';
+	const CACHE_DIR         = 'cache_dir';
+	const CSS_URL           = 'css_url';
+	const JS_URL            = 'js_url';
+	const IMAGE_URL         = 'image_url';
+	const IS_IN_LIVE_MODE   = 'is_in_live_mode';
+	const RATINGS_ENABLED   = 'ratings_enabled';
+	const DEBUG_MODE        = 'debug_mode';
+	const SCRIPT_DEBUG_MODE = 'script_debug_mode';
+	const LATERPAY_YUI_JS   = 'laterpay_yui_js';
 
-	const API_SANDBOX_BACKEND_API_URL 			= 'api.sandbox_backend_api_url';
-	const API_SANDBOX_DIALOG_API_URL 			= 'api.sandbox_dialog_api_url ';
-	const API_LIVE_BACKEND_API_URL 				= 'api.live_backend_api_url';
-	const API_LIVE_DIALOG_API_URL 				= 'api.live_dialog_api_url';
-	const API_MERCHANT_BACKEND_URL 				= 'api.merchant_backend_url';
+	const API_SANDBOX_BACKEND_API_URL = 'api.sandbox_backend_api_url';
+	const API_SANDBOX_DIALOG_API_URL  = 'api.sandbox_dialog_api_url ';
+	const API_LIVE_BACKEND_API_URL    = 'api.live_backend_api_url';
+	const API_LIVE_DIALOG_API_URL     = 'api.live_dialog_api_url';
+	const API_MERCHANT_BACKEND_URL    = 'api.merchant_backend_url';
 
-	const API_TOKEN_NAME 						= 'api.token_name';
-	const API_SANDBOX_MERCHANT_ID 				= 'api.sandbox_merchant_id';
-	const API_SANDBOX_API_KEY 					= 'api.sandbox_api_key';
+	const API_TOKEN_NAME          = 'api.token_name';
+	const API_SANDBOX_MERCHANT_ID = 'api.sandbox_merchant_id';
+	const API_SANDBOX_API_KEY     = 'api.sandbox_api_key';
 
-	const CURRENCY_DEFAULT 						= 'currency.default';
-	const CURRENCY_DEFAULT_PRICE 				= 'currency.default_price';
+	const CURRENCY_DEFAULT       = 'currency.default';
+	const CURRENCY_DEFAULT_PRICE = 'currency.default_price';
 
-	const CONTENT_AUTO_GENERATED_TEASER_CONTENT_WORD_COUNT 	= 'content.auto_generated_teaser_content_word_count';
+	const CONTENT_AUTO_GENERATED_TEASER_CONTENT_WORD_COUNT = 'content.auto_generated_teaser_content_word_count';
 
 	const CONTENT_PREVIEW_PERCENTAGE_OF_CONTENT = 'content.preview_percentage_of_content';
-	const CONTENT_PREVIEW_WORD_COUNT_MIN 		= 'content.preview_word_count_min';
-	const CONTENT_PREVIEW_WORD_COUNT_MAX 		= 'content.preview_word_count_max';
+	const CONTENT_PREVIEW_WORD_COUNT_MIN = 'content.preview_word_count_min';
+	const CONTENT_PREVIEW_WORD_COUNT_MAX = 'content.preview_word_count_max';
 
-	const CONTENT_SHOW_PURCHASE_BUTTON 			= 'content.show_purchase_button';
+	const CONTENT_SHOW_PURCHASE_BUTTON = 'content.show_purchase_button';
 
-	const CONTENT_ENABLED_POST_TYPES 			= 'content.enabled_post_types';
+	const CONTENT_ENABLED_POST_TYPES = 'content.enabled_post_types';
 
-	const LOGGING_ACCESS_LOGGING_ENABLED 		= 'logging.access_logging_enabled';
+	const LOGGING_ACCESS_LOGGING_ENABLED = 'logging.access_logging_enabled';
 
-	const BROWSCAP_AUTOUPDATE 					= 'browscap.autoupdate';
-	const BROWSCAP_SILENT 						= 'browscap.silent';
-	const BROWSCAP_MANUALLY_UPDATED_COPY 		= 'browscap.manually_updated_copy';
+	const BROWSCAP_AUTOUPDATE            = 'browscap.autoupdate';
+	const BROWSCAP_SILENT                = 'browscap.silent';
+	const BROWSCAP_MANUALLY_UPDATED_COPY = 'browscap.manually_updated_copy';
 
-	const REG_IS_IN_LIVE_MODE 					= 'laterpay_plugin_is_in_live_mode';
+	const REG_IS_IN_LIVE_MODE = 'laterpay_plugin_is_in_live_mode';
 
-	const REG_LATERPAY_RATINGS 					= 'laterpay_ratings';
+	const REG_LATERPAY_RATINGS = 'laterpay_ratings';
 
-	const REG_LATERPAY_SANDBOX_BACKEND_API_URL 	= 'laterpay_sandbox_backend_api_url ';
-	const REG_LATERPAY_SANDBOX_DIALOG_API_URL 	= 'laterpay_sandbox_dialog_api_url  ';
-	const REG_LATERPAY_LIVE_BACKEND_API_URL 	= 'laterpay_live_backend_api_url    ';
-	const REG_LATERPAY_LIVE_DIALOG_API_URL 		= 'laterpay_live_dialog_api_url     ';
+	const REG_LATERPAY_SANDBOX_BACKEND_API_URL = 'laterpay_sandbox_backend_api_url ';
+	const REG_LATERPAY_SANDBOX_DIALOG_API_URL  = 'laterpay_sandbox_dialog_api_url  ';
+	const REG_LATERPAY_LIVE_BACKEND_API_URL    = 'laterpay_live_backend_api_url    ';
+	const REG_LATERPAY_LIVE_DIALOG_API_URL     = 'laterpay_live_dialog_api_url     ';
 
 	const REG_LATERPAY_API_MERCHANT_BACKEND_URL = 'laterpay_api_merchant_backend_url';
 
-	const REG_LATERPAY_ENABLED_POST_TYPES 		= 'laterpay_enabled_post_types';
+	const REG_LATERPAY_ENABLED_POST_TYPES = 'laterpay_enabled_post_types';
 
 	const REG_LATERPAY_TEASER_CONTENT_WORD_COUNT = 'laterpay_teaser_content_word_count';
 
-	const REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT 	= 'laterpay_preview_excerpt_percentage_of_content';
-	const REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN 			= 'laterpay_preview_excerpt_word_count_min';
-	const REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX 			= 'laterpay_preview_excerpt_word_count_max';
+	const REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT = 'laterpay_preview_excerpt_percentage_of_content';
+	const REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN        = 'laterpay_preview_excerpt_word_count_min';
+	const REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX        = 'laterpay_preview_excerpt_word_count_max';
 
-	const REG_LATERPAY_SHOW_PURCHASE_BUTTON 	= 'laterpay_show_purchase_button';
+	const REG_LATERPAY_SHOW_PURCHASE_BUTTON = 'laterpay_show_purchase_button';
 
-	const REG_LATERPAY_ACCESS_LOGGING_ENABLED 	= 'laterpay_access_logging_enabled';
+	const REG_LATERPAY_ACCESS_LOGGING_ENABLED = 'laterpay_access_logging_enabled';
 
-	const REG_LATERPAY_CURRENCY 				= 'laterpay_currency';
+	const REG_LATERPAY_CURRENCY = 'laterpay_currency';
 
-	const REG_LATERPAY_PREVIEW_AS_VISITOR 		= 'laterpay_preview_as_visitor';
+	const REG_LATERPAY_PREVIEW_AS_VISITOR = 'laterpay_preview_as_visitor';
 	const REG_LATERPAY_STATISTICS_TAB_IS_HIDDEN = 'laterpay_statistic_tab_is_hidden';
 
-	const REG_LATERPAY_IS_IN_VISIBLE_TEST_MODE 	= 'laterpay_is_in_visible_test_mode';
+	const REG_LATERPAY_IS_IN_VISIBLE_TEST_MODE = 'laterpay_is_in_visible_test_mode';
 
 	/**
 	 * Registry of TYPO3.
@@ -267,11 +267,11 @@ class tx_laterpay_config implements t3lib_Singleton {
 		 * @var array
 		 */
 		$defaultApiSettings = array(
-			self::API_SANDBOX_BACKEND_API_URL 	=> $registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_SANDBOX_BACKEND_API_URL),
-			self::API_SANDBOX_DIALOG_API_URL 	=> $registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_SANDBOX_DIALOG_API_URL),
-			self::API_LIVE_BACKEND_API_URL 		=> $registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_LIVE_BACKEND_API_URL),
-			self::API_LIVE_DIALOG_API_URL 		=> $registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_LIVE_DIALOG_API_URL),
-			self::API_MERCHANT_BACKEND_URL 		=> $registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_API_MERCHANT_BACKEND_URL),
+			self::API_SANDBOX_BACKEND_API_URL => $registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_SANDBOX_BACKEND_API_URL),
+			self::API_SANDBOX_DIALOG_API_URL  => $registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_SANDBOX_DIALOG_API_URL),
+			self::API_LIVE_BACKEND_API_URL    => $registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_LIVE_BACKEND_API_URL),
+			self::API_LIVE_DIALOG_API_URL     => $registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_LIVE_DIALOG_API_URL),
+			self::API_MERCHANT_BACKEND_URL    => $registry->get(self::PLUGIN_NAME_SPACE, self::REG_LATERPAY_API_MERCHANT_BACKEND_URL),
 		);
 
 		/**
@@ -282,16 +282,16 @@ class tx_laterpay_config implements t3lib_Singleton {
 		 * @return array $api_settings
 		*/
 		// non-editable settings for the LaterPay API
-		$apiSettings[self::API_TOKEN_NAME] 			= 'token';
+		$apiSettings[self::API_TOKEN_NAME] = 'token';
 		$apiSettings[self::API_SANDBOX_MERCHANT_ID] = 'LaterPay-WordPressDemo';
-		$apiSettings[self::API_SANDBOX_API_KEY] 	= 'decafbaddecafbaddecafbaddecafbad';
+		$apiSettings[self::API_SANDBOX_API_KEY] = 'decafbaddecafbaddecafbaddecafbad';
 
 		$config->import($apiSettings);
 
 		// default settings for price and currency
 		$currencySettings = array(
-				self::CURRENCY_DEFAULT 			=> 'EUR',
-				self::CURRENCY_DEFAULT_PRICE 	=> 0.29,
+				self::CURRENCY_DEFAULT       => 'EUR',
+				self::CURRENCY_DEFAULT_PRICE => 0.29,
 		);
 		$config->import($currencySettings);
 
