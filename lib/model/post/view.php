@@ -389,9 +389,9 @@ class tx_laterpay_model_post_view extends tx_laterpay_model_query_abstract {
 	}
 
 	/**
-	 * Removal of old data
+	 * Remove all data from table that are older than a given date.
 	 *
-	 * @param DateTime $removeBefore - dateTime from whch need to delete logs
+	 * @param DateTime $removeBefore - dateTime from which need to delete logs
 	 *
 	 * @return void
 	 */

@@ -21,15 +21,18 @@
  */
 class tx_laterpay_scheduler_clearviewdata extends tx_scheduler_Task {
 	/**
-	 * Execute removal of views data.
+	 * Execute removal of logged page views that are older than three months.
 	 *
 	 * @return bool
 	 */
 	public function execute() {
 		$model = new tx_laterpay_model_post_view();
+
 		$date = new DateTime();
-		$date->modify('-32 days');
+		$date->modify('-3 months');
+
 		$model->removeOldRecords($date);
+
 		return TRUE;
 	}
 }
