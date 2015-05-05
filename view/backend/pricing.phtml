@@ -5,16 +5,6 @@
         <p></p>
     </div>
 
-    <div class="lp_navigation lp_u_relative">
-        <?php if ( ! $laterpay['plugin_is_in_live_mode'] ): ?>
-            <a href="<?php echo tx_laterpay_helper_string::addQueryArg( array( 'page' => $laterpay['admin_menu']['account']['url'] ) ); ?>" class="lp_pluginModeIndicator lp_u_absolute" data-icon="h">
-                <h2><?php tx_laterpay_helper_string::trEcho('<strong>Test</strong> mode'); ?></h2>
-                <span><?php tx_laterpay_helper_string::trEcho('Earn money in <i>live mode</i>'); ?></span>
-            </a>
-        <?php endif; ?>
-        <?php echo $laterpay['top_nav']; ?>
-    </div>
-
     <div class="lp_pagewrap">
         <div class="lp-row lp_enabled-revenue-models">
             <?php tx_laterpay_helper_string::trEcho('Allow <strong>individual and time pass purchases</strong>'); ?>
