@@ -1,21 +1,9 @@
 <?php if ( ! defined( 'TYPO3_MODE' ) ) { die('Access denied.'); } ?>
 
-<div class="lp_page wp-core-ui">
+<div class="lp_page">
 
     <div id="lp_js_flashMessage" class="lp_flashMessage" style="display:none;">
         <p></p>
-    </div>
-
-    <div class="lp_navigation lp_u_relative">
-        <a  href="<?php echo tx_laterpay_helper_string::addQueryArg( array( 'page' => $laterpay['admin_menu']['account']['url'] ) ); ?>"
-            id="lp_js_pluginModeIndicator"
-            class="lp_pluginModeIndicator lp_u_absolute"
-            <?php if ( $laterpay['plugin_is_in_live_mode'] ): ?>style="display:none;"<?php endif; ?>
-            data-icon="h">
-            <h2><?php tx_laterpay_helper_string::trEcho('<strong>Test</strong> mode'); ?></h2>
-            <span><?php tx_laterpay_helper_string::trEcho('Earn money in <i>live mode</i>'); ?></span>
-        </a>
-        <?php echo $laterpay['top_nav']; ?>
     </div>
 
     <div class="lp_pagewrap">

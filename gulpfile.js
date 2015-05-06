@@ -1,5 +1,6 @@
 var gulp    = require('gulp'),
     plugins = require('gulp-load-plugins')(),
+    nib     = require('nib'),
     del     = require('del'),
     p               = {
                         allfiles    : [
@@ -30,7 +31,7 @@ gulp.task('css-watch', function() {
     gulp.src(p.srcStylus)
         .pipe(plugins.sourcemaps.init())
         .pipe(plugins.stylus({                                                  // process Stylus sources to CSS
-            use     : plugins.nib(),
+            use     : nib(),
             linenos : true,                                                     // make line numbers available in browser dev tools
         }))
         .pipe(plugins.sourcemaps.write('./maps'))                               // write sourcemaps
@@ -42,7 +43,7 @@ gulp.task('css-watch', function() {
 gulp.task('css-build', function() {
     gulp.src(p.srcStylus)
         .pipe(plugins.stylus({                                                  // process Stylus sources to CSS
-            use     : plugins.nib(),
+            use     : nib(),
             compress: true
         }))
         .on('error', plugins.notify.onError())
