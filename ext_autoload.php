@@ -91,5 +91,7 @@ return array(
 	'tx_laterpay_core_logger_processor_memoryusage' => $extensionPath . 'lib/core/logger/processor/memoryusage.php',
 	'tx_laterpay_core_logger_processor_web' => $extensionPath . 'lib/core/logger/processor/web.php',
 
+	'tx_laterpay_scheduler_clearviewdata' => $extensionPath . 'task/class.tx_laterpay_scheduler_clearviewdata.php',
+
 	'tx_laterpay_evaluate_price' => $extensionPath . 'lib/evaluate/price.php',
 );
