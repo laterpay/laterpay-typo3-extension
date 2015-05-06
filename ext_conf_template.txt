@@ -1,0 +1,2 @@
+#cat=basic; type=user[EXT:laterpay/lib/install/class.tx_laterpay_installer.php:tx_laterpay_installer->postInstall];
+postInstallAction=
