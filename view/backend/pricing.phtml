@@ -7,66 +7,26 @@
 
     <div class="lp_pagewrap">
 
-            <ul class="lp_js_hideInTimePassOnlyMode lp_row lp_u_clearfix">
-                <li class="lp_u_left lp_u_w-1-3">
-                    <div class="lp_u_m-0 lp_u_m-r1">
-                        <h2><?php tx_laterpay_helper_string::trEcho('Individual Prices'); ?></h2>
-                        <hr class="lp_u_b-0 lp_u_m-0 lp_u_m-t05 lp_u_m-b025">
-                        <dfn class="lp_spacer lp_u_block"><?php tx_laterpay_helper_string::trEcho('Individual prices overwrite global and category default prices.'); ?></dfn>
-
-                        <div>
-                            <p><?php tx_laterpay_helper_string::trEcho('You can set individual prices for posts,<br>when adding or editing a post.'); ?></p>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-
-            <div class="lp_js_hideInTimePassOnlyMode lp_row lp_u_m-t3">
-                <p>
-                    <span class="lp_revenueModelLabel lp_u_m-r05">PPU</span><strong><dfn>Pay-per-Use</dfn></strong><br>
-                    <dfn>
-                        <?php tx_laterpay_helper_string::trEcho( sprintf('The user pays later once his LaterPay invoice reaches 5 %s.', $laterpay['standard_currency'] )); ?><br>
-                        <?php tx_laterpay_helper_string::trEcho( sprintf('You can choose PPU for prices from 0.05 - 5.00 %s.', $laterpay['standard_currency'] )); ?>
-                    </dfn>
-                </p>
-                <p>
-                    <span class="lp_revenueModelLabel lp_u_m-r05">SIS</span><strong><dfn>Single Sale</dfn></strong><br>
-                    <dfn>
-                        <?php tx_laterpay_helper_string::trEcho('The user has to log in to LaterPay and pay immediately.'); ?><br>
-                        <?php tx_laterpay_helper_string::trEcho(sprintf( 'You can choose SIS for prices from 1.49 - 149.99 %s.', $laterpay['standard_currency'] )); ?>
-                    </dfn>
-                </p>
-            </div>
-        <?php if ( $laterpay['only_time_pass_purchases_allowed'] == true ) : ?>
-            <hr class="lp_js_hideInTimePassOnlyMode lp_u_m-1-0 lp_u_m-b3" style="display:none;">
-        <?php else : ?>
-            <hr class="lp_js_hideInTimePassOnlyMode lp_u_m-1-0 lp_u_m-b3">
-        <?php endif; ?>
-
         <div class="lp_row">
+            <h2><?php tx_laterpay_helper_string::trEcho('Individual Prices'); ?></h2>
+
+            <dfn class="lp_u_block lp_u_m-b1">
+                <?php tx_laterpay_helper_string::trEcho('You can set individual prices for posts, when adding or editing a post.'); ?>
+            </dfn>
+        </div>
+
+        <div class="lp_row lp_u_m-t3">
             <h2 id="lp_timePasses"><?php tx_laterpay_helper_string::trEcho('Time Passes'); ?></h2>
 
             <dfn class="lp_u_block lp_u_m-b1">
-                <?php tx_laterpay_helper_string::trEcho('Time passes provide access to your entire site or specific categories for a limited time.'); ?><br>
-                <?php tx_laterpay_helper_string::trEcho('You can offer <strong>gift cards</strong> for each time pass. Please follow the instructions in the <a href="admin.php?page=laterpay-appearance-tab#lp_giftCardsAppearance">appearance tab</a>.'); ?>
+                <?php tx_laterpay_helper_string::trEcho('Time passes provide access to your entire site or specific categories for a limited time.'); ?>
             </dfn>
-
-            <div class="lp_u_m-b1">
-                <form id="lp_js_landingPageForm" method="post">
-                    <input type="hidden" name="form" value="save_landing_page">
-                    <input type="hidden" name="action" value="laterpay_pricing">
-                    <?php if ( function_exists( 'wp_nonce_field' ) ) { wp_nonce_field('laterpay_form'); } ?>
-                    <label><?php tx_laterpay_helper_string::trEcho('Forward users to this URL after they have redeemed a gift card:'); ?></label>
-                    <input type="text" name="landing_url" class="lp_input lp_js_landingPageInput" value="<?php echo $laterpay['landing_page']; ?>">
-                    <a href="#" id="lp_js_landingPageSave" class="lp_editLink lp_saveLink lp_u_inlineBlock lp_u_m-l1 lp_u_pd-0-05" data-icon="f"><?php tx_laterpay_helper_string::trEcho('Save'); ?></a>
-                </form>
-            </div>
 
             <div class="lp_js_timePassEditor lp_timePassEditor">
                 <a href="#" id="lp_js_addTimePass" class="lp_addTimePass button button-primary" data-icon="c"><?php tx_laterpay_helper_string::trEcho('New Time Pass'); ?></a>
 
                 <?php foreach ( $laterpay['passes_list'] as $pass ): ?>
-                    <div class="lp_js_timePassWrapper lp_timePassWrapper lp_u_clearfix" data-pass-id="<?php echo $pass['pass_id']; ?>">
+                    <div class="lp_js_timePassWrapper lp_timePassWrapper lp_u_clearfix lp_u_m-t1" data-pass-id="<?php echo $pass['pass_id']; ?>">
                         <div class="lp_timePass__idWrapper">
                             <?php tx_laterpay_helper_string::trEcho('Pass'); ?>
                             <span class="lp_js_timePassId lp_timePass__id"><?php echo $pass['pass_id']; ?></span>
@@ -217,29 +177,6 @@
                 </div>
             </div>
         </div>
-<?php # commented out as long as there is only a single currency ?>
-<?php /* ?>
-        <div class="lp_row">
-            <h2><?php tx_laterpay_helper_string::trEcho('Currency'); ?></h2>
-            <form id="lp_js_defaultCurrency_form" method="post">
-                <input type="hidden" name="form"    value="currency_form">
-                <input type="hidden" name="action"  value="laterpay_pricing">
-                <?php if ( function_exists( 'wp_nonce_field' ) ) { wp_nonce_field( 'laterpay_form' ); } ?>
-
-                <div>
-                    <p><?php tx_laterpay_helper_string::trEcho('All prices are given in'); ?>
-                        <select name="laterpay_currency" id="lp_js_changeDefaultCurrency" class="lp_input">
-                            <?php foreach ( $currencies as $currency ): ?>
-                                <option<?php if ( $currency->short_name == $standard_currency ): ?> selected<?php endif; ?> value="<?php echo $currency->short_name; ?>">
-                                    <?php echo $currency->full_name . ' (' . $currency->short_name . ')'; ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </p>
-                </div>
-            </form>
-        </div>
-<?php */ ?>
 
     </div>
 </div>
