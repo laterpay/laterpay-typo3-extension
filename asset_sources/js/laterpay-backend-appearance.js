@@ -7,10 +7,6 @@
                 previewForm                     : $('#lp_js_previewModeForm'),
                 togglePreviewMode               : $('.lp_js_togglePreviewMode'),
 
-                // ratings
-                ratingsToggle                   : $('#lp_js_enableRatingsToggle'),
-                ratingsForm                     : $('#lp_js_laterpayRatingsForm'),
-
                 // position of LaterPay elements
                 purchaseButtonPositionForm      : $('#lp_js_purchaseButtonPositionForm'),
                 togglePurchaseButtonPosition    : $('#lp_js_togglePurchaseButtonPosition'),
@@ -19,7 +15,7 @@
                 toggleTimePassesPosition        : $('#lp_js_toggleTimePassesPosition'),
                 timePassesExplanation           : $('#lp_js_timePassesPosition__explanation'),
 
-                //auto-teaser generation
+                // auto-teaser generation
                 teaserConfigForm                : $('#lp_js_autoTeaserContent'),
                 teaserSaveConfigLink            : $('#lp_js_AutoTeaserContentSave'),
             },
@@ -29,12 +25,6 @@
                 $($o.togglePreviewMode, $o.previewForm)
                 .change(function() {
                     saveData($o.previewForm);
-                });
-
-                // toggle activation status of content rating
-                $o.ratingsToggle
-                .change(function() {
-                    saveData($o.ratingsForm);
                 });
 
                 // toggle positioning mode of purchase button
