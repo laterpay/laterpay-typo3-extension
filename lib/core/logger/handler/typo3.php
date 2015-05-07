@@ -29,11 +29,11 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 	 */
 	const DEBUG_TABLE_TEMPLATE = '
 		<div id="lp_js_debugger" class="lp_debugger lp_is-hidden">
-			<header id="lp_js_toggleDebuggerVisibility" class="lp_debugger-header">
+			<div id="lp_js_toggleDebuggerVisibility" class="lp_debugger-header">
 				<a href="#" class="lp_debugger__close-link lp_right" data-icon="l"></a>
 				<div class="lp_debugger-header__text lp_right">%s</div>
 				<h2 data-icon="a" class="lp_debugger-header__title">%s</h2>
-			</header>
+			</div>
 
 			<ul id="lp_js_debuggerTabs" class="lp_debugger-tabs lp_clearfix">
 				<li class="lp_js_debuggerTabItem lp_is-selected lp_debugger-tabs__item">
