@@ -153,19 +153,19 @@ class tx_laterpay_module1 extends t3lib_SCbase {
 		switch ((string)$this->MOD_SETTINGS['function']) {
 			case 1:
 				$tController = new tx_laterpay_controller_admin_dashboard( $this->doc);
-				$content = $this->doc->section(tx_laterpay_helper_string::tr('Dashboard') . ':', $tController->renderPage(), 0, 1);
+				$content = $this->doc->section('', $tController->renderPage(), 0, 1);
 				break;
 			case 2:
 				$tController = new tx_laterpay_controller_admin_pricing( $this->doc );
-				$content = $this->doc->section(tx_laterpay_helper_string::tr('Pricing') . ':', $tController->renderPage(), 0, 1);
+				$content = $this->doc->section('', $tController->renderPage(), 0, 1);
 				break;
 			case 3:
 				$tController = new tx_laterpay_controller_admin_appearance( $this->doc);
-				$content = $this->doc->section(tx_laterpay_helper_string::tr('Appearance') . ':', $tController->renderPage(), 0, 1);
+				$content = $this->doc->section('', $tController->renderPage(), 0, 1);
 				break;
 			case 4:
 				$tController = new tx_laterpay_controller_admin_account( $this->doc );
-				$content = $this->doc->section(tx_laterpay_helper_string::tr('Account') . ':', $tController->renderPage(), 0, 1);
+				$content = $this->doc->section('', $tController->renderPage(), 0, 1);
 				break;
 			default:
 				throw new Exception('Bad input data');
