@@ -23,7 +23,7 @@
             </dfn>
 
             <div class="lp_js_timePassEditor lp_timePassEditor">
-                <a href="#" id="lp_js_addTimePass" class="lp_addTimePass button button-primary" data-icon="c"><?php tx_laterpay_helper_string::trEcho('New Time Pass'); ?></a>
+                <a href="#" id="lp_js_addTimePass" class="lp_addTimePass lp_button--backend" data-icon="c"><?php tx_laterpay_helper_string::trEcho('New Time Pass'); ?></a>
 
                 <?php foreach ( $laterpay['passes_list'] as $pass ): ?>
                     <div class="lp_js_timePassWrapper lp_timePassWrapper lp_u_clearfix lp_u_m-t1" data-pass-id="<?php echo $pass['pass_id']; ?>">
@@ -37,7 +37,7 @@
 
                         <div class="lp_js_timePass_editorContainer lp_timePass_editorContainer lp_u_m-t05"></div>
 
-                        <a href="#" class="lp_js_saveTimePass lp_saveLink button button-primary lp_u_hide"><?php tx_laterpay_helper_string::trEcho('Save'); ?></a>
+                        <a href="#" class="lp_js_saveTimePass lp_saveLink lp_button--backend lp_u_hide"><?php tx_laterpay_helper_string::trEcho('Save'); ?></a>
                         <a href="#" class="lp_js_cancelEditingTimePass lp_cancelLink lp_u_inlineBlock lp_u_pd-05 lp_u_hide" data-icon="e"><?php tx_laterpay_helper_string::trEcho('Cancel'); ?></a>
                         <a href="#" class="lp_js_editTimePass lp_changeLink lp_u_inlineBlock lp_u_pd-05" data-icon="d"><?php tx_laterpay_helper_string::trEcho('Change'); ?></a><br>
                         <a href="#" class="lp_js_deleteTimePass lp_deleteLink lp_u_inlineBlock lp_u_pd-05" data-icon="g"><?php tx_laterpay_helper_string::trEcho('Delete'); ?></a>
@@ -168,7 +168,7 @@
                         </form>
                     </div>
 
-                    <a href="#" class="lp_js_saveTimePass lp_saveLink button button-primary"><?php tx_laterpay_helper_string::trEcho('Save'); ?></a>
+                    <a href="#" class="lp_js_saveTimePass lp_saveLink lp_button--backend"><?php tx_laterpay_helper_string::trEcho('Save'); ?></a>
                     <a href="#" class="lp_js_cancelEditingTimePass lp_cancelLink lp_u_inlineBlock lp_u_pd-05" data-icon="e"><?php tx_laterpay_helper_string::trEcho('Cancel'); ?></a>
                     <a href="#" class="lp_js_editTimePass lp_changeLink lp_u_inlineBlock lp_u_pd-05 lp_u_hide" data-icon="d"><?php tx_laterpay_helper_string::trEcho('Change'); ?></a><br>
                     <a href="#" class="lp_js_deleteTimePass lp_deleteLink lp_u_inlineBlock lp_u_pd-05 lp_u_hide" data-icon="g"><?php tx_laterpay_helper_string::trEcho('Delete'); ?></a>
