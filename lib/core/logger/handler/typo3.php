@@ -192,7 +192,7 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 	 * @return void
 	 */
 	public function loadAssets($renderer) {
-		$href = t3lib_extMgm::siteRelPath('laterpay') . 'res/css/laterpay-debugger.css';
+		$href = t3lib_extMgm::extRelPath('laterpay') . 'res/css/laterpay-debugger.css';
 		error_log (__METHOD__ . var_export($href, TRUE) . PHP_EOL, 3, '/vagrant/main_form.log');
 
 		if (strpos($href, '://') !== FALSE || substr($href, 0, 1) === '/') {
@@ -202,7 +202,7 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 		}
 
 		$renderer->addCssFile($file, 'stylesheet', 'screen');
-		$renderer->addJsFile($GLOBALS['BACK_PATH'] . t3lib_extMgm::siteRelPath('laterpay') . 'res/js/laterpay-debugger.js');
+		$renderer->addJsFile($GLOBALS['BACK_PATH'] . t3lib_extMgm::extRelPath('laterpay') . 'res/js/laterpay-debugger.js');
 	}
 
 	/**
