@@ -712,10 +712,6 @@
 
             initializePage = function() {
                 bindEvents();
-
-                // trigger change event of bulk price editor on page load
-                // FIXME: why is this required?
-                $o.bulkPriceAction.change();
             };
 
         initializePage();
