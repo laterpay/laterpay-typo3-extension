@@ -249,6 +249,8 @@
             <label index="Get immediate access to your purchase.&lt;br&gt; You are only buying this article, not a subscription.">Get immediate access to your purchase.&lt;br&gt; You are only buying this article, not a subscription.</label>
             <label index="Pay Later">Pay Later</label>
             <label index="Buy with LaterPay until you reach a total of 5 Euro.&lt;br&gt; Only then do you have to register and pay.">Buy with LaterPay until you reach a total of 5 Euro.&lt;br&gt; Only then do you have to register and pay.</label>
+            <label index="Buy now for">Buy now for</label>
+            <label index="and pay later">and pay later</label>
         </languageKey>
         <languageKey index="de" type="array">
             <label index="%s : &lt;code&gt;%s&lt;/code&gt; not found">%s: &lt;code&gt;%s&lt;/code&gt; nicht gefunden</label>
@@ -492,6 +494,8 @@
             <label index="Get immediate access to your purchase.&lt;br&gt; You are only buying this article, not a subscription.">Greifen Sie sofort auf Ihren Kauf zu. &lt;br&gt;Sie kaufen nur diesen Beitrag, kein Abo.</label>
             <label index="Pay Later">Später zahlen</label>
             <label index="Buy with LaterPay until you reach a total of 5 Euro.&lt;br&gt; Only then do you have to register and pay.">Kaufen Sie mit LaterPay, bis Sie 5 Euro erreicht haben.&lt;br&gt; Erst dann müssen Sie sich registrieren und bezahlen.</label>
+            <label index="Buy now for">Jetzt kaufen für</label>
+            <label index="and pay later">und später zahlen</label>
         </languageKey>
     </data>
 </T3locallang>
