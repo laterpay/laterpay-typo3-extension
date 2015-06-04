@@ -43,7 +43,7 @@ $TCA['tt_content']['columns'] += array(
 		'label' => 'Price &euro;',
 		'config' => array(
 			'type' => 'input',
-			'default' => '0.25',
+			'default' => '0.00',
 			'eval' => 'tx_laterpay_evaluate_price'
 		)
 	)
