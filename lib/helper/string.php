@@ -212,8 +212,7 @@ class tx_laterpay_helper_string {
 	 *
 	 * @return string
 	 */
-	public static function trAndLog($text)
-	{
+	public static function trAndLog($text) {
 		static $allProcessed;
 
 		$result = NULL;
@@ -221,8 +220,7 @@ class tx_laterpay_helper_string {
 			$allProcessed = array();
 		}
 		if (defined('TYPO3_MODE') && (TYPO3_MODE == 'FE')) {
-			global $TSFE;
-			$result = $TSFE->sL('LLL:EXT:laterpay/mod1/locallang.xml:' . $text);
+			$result = $GLOBALS['TSFE']->sL('LLL:EXT:laterpay/mod1/locallang.xml:' . $text);
 		} elseif ($GLOBALS['LANG']) {
 			$result = $GLOBALS['LANG']->getLL($text);
 		}
