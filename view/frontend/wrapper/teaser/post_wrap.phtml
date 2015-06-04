@@ -2,4 +2,4 @@
     
 ?>
 <br>
-<a data-is-in-visible-test-mode="<?php echo $isInVisibleTestMode?>" data-preview-as-visitor="<?php echo $previewAsVisitor?>" data-post-id="" data-laterpay="<?php echo $purchaseURL ?>" data-icon="b" title="Buy now with LaterPay" class="lp_js_doPurchase lp_purchaseLink" href="#">Buy now for <?php echo $price ?><small>EUR</small> and pay later</a>
+<a data-is-in-visible-test-mode="<?php echo $isInVisibleTestMode?>" data-preview-as-visitor="<?php echo $previewAsVisitor?>" data-post-id="" data-laterpay="<?php echo $purchaseURL ?>" data-icon="b" title="<?php echo tx_laterpay_helper_string::tr('Buy now with LaterPay');?>" class="lp_js_doPurchase lp_purchaseLink" href="#"><?php echo tx_laterpay_helper_string::tr('Buy now for');?> <?php echo $price ?><small>EUR</small> <?php echo tx_laterpay_helper_string::tr('and pay later');?></a>
