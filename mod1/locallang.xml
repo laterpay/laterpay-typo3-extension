@@ -232,7 +232,6 @@
             <label index="Preview post as">Preview post as</label>
             <label index="Admin">Admin</label>
             <label index="Visitor">Visitor</label>
-            <label index="Buy now with LaterPay', 'laterpay">Buy now with LaterPay', 'laterpay</label>
             <label index="Terms', 'laterpay">Terms', 'laterpay</label>
             <label index="Back', 'laterpay">Back', 'laterpay</label>
             <label index="Validity', 'laterpay">Validity', 'laterpay</label>
@@ -476,7 +475,6 @@
             <label index="Preview post as">Vorschau für</label>
             <label index="Admin">Admin</label>
             <label index="Visitor">Besucher</label>
-            <label index="Buy now with LaterPay', 'laterpay">Jetzt kaufen mit LaterPay', 'laterpay</label>
             <label index="Terms', 'laterpay">Details', 'laterpay</label>
             <label index="Back', 'laterpay">Zurück', 'laterpay</label>
             <label index="Validity', 'laterpay">Gültigkeit', 'laterpay</label>

@@ -1,13 +1,6 @@
 <?php if ( ! defined( 'TYPO3_MODE' ) ) { die('Access denied.'); } ?>
 <div class="lp_teaser-content">
-    <p><?php echo tx_laterpay_helper_string::truncate(
-                $content,
-                tx_laterpay_helper_string::determineNumberOfWords( $content ),
-                array(
-                    'html'  => true,
-                    'words' => true,
-                )
-            ); ?></p>
+    <p><?php echo $content; ?></p>
 </div>
 <div class="lp_paidContent">
     <div class="lp_fullContent">
@@ -62,7 +55,7 @@
             <div>
                 <div class="lp_u_clearfix lp_u_relative lp_u_m-b2">
                     <div>
-                        <a data-is-in-visible-test-mode="<?php echo $isInVisibleTestMode; ?>" data-preview-as-visitor="<?php echo $previewAsVisitor; ?>" data-post-id="" data-laterpay="<?php echo $purchaseURL; ?>" data-icon="b" title="Buy now with LaterPay" class="lp_js_doPurchase lp_purchaseLink lp_button" href="#"><?php echo $price; ?><small>EUR</small></a>
+                        <a data-is-in-visible-test-mode="<?php echo $isInVisibleTestMode; ?>" data-preview-as-visitor="<?php echo $previewAsVisitor; ?>" data-post-id="" data-laterpay="<?php echo $purchaseURL; ?>" data-icon="b" title="<?php echo tx_laterpay_helper_string::tr('Buy now with LaterPay');?>" class="lp_js_doPurchase lp_purchaseLink lp_button" href="#"><?php echo $price; ?><small>EUR</small></a>
                     </div>
                 </div>
             </div>
