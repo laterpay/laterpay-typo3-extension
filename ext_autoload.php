@@ -64,6 +64,7 @@ return array(
 	'tx_laterpay_form_bulkprice' => $extensionPath . 'lib/form/bulkprice.php',
 	'tx_laterpay_form_landingpage' => $extensionPath . 'lib/form/landingpage.php',
 	'tx_laterpay_form_timepassposition' => $extensionPath . 'lib/form/timepassposition.php',
+	'tx_laterpay_form_adminuserroles' => $extensionPath . 'lib/form/adminuserroles.php',
 	'tx_laterpay_form_rating' => $extensionPath . 'lib/form/rating.php',
 	'tx_laterpay_form_purchasebuttonposition' => $extensionPath . 'lib/form/purchasebuttonposition.php',
 	'tx_laterpay_form_paidcontentpreview' => $extensionPath . 'lib/form/paidcontentpreview.php',

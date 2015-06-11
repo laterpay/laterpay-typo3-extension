@@ -55,7 +55,6 @@ $TYPO3_CONF_VARS['SC_OPTIONS']['tslib/class.tslib_content.php']['cObjTypeAndClas
 $TYPO3_CONF_VARS['SC_OPTIONS']['tslib/class.tslib_content.php']['cObjTypeAndClass'][] = array('SWFOBJECT',          'EXT:laterpay/lib/hook/class.tx_content_replacer.php:&tx_content_replacer');
 $TYPO3_CONF_VARS['SC_OPTIONS']['tslib/class.tslib_content.php']['cObjTypeAndClass'][] = array('QTOBJECT',           'EXT:laterpay/lib/hook/class.tx_content_replacer.php:&tx_content_replacer');
 $TYPO3_CONF_VARS['SC_OPTIONS']['tslib/class.tslib_content.php']['cObjTypeAndClass'][] = array('SVG',                'EXT:laterpay/lib/hook/class.tx_content_replacer.php:&tx_content_replacer');
-$TYPO3_CONF_VARS['SC_OPTIONS']['tslib/class.tslib_content.php']['cObjTypeAndClass'][] = 'EXT:laterpay/lib/hook/class.tx_content_replacer.php:&tx_content_replacer';
 
 $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess']['lplogger'] = 'EXT:laterpay/lib/core/logger.php:&tx_laterpay_core_logger->handlersLoadAssets';
 $TYPO3_CONF_VARS['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-postProcess']['lplogger'] = 'EXT:laterpay/lib/core/logger.php:&tx_laterpay_core_logger->handlersFlush';

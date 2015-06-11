@@ -29,13 +29,13 @@ gulp.task('clean', function(cb) {
 // CSS related tasks
 gulp.task('css-watch', function() {
     gulp.src(p.srcStylus)
-        .pipe(plugins.sourcemaps.init())
         .pipe(plugins.stylus({                                                  // process Stylus sources to CSS
             use     : nib(),
-            linenos : true,                                                     // make line numbers available in browser dev tools
+            linenos : true                                                      // make line numbers available in browser dev tools
         }))
-        .pipe(plugins.sourcemaps.write('./maps'))                               // write sourcemaps
+        .pipe(plugins.sourcemaps.init())
         .pipe(plugins.autoprefixer('last 3 versions', '> 2%', 'ff > 23', 'ie > 8')) // vendorize properties for supported browsers
+        .pipe(plugins.sourcemaps.write('./maps'))                               // write sourcemaps
         .on('error', plugins.notify.onError())
         .pipe(gulp.dest(p.distCSS));                                            // move to target folder
 });
