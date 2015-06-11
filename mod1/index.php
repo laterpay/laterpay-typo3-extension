@@ -70,8 +70,7 @@ class tx_laterpay_module1 extends t3lib_SCbase {
 		// The page will show only if there is a valid page and if this page may be viewed by the user
 		$this->pageinfo = t3lib_BEfunc::readPageAccess($this->id, $this->perms_clause);
 		$access = is_array($this->pageinfo) ? 1 : 0;
-
-		if (($this->id && $access) || ($GLOBALS['BE_USER']->user['admin'] && !$this->id)) {
+		if (($this->id && $access) || (tx_laterpay_helper_user::isAdmin() && !$this->id)) {
 			$this->doc->backPath = $GLOBALS['BACK_PATH'];
 
 			// load LaterPay-specific CSS
