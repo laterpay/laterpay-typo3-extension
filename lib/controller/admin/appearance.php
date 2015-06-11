@@ -59,6 +59,8 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 			'teaser_percentage_of_content'        => tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_PERCENTAGE_OF_CONTENT),
 			'teaser_min_words_count'              => tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MIN),
 			'teaser_max_words_count'              => tx_laterpay_config::getOption(tx_laterpay_config::REG_LATERPAY_PREVIEW_EXCERPT_WORD_COUNT_MAX),
+			'admin_user_roles'                    => tx_laterpay_config::getOption('admin_user_roles'),
+			'admin_user_roles_collection'         => t3lib_BEfunc::getListGroupNames(),
 		);
 
 		$this->assign('laterpay', $viewArgs);
@@ -222,6 +224,28 @@ class tx_laterpay_controller_admin_appearance extends tx_laterpay_controller_abs
 				$ajaxObj->setContent(
 					$array
 				);
+				break;
+
+			case 'admin_user_roles_configuration':
+				$adminUserRolesForm = new tx_laterpay_form_adminuserroles( $post );
+				if (! $adminUserRolesForm->isValid()) {
+					$ajaxObj->setContent(
+						array(
+							'success' => FALSE,
+							'message' => tx_laterpay_helper_string::tr('An error occurred when trying to save your settings. Please try again.')
+						)
+					);
+				} else {
+					$result = tx_laterpay_config::updateOption('admin_user_roles', $adminUserRolesForm->getFieldValue('admin_user_roles'));
+					if ($result) {
+						$ajaxObj->setContent(
+							array(
+								'success' => TRUE,
+								'message' => tx_laterpay_helper_string::tr('Admin user roles were saved successfully.')
+							)
+						);
+					}
+				}
 				break;
 
 			default:

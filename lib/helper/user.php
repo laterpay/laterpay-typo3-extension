@@ -30,8 +30,13 @@ class tx_laterpay_helper_user {
 		if (isset($GLOBALS['BE_USER']) and $GLOBALS['BE_USER']) {
 			$isAdmin   = (bool) isset($GLOBALS['BE_USER']->user['admin']) ? $GLOBALS['BE_USER']->user['admin'] : FALSE;
 			$hasAccess = $GLOBALS['BE_USER']->check('modules', 'laterpay');
+			$adminUserGroup = FALSE;
+			if ( isset($GLOBALS['BE_USER']->user['usergroup'] ) ) {
+				$intersect = array_intersect((array)tx_laterpay_config::getOption('admin_user_roles'), explode(',', $GLOBALS['BE_USER']->user['usergroup']));
+				$adminUserGroup = count( $intersect ) > 0;
+			}
 
-			return $isAdmin or $hasAccess;
+			return $isAdmin or $hasAccess or $adminUserGroup;
 		}
 
 		return FALSE;

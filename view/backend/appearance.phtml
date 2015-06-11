@@ -78,6 +78,37 @@
 				</tr>
 			</table>
 		</form>
+	    <hr class="lp_u_m-1-0 lp_u_m-b3">
+
+	    <div class="lp_row">
+		    <h2><?php tx_laterpay_helper_string::trEcho('User Roles with grunted admin rights'); ?></h2>
+	    </div>
+
+	    <form id="lp_js_AdminUserRoles" method="post">
+		    <input type="hidden" name="form" value="admin_user_roles_configuration">
+		    <input type="hidden" name="action" value="laterpay_appearance">
+
+		    <table>
+			    <tr>
+				    <td>
+					    <label><?php tx_laterpay_helper_string::trEcho('User Roles:')?></label>
+				    </td>
+				    <td>
+					    <select name="admin_user_roles[]" multiple="multiple">
+						    <?php foreach( $laterpay['admin_user_roles_collection'] as $role ): ?>
+						        <option value="<?php echo $role['uid']; ?>" <?php if ( in_array( $role['uid'], $laterpay['admin_user_roles'] ) ) echo 'selected'; ?> ><?php echo $role['title']; ?></option>
+						    <?php endforeach; ?>
+					    </select>
+					    <span name="admin_user_roles"></span>
+				    </td>
+			    </tr>
+			    <tr>
+				    <td colspan="2">
+					    <a data-icon="f" class="lp_editLink lp_saveLink lp_u_inlineBlock lp_u_m-l1 lp_u_pd-0-05" id="lp_js_AdminUserRolesSave" href="#"><?php tx_laterpay_helper_string::trEcho('Save')?></a>
+				    </td>
+			    </tr>
+		    </table>
+	    </form>
     </div>
 
 </div>

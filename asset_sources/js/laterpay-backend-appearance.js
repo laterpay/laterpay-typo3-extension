@@ -18,6 +18,10 @@
                 // auto-teaser generation
                 teaserConfigForm                : $('#lp_js_autoTeaserContent'),
                 teaserSaveConfigLink            : $('#lp_js_AutoTeaserContentSave'),
+
+                // admin user roles
+                adminUserRolesForm                : $('#lp_js_AdminUserRoles'),
+                adminUserRolesSaveLink            : $('#lp_js_AdminUserRolesSave')
             },
 
             bindEvents = function() {
@@ -82,6 +86,36 @@
                     );
                     return false;
                 });
+
+                $o.adminUserRolesSaveLink
+                    .click(function() {
+                        $.post(
+                            ajaxurl,
+                            $o.adminUserRolesForm.serializeArray(),
+                            function(data) {
+                                if (data.success) {
+                                    $o.adminUserRolesForm.find('select,input').removeClass('error');
+                                    $o.adminUserRolesForm.find('span').empty();
+                                    setMessage(data);
+                                } else {
+                                    setMessage(data);
+
+                                    for (var error_field_name in data.errors) {
+                                        if(data.errors.hasOwnProperty(error_field_name)) {
+
+                                            $o.adminUserRolesForm.find(
+                                                '[name='+data.errors[error_field_name]+']'
+                                            ).addClass('error');
+                                            $o.adminUserRolesForm.find(
+                                                'span[name='+data.errors[error_field_name]+']'
+                                            ).empty().append(data.error_message[data.errors[error_field_name]]);
+                                        }
+                                    }
+                                }
+                            }
+                        );
+                        return false;
+                    });
             },
 
             saveData = function( $form ) {

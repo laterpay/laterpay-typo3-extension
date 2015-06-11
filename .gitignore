@@ -28,6 +28,8 @@
 .buildpath
 
 # Resources
+res/css/maps/
+res/js/maps/
 /res/css/*.css
 /res/css/*.css_wp
 /res/js/*.js
