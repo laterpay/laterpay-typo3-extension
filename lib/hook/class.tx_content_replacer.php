@@ -348,8 +348,8 @@ class tx_content_replacer extends tx_hook_abstract {
 	 */
 	public function setJsAndCss() {
 		// set basic Javascript
-		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay_jquery'] = 'http://code.jquery.com/jquery-1.11.1.js';
-		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay_jquery.']['external'] = 1;
+		$GLOBALS['TSFE']->getPageRenderer()->addJsFile(t3lib_extMgm::siteRelPath('laterpay') . 'res/js/laterpay-jquery-noconflict.js', $type = 'text/javascript', $compress = TRUE, $forceOnTop = TRUE);
+		$GLOBALS['TSFE']->getPageRenderer()->addJsFile('//code.jquery.com/jquery-1.11.1.js', $type = 'text/javascript', $compress = TRUE, $forceOnTop = TRUE);
 
 		$config = tx_laterpay_config::getInstance();
 		$GLOBALS['TSFE']->pSetup['includeJS.']['laterpay_yui'] = $config->getInstance()->get(tx_laterpay_config::LATERPAY_YUI_JS);
