@@ -63,7 +63,7 @@ class tx_field_checker {
 			}
 		}
 		$teaserStr = trim(strip_tags($fieldArray[$teaserFieldName]));
-		if (empty($teaserStr)) {
+		if (isset($fieldArray[$teaserFieldName]) && empty($teaserStr)) {
 			$fieldArray[$teaserFieldName] = tx_laterpay_helper_content::getTeaser($content['bodytext']);
 		}
 	}

@@ -201,7 +201,7 @@ class tx_laterpay_core_logger_handler_typo3 extends tx_laterpay_core_logger_hand
 			$file = $GLOBALS['BACK_PATH'] . $href;
 		}
 
-		$renderer->addCssFile($file, 'stylesheet', 'screen', 'lpdebugger');
+		$renderer->addCssFile($file, 'stylesheet', 'screen');
 		$renderer->addJsFile($GLOBALS['BACK_PATH'] . t3lib_extMgm::extRelPath('laterpay') . 'res/js/laterpay-debugger.js');
 	}
 

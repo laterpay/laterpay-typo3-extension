@@ -214,29 +214,28 @@ class tx_laterpay_helper_string {
 	 */
 	public static function trAndLog($text) {
 		static $allProcessed;
+
+		$result = NULL;
 		if (!isset($allProcessed)) {
 			$allProcessed = array();
 		}
-
-		if ($GLOBALS['LANG']) {
+		if (defined('TYPO3_MODE') && (TYPO3_MODE == 'FE')) {
+			$result = $GLOBALS['TSFE']->sL('LLL:EXT:laterpay/mod1/locallang.xml:' . $text);
+		} elseif ($GLOBALS['LANG']) {
 			$result = $GLOBALS['LANG']->getLL($text);
+		}
+		if (empty($result)) {
+			if (!in_array($text, $allProcessed)) {
+				$allProcessed[] = $text;
+				$encResult = htmlentities($text);
 
-			if (empty($result)) {
-				if (!in_array($text, $allProcessed)) {
-					$allProcessed[] = $text;
-					$encResult = htmlentities($text);
-
-					t3lib_div::syslog(
-						sprintf('No translation for: <label index="%s">%s</label>', $encResult, $encResult),
-						tx_laterpay_config::PLUGIN_NAME
-					);
-				}
-				$result = $text;
+				t3lib_div::syslog(
+					sprintf('No translation for: <label index="%s">%s</label>', $encResult, $encResult),
+					tx_laterpay_config::PLUGIN_NAME
+				);
 			}
-		} else {
 			$result = $text;
 		}
-
 		return $result;
 	}
 

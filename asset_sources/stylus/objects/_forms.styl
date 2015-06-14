@@ -7,7 +7,7 @@ select.lp_input
     border-radius                   4px
     border                          2px solid $border
     box-shadow                      none
-    height                          calc(2em + 4px) // normalize input height, especially selects in Chrome
+    height                          calc(1em + 4px) // normalize input height, especially selects in Chrome
     line-height                     1
     margin                          0
     padding                         0.5em
@@ -135,8 +135,8 @@ input[type=text].lp_numberInput
 input[type=text][required] + label[placeholder]
     display                         block
     line-height                     1
-    margin-bottom                   1em
-    margin-top                      calc(-3em - 2px)
+    margin-bottom                   2em
+    margin-top                      calc(-3em - 5px)
     pointer-events                  none
 
     &:before
@@ -220,6 +220,20 @@ label:hover .ez-mark
 .lp_editLink
     margin-left                     1em
     padding                         0.5em 0
+
+
+// buttons -------------------------------------------------------------------------------------------------------------
+.lp_button-backend {
+    background:                     blue;
+    border-radius:                  5px;
+    color:                          $text-inverse;
+    cursor:                         pointer;
+    line-height:                    1.1;
+    margin:                         0;
+    padding:                        0.2em 0.2em 0.1em 0;
+    text-shadow:                    0 -1px 0 hsl(166, 65%, 38%);
+    white-space:                    nowrap;
+}
 
 
 // revenue model labels ------------------------------------------------------------------------------------------------

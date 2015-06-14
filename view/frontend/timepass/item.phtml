@@ -18,7 +18,7 @@
         <h4 class="lp_js_timePassPreviewTitle lp_timePass_title"><?php echo $timepass['title']; ?></h4>
         <p class="lp_js_timePassPreviewDescription lp_timePass_description"><?php echo $timepass['description']; ?></p>
         <div class="lp_timePass_actions">
-            <a href="#" class="lp_js_doPurchase lp_purchaseLink lp_button" title="<?php tx_laterpay_helper_string::trEcho( 'Buy now with LaterPay', 'laterpay' ); ?>" data-icon="b" data-laterpay="<?php echo $timepass['laterpayURL']; ?>" data-preview-as-visitor="<?php echo $previewAsVisitor; ?>" data-is-in-visible-test-mode = "<?php echo $isInVisibleTestMode; ?>"><?php echo $timepass['price']; ?><small>EUR</small></a><a href="#" class="lp_js_flipTimePass lp_timePass_termsLink"><?php tx_laterpay_helper_string::trEcho( 'Terms', 'laterpay' ); ?></a>
+            <a href="#" class="lp_js_doPurchase lp_purchaseLink lp_button" title="<?php tx_laterpay_helper_string::trEcho( 'Buy now with LaterPay' ); ?>" data-icon="b" data-laterpay="<?php echo $timepass['laterpayURL']; ?>" data-preview-as-visitor="<?php echo $previewAsVisitor; ?>" data-is-in-visible-test-mode = "<?php echo $isInVisibleTestMode; ?>"><?php echo $timepass['price']; ?><small>EUR</small></a><a href="#" class="lp_js_flipTimePass lp_timePass_termsLink"><?php tx_laterpay_helper_string::trEcho( 'Terms', 'laterpay' ); ?></a>
         </div>
     </section>
     <section class="lp_timePass__back">

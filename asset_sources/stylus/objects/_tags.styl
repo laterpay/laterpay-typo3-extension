@@ -17,7 +17,14 @@
 
     // links -----------------------------------------------------------------------------------------------------------
     a
+        color:          $clickable;
         text-decoration none
+
+        &:hover,
+        &:focus,
+        &:active {
+            color:      $clickable-highlight;
+        }
 
         // remove dotted outline and box shadows from links
         &:focus,
@@ -28,11 +35,11 @@
 
 
     // lists -----------------------------------------------------------------------------------------------------------
-    ul,
-    li
-        list-style      none
-        margin          0
-        padding         0
+    // ul,
+    // li
+    //     list-style      none
+    //     margin          0
+    //     padding         0
 
 
     // explanatory texts -----------------------------------------------------------------------------------------------
