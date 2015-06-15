@@ -76,7 +76,11 @@
             padding                     0                                                           !important
             position                    relative                                                    !important
 
-            header
+            // hide empty paragraphs inserted by TYPO3
+            p.bodytext:empty
+                display                 none                                                        !important
+
+            .lp_benefits__header
                 background              hsl(135, 38%, 49%) url(../img/benefits-header.png) 50% 50% / 100% no-repeat !important
                 border-radius           5px 5px 0 0                                                 !important
                 left                    0                                                           !important
