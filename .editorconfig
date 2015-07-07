@@ -30,6 +30,7 @@ indent_style = tab
 [*.bat]
 indent_style = tab
 
+# follow TYPO3 guidelines
 [*.php]
 indent_style = tab
 indent_size = 1
